@@ -401,6 +401,144 @@ header h1 {
     animation: slideOut 0.3s ease-in forwards;
 }
 
+.confirmation-dialog-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
+    z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.confirmation-dialog {
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+    border-radius: 16px;
+    padding: 30px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: scaleIn 0.3s ease-out;
+}
+
+.confirmation-dialog-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.confirmation-dialog-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+}
+
+.confirmation-dialog-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    font-family: 'Fredoka', sans-serif;
+}
+
+.confirmation-dialog-message {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.confirmation-dialog-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: flex-end;
+}
+
+.confirmation-dialog-button {
+    padding: 10px 24px;
+    border-radius: 8px;
+    border: none;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Fredoka', sans-serif;
+}
+
+.confirmation-dialog-button.cancel {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.confirmation-dialog-button.cancel:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.confirmation-dialog-button.confirm {
+    background: linear-gradient(135deg, #51cf66, #40c057);
+    color: white;
+}
+
+.confirmation-dialog-button.confirm:hover {
+    background: linear-gradient(135deg, #40c057, #37b24d);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(64, 192, 87, 0.4);
+}
+
+.confirmation-dialog-button.confirm.danger {
+    background: linear-gradient(135deg, #ff6b6b, #e53e3e);
+}
+
+.confirmation-dialog-button.confirm.danger:hover {
+    background: linear-gradient(135deg, #e53e3e, #c92a2a);
+    box-shadow: 0 4px 12px rgba(229, 62, 62, 0.4);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes scaleOut {
+    from {
+        transform: scale(1);
+        opacity: 1;
+    }
+    to {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+}
+
 .save-confirmation {
     position: fixed;
     bottom: 30px;
@@ -547,6 +685,34 @@ header h1 {
 
 .refinery-resource-card:hover::before {
     opacity: 1;
+}
+
+.refinery-resource-card.locked {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.refinery-resource-card.locked::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    z-index: 1;
+}
+
+.refinery-resource-card .locked-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    z-index: 2;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
 }
 
 .resource-image {
@@ -965,11 +1131,10 @@ header h1 {
 
 
 .recipe-card {
-    background: white;
     border-radius: 20px;
     padding: 0;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-    border: 2px solid #e9ecef;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
     transition: all 0.3s ease;
     overflow: hidden;
     position: relative;
@@ -982,14 +1147,14 @@ header h1 {
     left: 0;
     right: 0;
     height: 5px;
-    background: linear-gradient(90deg, #667eea, #764ba2);
-    opacity: 0;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.6));
+    opacity: 1;
     transition: opacity 0.3s ease;
 }
 
 .recipe-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
 }
 
 .recipe-card:hover::before {
@@ -997,22 +1162,20 @@ header h1 {
 }
 
 .recipe-card.has-resources {
-    background: linear-gradient(135deg, #d3f9d8 0%, #ebfbee 100%);
-    border-color: #51cf66;
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .recipe-card.has-resources::before {
-    background: linear-gradient(90deg, #51cf66, #40c057);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.7));
     opacity: 1;
 }
 
 .recipe-card.missing-resources {
-    background: linear-gradient(135deg, #ffe0e0 0%, #fff5f5 100%);
-    border-color: #ff6b6b;
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .recipe-card.missing-resources::before {
-    background: linear-gradient(90deg, #ff6b6b, #fa5252);
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.7));
     opacity: 1;
 }
 
@@ -1044,7 +1207,6 @@ header h1 {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     pointer-events: none;
 }
-
 .recipe-image {
     width: 100%;
     height: 150px;
@@ -1073,6 +1235,7 @@ header h1 {
     font-size: 18px;
     color: #2d3748;
     margin: 0 0 12px 0;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .recipe-price {
@@ -1115,12 +1278,24 @@ header h1 {
 
 .recipe-ingredients {
     font-size: 13px;
-    color: #4a5568;
+    color: #2d3748;
     margin-bottom: 15px;
-    line-height: 1.6;
-    background: #f8f9fa;
+    line-height: 1.8;
+    background: rgba(255, 255, 255, 0.85);
     padding: 12px;
     border-radius: 10px;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(5px);
+}
+
+.ingredient-sufficient {
+    color: #2f9e44;
+    font-weight: 600;
+}
+
+.ingredient-insufficient {
+    color: #c92a2a;
+    font-weight: 600;
 }
 
 .recipe-actions {
@@ -1187,6 +1362,17 @@ header h1 {
 
 .btn-favorite.active:hover {
     box-shadow: 0 6px 16px rgba(250, 176, 5, 0.5);
+}
+
+.zone-card .btn-favorite,
+.dlc-card .btn-favorite {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    z-index: 10;
+    width: 45px;
+    height: 45px;
+    padding: 8px;
 }
 
 .total-price {
@@ -1979,7 +2165,6 @@ header h1 {
 .zone-image-container {
     position: relative;
     width: 100%;
-    height: 200px;
     margin-bottom: 20px;
     border-radius: 15px;
     overflow: hidden;
@@ -1991,8 +2176,9 @@ header h1 {
 
 .zone-img {
     width: 100%;
-    height: 100%;
-    object-fit: contain;
+    height: auto;
+    max-height: 200px;
+    object-fit: scale-down;
     transition: transform 0.3s ease;
     padding: 10px;
 }
@@ -2016,7 +2202,6 @@ header h1 {
     font-size: 28px;
     font-weight: bold;
     box-shadow: 0 4px 12px rgba(81, 207, 102, 0.4);
-    animation: bounceIn 0.5s ease;
 }
 
 @keyframes bounceIn {
@@ -2103,7 +2288,6 @@ header h1 {
     font-size: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
-    text-transform: uppercase;
     letter-spacing: 0.5px;
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;

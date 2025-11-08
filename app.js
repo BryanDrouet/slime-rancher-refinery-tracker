@@ -4,6 +4,9 @@ let userData = {
     refineryDeposits: {}, 
     purchasedRecipes: [],
     favoriteRecipes: [],
+    favoriteUpgrades: [],
+    favoriteZones: [],
+    favoriteDlcs: [],
     currentMoney: 0,
     currentTier: 0,
     purchasedClubTiers: [], 
@@ -46,6 +49,42 @@ function hasEnoughResources(ingredients) {
         }
     }
     return true;
+}
+
+function getResourcesPercentage(ingredients) {
+    if (!ingredients || ingredients.length === 0) return 100;
+    
+    let totalRequired = 0;
+    let totalAvailable = 0;
+    
+    for (let ingredient of ingredients) {
+        const match = ingredient.match(/(.+?)\s*x(\d+)/);
+        if (match) {
+            const itemName = match[1].trim();
+            const required = parseInt(match[2]);
+            const available = userData.refineryDeposits[itemName] || 0;
+            
+            totalRequired += required;
+            totalAvailable += Math.min(available, required);
+        }
+    }
+    
+    if (totalRequired === 0) return 100;
+    return Math.round((totalAvailable / totalRequired) * 100);
+}
+
+function getGradientByPercentage(percentage) {
+    if (percentage >= 100) {
+        return 'linear-gradient(135deg, #51cf66 0%, #40c057 100%)';
+    } else if (percentage >= 75) {
+        return 'linear-gradient(135deg, #94d82d 0%, #51cf66 100%)';
+    } else if (percentage >= 50) {
+        return 'linear-gradient(135deg, #ffd43b 0%, #fab005 100%)';
+    } else if (percentage >= 25) {
+        return 'linear-gradient(135deg, #ff922b 0%, #fd7e14 100%)';
+    } else {
+        return 'linear-gradient(135deg, #ff6b6b 0%, #e53e3e 100%)';
+    }
 }
 
 
@@ -170,7 +209,16 @@ async function loginWithGoogle() {
 }
 
 async function logout() {
-    if (confirm(t('confirmLogout'))) {
+    const confirmed = await showConfirmDialog({
+        title: t('confirmLogout') || 'Déconnexion',
+        message: t('confirmLogoutMessage') || 'Voulez-vous vraiment vous déconnecter ?',
+        confirmText: t('logout') || 'Déconnexion',
+        cancelText: t('cancel') || 'Annuler',
+        isDanger: true,
+        icon: '🚪'
+    });
+    
+    if (confirmed) {
         await auth.signOut();
     }
 }
@@ -198,9 +246,34 @@ function showSection(sectionName) {
         navBtn.classList.add('active');
     }
     
+    const urlParams = new URLSearchParams(window.location.search);
+    const lang = urlParams.get('lang') || 'fr';
     
-    window.location.hash = sectionName;
+    let newUrl;
+    if (sectionName === 'refinery') {
+        const refineryFilter = currentRefineryFilter || 'all';
+        newUrl = `${window.location.pathname}?lang=${lang}&refineryFilter=${refineryFilter}#${sectionName}`;
+    } else if (sectionName === 'recipes') {
+        const recipeFilter = currentFilter || 'all';
+        newUrl = `${window.location.pathname}?lang=${lang}&recipeFilter=${recipeFilter}#${sectionName}`;
+    } else {
+        newUrl = `${window.location.pathname}?lang=${lang}#${sectionName}`;
+    }
     
+    window.history.replaceState({}, '', newUrl);
+    
+    // Appeler les fonctions d'affichage pour charger le contenu
+    if (sectionName === 'vacpack') {
+        displayVacpackUpgrades();
+    } else if (sectionName === 'club7zee') {
+        displayClubRewards();
+    } else if (sectionName === 'zones') {
+        displayZones();
+    } else if (sectionName === 'dlcs') {
+        displayDlcs();
+    } else if (sectionName === 'favorites') {
+        displayFavorites();
+    }
     
     closeMobileMenu();
 }
@@ -286,11 +359,13 @@ window.addEventListener('hashchange', handleURLNavigation);
 window.addEventListener('DOMContentLoaded', () => {
     
     const urlParams = new URLSearchParams(window.location.search);
-    const langParam = urlParams.get('lang');
+    let langParam = urlParams.get('lang');
     
-    if (langParam && ['fr', 'en', 'es'].includes(langParam)) {
-        changeLanguage(langParam);
+    if (!langParam || !['fr', 'en', 'es'].includes(langParam)) {
+        langParam = 'fr';
     }
+    
+    changeLanguage(langParam, true);
     
     
     handleURLNavigation();
@@ -354,6 +429,19 @@ async function loadUserData() {
                     userData.ownedDlcs.push(dlc.id);
                 }
             });
+            
+            if (!userData.favoriteRecipes) {
+                userData.favoriteRecipes = [];
+            }
+            if (!userData.favoriteUpgrades) {
+                userData.favoriteUpgrades = [];
+            }
+            if (!userData.favoriteZones) {
+                userData.favoriteZones = [];
+            }
+            if (!userData.favoriteDlcs) {
+                userData.favoriteDlcs = [];
+            }
             
             console.log('User data loaded successfully');
         } else {
@@ -456,22 +544,12 @@ function displayRefineryDeposits() {
     const container = document.getElementById('refinery-grid');
     if (!container) return;
     
+    const labWarning = document.getElementById('lab-warning-refinery');
+    const labAccess = hasLabAccess();
     
-    if (!hasLabAccess()) {
-        container.innerHTML = `
-            <div class="zone-locked-message">
-                <div class="locked-icon">🔒</div>
-                <h3 data-i18n="labRequired"></h3>
-                <p data-i18n="labRequiredDesc"></p>
-                <button class="btn-primary" onclick="showSection('zones')">
-                    <span data-i18n="goToZones"></span>
-                </button>
-            </div>
-        `;
-        updatePageTranslations();
-        return;
+    if (labWarning) {
+        labWarning.style.display = labAccess ? 'none' : 'block';
     }
-    
     
     ALL_RESOURCES.forEach(resource => {
         if (!(resource in userData.refineryDeposits)) {
@@ -479,9 +557,7 @@ function displayRefineryDeposits() {
         }
     });
     
-    
     const lang = currentLanguage || 'en';
-    
     
     let resourcesToDisplay = ALL_RESOURCES;
     if (currentRefineryFilter !== 'all') {
@@ -492,9 +568,12 @@ function displayRefineryDeposits() {
         const translatedName = ALL_RESOURCES_TRANSLATIONS[resource] 
             ? ALL_RESOURCES_TRANSLATIONS[resource][lang] 
             : resource;
+        
+        const isLocked = !labAccess;
             
         return `
-        <div class="refinery-resource-card">
+        <div class="refinery-resource-card ${isLocked ? 'locked' : ''}">
+            ${isLocked ? '<div class="locked-overlay">🔒</div>' : ''}
             <div class="resource-image">
                 <img loading="lazy" src="assets/resources/${resource.toLowerCase().replace(/\s+/g, '_')}.png" 
                      alt="${translatedName}"
@@ -502,14 +581,19 @@ function displayRefineryDeposits() {
             </div>
             <div class="resource-name-display">${translatedName}</div>
             <div class="resource-controls">
-                <button class="resource-btn-minus" onclick="adjustRefineryQuantity('${resource}', -1)">−</button>
+                <button class="resource-btn-minus ${isLocked ? 'disabled' : ''}" 
+                        onclick="${isLocked ? 'return false;' : `adjustRefineryQuantity('${resource}', -1)`}"
+                        ${isLocked ? 'disabled' : ''}>−</button>
                 <input type="number" 
                        class="resource-qty-input"
                        id="refinery-${resource.replace(/\s+/g, '_')}" 
                        value="${userData.refineryDeposits[resource] || 0}" 
                        min="0"
-                       onchange="updateRefineryQuantity('${resource}', this.value)">
-                <button class="resource-btn-plus" onclick="adjustRefineryQuantity('${resource}', 1)">+</button>
+                       ${isLocked ? 'disabled' : ''}
+                       onchange="${isLocked ? 'return false;' : `updateRefineryQuantity('${resource}', this.value)`}">
+                <button class="resource-btn-plus ${isLocked ? 'disabled' : ''}" 
+                        onclick="${isLocked ? 'return false;' : `adjustRefineryQuantity('${resource}', 1)`}"
+                        ${isLocked ? 'disabled' : ''}>+</button>
             </div>
         </div>`;
     }).join('');
@@ -519,10 +603,9 @@ function displayRefineryDeposits() {
 function filterRefinery(category) {
     currentRefineryFilter = category;
     
-    
     const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set('refineryFilter', category);
-    const newUrl = `${window.location.pathname}?${urlParams.toString()}${window.location.hash}`;
+    const lang = urlParams.get('lang') || 'fr';
+    const newUrl = `${window.location.pathname}?lang=${lang}&refineryFilter=${category}#refinery`;
     window.history.replaceState({}, '', newUrl);
     
     
@@ -610,6 +693,48 @@ async function toggleRecipeFavorite(recipeId) {
     displayFavorites();
 }
 
+async function toggleUpgradeFavorite(upgradeId) {
+    const index = userData.favoriteUpgrades.indexOf(upgradeId);
+    if (index >= 0) {
+        userData.favoriteUpgrades.splice(index, 1);
+    } else {
+        userData.favoriteUpgrades.push(upgradeId);
+    }
+    
+    markAsChanged();
+    await saveUserData();
+    displayVacpackUpgrades();
+    displayFavorites();
+}
+
+async function toggleZoneFavorite(zoneId) {
+    const index = userData.favoriteZones.indexOf(zoneId);
+    if (index >= 0) {
+        userData.favoriteZones.splice(index, 1);
+    } else {
+        userData.favoriteZones.push(zoneId);
+    }
+    
+    markAsChanged();
+    await saveUserData();
+    displayZones();
+    displayFavorites();
+}
+
+async function toggleDlcFavorite(dlcId) {
+    const index = userData.favoriteDlcs.indexOf(dlcId);
+    if (index >= 0) {
+        userData.favoriteDlcs.splice(index, 1);
+    } else {
+        userData.favoriteDlcs.push(dlcId);
+    }
+    
+    markAsChanged();
+    await saveUserData();
+    displayDlcs();
+    displayFavorites();
+}
+
 let currentFilter = 'all';
 let currentSort = 'default';
 
@@ -621,10 +746,9 @@ function sortRecipes(sortType) {
 function filterRecipes(filter) {
     currentFilter = filter;
     
-    
     const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set('recipeFilter', filter);
-    const newUrl = `${window.location.pathname}?${urlParams.toString()}${window.location.hash}`;
+    const lang = urlParams.get('lang') || 'fr';
+    const newUrl = `${window.location.pathname}?lang=${lang}&recipeFilter=${filter}#recipes`;
     window.history.replaceState({}, '', newUrl);
     
     
@@ -639,6 +763,11 @@ function filterRecipes(filter) {
 function displayRecipes(filter) {
     const container = document.getElementById('recipes-list');
     const lang = currentLanguage || 'en';
+    
+    const labWarning = document.getElementById('lab-warning-recipes');
+    if (labWarning) {
+        labWarning.style.display = hasLabAccess() ? 'none' : 'block';
+    }
     
     let filteredRecipes = RECIPES_DATA;
     if (filter === 'purchased') {
@@ -678,7 +807,11 @@ function displayRecipes(filter) {
     
     if (filteredRecipes.length === 0) {
         let emptyMessage = '';
-        if (filter === 'purchased') {
+        const labAccess = hasLabAccess();
+        
+        if (!labAccess) {
+            emptyMessage = t('buyLabFirst') || 'Commencez à acheter le labo !';
+        } else if (filter === 'purchased') {
             emptyMessage = t('noPurchasedRecipes') || 'Aucune recette achetée. Commencez à acheter des recettes !';
         } else if (filter === 'not-purchased') {
             emptyMessage = t('allRecipesPurchased') || 'Toutes les recettes ont été achetées ! Bravo ! 🎉';
@@ -693,8 +826,12 @@ function displayRecipes(filter) {
         const isPurchased = userData.purchasedRecipes.includes(recipe.id);
         const isFavorite = userData.favoriteRecipes.includes(recipe.id);
         const hasResources = hasEnoughResources(recipe.ingredients);
+        const resourcesPercentage = getResourcesPercentage(recipe.ingredients);
+        const gradient = getGradientByPercentage(resourcesPercentage);
         const labAccess = hasLabAccess();
-        const isLocked = !labAccess && recipe.price > 0; 
+        const isFree = recipe.price === 0;
+        const isLocked = !labAccess;
+        const cannotToggle = isFree || isLocked;
         
         
         const translatedName = RECIPES_TRANSLATIONS[recipe.name]
@@ -705,15 +842,18 @@ function displayRecipes(filter) {
         const translatedIngredients = recipe.ingredients.map(ing => {
             const parts = ing.split(' x');
             const resourceName = parts[0];
-            const quantity = parts[1];
+            const requiredQty = parseInt(parts[1]);
+            const currentQty = userData.refineryDeposits[resourceName] || 0;
             const translatedResource = ALL_RESOURCES_TRANSLATIONS[resourceName]
                 ? ALL_RESOURCES_TRANSLATIONS[resourceName][lang]
                 : resourceName;
-            return `${translatedResource} x${quantity}`;
-        }).join(', ');
+            const hasEnough = currentQty >= requiredQty;
+            const colorClass = hasEnough ? 'ingredient-sufficient' : 'ingredient-insufficient';
+            return `<span class="${colorClass}">${translatedResource}: ${currentQty}/${requiredQty}</span>`;
+        }).join('<br>');
         
         return `
-            <div class="recipe-card ${hasResources ? 'has-resources' : 'missing-resources'} ${isLocked ? 'locked' : ''}">
+            <div class="recipe-card ${hasResources ? 'has-resources' : 'missing-resources'} ${isLocked ? 'locked' : ''}" style="background: ${gradient};">
                 ${isLocked ? '<div class="locked-overlay">🔒</div>' : ''}
                 <div class="recipe-image">
                     <img loading="lazy" src="assets/resources/${recipe.name.toLowerCase().replace(/\s+/g, '_').replace(/\(/g, '').replace(/\)/g, '')}.png" 
@@ -727,10 +867,10 @@ function displayRecipes(filter) {
                         ${translatedIngredients}
                     </div>
                     <div class="recipe-actions">
-                        <button class="btn-purchase ${isPurchased ? 'purchased' : ''} ${isLocked ? 'disabled' : ''}" 
-                                onclick="${isLocked ? 'return false;' : `toggleRecipePurchase(${recipe.id})`}"
-                                ${isLocked ? 'disabled' : ''}>
-                            ${isLocked ? '🔒 ' + (t('locked') || 'Verrouillé') : (isPurchased ? t('purchased') : (recipe.price === 0 ? t('obtain') : t('purchase')))}
+                        <button class="btn-purchase ${isPurchased ? 'purchased' : ''} ${cannotToggle ? 'disabled' : ''}" 
+                                onclick="${cannotToggle ? 'return false;' : `toggleRecipePurchase(${recipe.id})`}"
+                                ${cannotToggle ? 'disabled' : ''}>
+                            ${isLocked && !isFree ? '🔒 ' + (t('locked') || 'Verrouillé') : (isPurchased ? t('purchased') : (isFree ? t('obtain') : t('purchase')))}
                         </button>
                         <button class="btn-favorite ${isFavorite ? 'active' : ''} ${isLocked ? 'disabled' : ''}" 
                                 onclick="${isLocked ? 'return false;' : `toggleRecipeFavorite(${recipe.id})`}"
@@ -890,6 +1030,7 @@ function displayDlcs() {
     
     container.innerHTML = SLIME_RANCHER_DLCS.map(dlc => {
         const isOwned = userData.ownedDlcs.includes(dlc.id);
+        const isFavorite = userData.favoriteDlcs.includes(dlc.id);
         
         
         const translatedName = DLC_TRANSLATIONS[dlc.name]
@@ -915,6 +1056,9 @@ function displayDlcs() {
                         ${translatedContent.map(item => `<li>${item}</li>`).join('')}
                     </ul>
                 </div>
+                <button class="btn-favorite" onclick="toggleDlcFavorite('${dlc.id}')" title="${t('addFavorite')}">
+                    ${isFavorite ? '★' : '☆'}
+                </button>
                 <button class="btn-dlc ${isOwned ? 'owned' : ''}" 
                         onclick="toggleDlcOwnership('${dlc.id}')">
                     ${isOwned ? t('dlcOwned') : t('dlcBuy')}
@@ -933,9 +1077,8 @@ function hasLabAccess() {
 async function toggleZone(zoneId) {
     const index = userData.ownedZones.indexOf(zoneId);
     if (index >= 0) {
-        
         if (zoneId === 'lab') {
-            const hasDeposits = Object.keys(userData.refineryDeposits).length > 0;
+            const hasDeposits = Object.values(userData.refineryDeposits).some(qty => qty > 0);
             if (hasDeposits) {
                 showError(t('cannotRemoveLab') || 'Impossible de retirer le labo avec des ressources dans la raffinerie');
                 return;
@@ -971,17 +1114,12 @@ function displayZones() {
     
     console.log('Zones count:', ZONES_DATA.length);
     
-    
-    const labWarning = document.getElementById('lab-warning');
-    if (labWarning) {
-        labWarning.style.display = hasLabAccess() ? 'none' : 'block';
-    }
-    
     const lang = currentLanguage || 'en';
     
     container.innerHTML = ZONES_DATA.map(zone => {
         const isOwned = userData.ownedZones.includes(zone.id);
         const isFree = zone.price === 0;
+        const isFavorite = userData.favoriteZones.includes(zone.id);
         
         
         const translatedName = ZONES_TRANSLATIONS[zone.nameKey]
@@ -1011,6 +1149,9 @@ function displayZones() {
                         </ul>
                     </div>
                 ` : ''}
+                <button class="btn-favorite" onclick="toggleZoneFavorite('${zone.id}')" title="${t('addFavorite')}">
+                    ${isFavorite ? '★' : '☆'}
+                </button>
                 <button class="btn-zone ${isOwned ? 'owned' : ''} ${isFree ? 'disabled' : ''}" 
                         onclick="${isFree ? 'return false;' : `toggleZone('${zone.id}')`}"
                         ${isFree ? 'disabled' : ''}>
@@ -1104,6 +1245,8 @@ function displayVacpackUpgrades() {
                             ? VACPACK_TRANSLATIONS[upgrade.name][lang]
                             : upgrade.name;
                         
+                        const isFavorite = userData.favoriteUpgrades.includes(upgrade.id);
+                        
                         return `
                             <div class="vacpack-upgrade-card ${isPurchased ? 'purchased' : ''} ${canPurchase && !isPurchased ? 'available' : ''}">
                                 <div class="upgrade-icon">
@@ -1115,6 +1258,9 @@ function displayVacpackUpgrades() {
                                     <div class="upgrade-name">${translatedName}</div>
                                     <div class="upgrade-price">${formatPrice(upgrade.price)}</div>
                                 </div>
+                                <button class="btn-favorite" onclick="toggleUpgradeFavorite(${upgrade.id})" title="${t('addFavorite')}">
+                                    ${isFavorite ? '★' : '☆'}
+                                </button>
                                 <button class="btn-upgrade ${isPurchased ? 'purchased' : ''}"
                                         onclick="toggleVacpackUpgrade(${upgrade.id})"
                                         ${!canPurchase && !isPurchased ? 'disabled' : ''}>
@@ -1141,61 +1287,168 @@ function displayFavorites() {
     
     const lang = currentLanguage || 'en';
     const favoriteRecipes = RECIPES_DATA.filter(r => userData.favoriteRecipes.includes(r.id));
+    const favoriteUpgrades = VACPACK_UPGRADES.filter(u => userData.favoriteUpgrades.includes(u.id));
+    const favoriteZones = ZONES_DATA.filter(z => userData.favoriteZones.includes(z.id));
+    const favoriteDlcs = SLIME_RANCHER_DLCS.filter(d => userData.favoriteDlcs.includes(d.id));
     
-    if (favoriteRecipes.length === 0) {
-        favoritesContainer.innerHTML = `<div class="empty-message">${t('noFavorites') || 'Aucun favori pour le moment. Ajoutez des recettes en cliquant sur ☆'}</div>`;
+    const totalFavorites = favoriteRecipes.length + favoriteUpgrades.length + favoriteZones.length + favoriteDlcs.length;
+    
+    if (totalFavorites === 0) {
+        favoritesContainer.innerHTML = `<div class="empty-message">${t('noFavorites') || 'Aucun favori pour le moment. Ajoutez des éléments en cliquant sur ☆'}</div>`;
         return;
     }
     
+    let content = '';
     
-    favoritesContainer.innerHTML = `
-        <div class="recipes-grid">
-            ${favoriteRecipes.map(recipe => {
-                const isPurchased = userData.purchasedRecipes.includes(recipe.id);
-                const hasResources = hasEnoughResources(recipe.ingredients);
-                
-                const translatedName = RECIPES_TRANSLATIONS[recipe.name]
-                    ? RECIPES_TRANSLATIONS[recipe.name][lang]
-                    : recipe.name;
-                
-                const translatedIngredients = recipe.ingredients.map(ing => {
-                    const parts = ing.split(' x');
-                    const resourceName = parts[0];
-                    const quantity = parts[1];
-                    const translatedResource = ALL_RESOURCES_TRANSLATIONS[resourceName]
-                        ? ALL_RESOURCES_TRANSLATIONS[resourceName][lang]
-                        : resourceName;
-                    return `${translatedResource} x${quantity}`;
-                }).join(', ');
-                
-                return `
-                    <div class="recipe-card ${hasResources ? 'has-resources' : 'missing-resources'}">
-                        <div class="recipe-image">
-                            <img loading="lazy" src="assets/resources/${recipe.name.toLowerCase().replace(/\s+/g, '_').replace(/\(/g, '').replace(/\)/g, '')}.png" 
-                                 alt="${translatedName}"
-                                 onerror="this.parentElement.innerHTML='${recipe.icon}'">
-                        </div>
-                        <div class="recipe-content">
-                            <div class="recipe-name">${translatedName}</div>
-                            <div class="recipe-price">${formatPrice(recipe.price)}</div>
-                            <div class="recipe-ingredients">${translatedIngredients}</div>
-                            <div class="recipe-actions">
-                                <button class="btn-purchase ${isPurchased ? 'purchased' : ''}" 
-                                        onclick="toggleRecipePurchase(${recipe.id})">
-                                    ${isPurchased ? t('purchased') : (recipe.price === 0 ? t('obtain') : t('purchase'))}
-                                </button>
-                                <button class="btn-favorite active" 
-                                        onclick="toggleRecipeFavorite(${recipe.id})"
-                                        title="${t('removeFavorite') || 'Retirer des favoris'}">
-                                    ★
-                                </button>
-                            </div>
+    if (favoriteRecipes.length > 0) {
+        content += `<h3>${t('recipesTitle') || 'Recettes'}</h3>`;
+        content += `<div class="recipes-grid">`;
+        content += favoriteRecipes.map(recipe => {
+            const isPurchased = userData.purchasedRecipes.includes(recipe.id);
+            const hasResources = hasEnoughResources(recipe.ingredients);
+            const resourcesPercentage = getResourcesPercentage(recipe.ingredients);
+            const gradient = getGradientByPercentage(resourcesPercentage);
+            
+            const translatedName = RECIPES_TRANSLATIONS[recipe.name]
+                ? RECIPES_TRANSLATIONS[recipe.name][lang]
+                : recipe.name;
+            
+            const translatedIngredients = recipe.ingredients.map(ing => {
+                const parts = ing.split(' x');
+                const resourceName = parts[0];
+                const requiredQty = parseInt(parts[1]);
+                const currentQty = userData.refineryDeposits[resourceName] || 0;
+                const translatedResource = ALL_RESOURCES_TRANSLATIONS[resourceName]
+                    ? ALL_RESOURCES_TRANSLATIONS[resourceName][lang]
+                    : resourceName;
+                const hasEnough = currentQty >= requiredQty;
+                const colorClass = hasEnough ? 'ingredient-sufficient' : 'ingredient-insufficient';
+                return `<span class="${colorClass}">${translatedResource}: ${currentQty}/${requiredQty}</span>`;
+            }).join('<br>');
+            
+            return `
+                <div class="recipe-card ${hasResources ? 'has-resources' : 'missing-resources'}" style="background: ${gradient};">
+                    <div class="recipe-image">
+                        <img loading="lazy" src="assets/resources/${recipe.name.toLowerCase().replace(/\s+/g, '_').replace(/\(/g, '').replace(/\)/g, '')}.png" 
+                             alt="${translatedName}"
+                             onerror="this.parentElement.innerHTML='${recipe.icon}'">
+                    </div>
+                    <div class="recipe-content">
+                        <div class="recipe-name">${translatedName}</div>
+                        <div class="recipe-price">${formatPrice(recipe.price)}</div>
+                        <div class="recipe-ingredients">${translatedIngredients}</div>
+                        <div class="recipe-actions">
+                            <button class="btn-purchase ${isPurchased ? 'purchased' : ''}" 
+                                    onclick="toggleRecipePurchase(${recipe.id})">
+                                ${isPurchased ? t('purchased') : (recipe.price === 0 ? t('obtain') : t('purchase'))}
+                            </button>
+                            <button class="btn-favorite active" 
+                                    onclick="toggleRecipeFavorite(${recipe.id})"
+                                    title="${t('removeFavorite') || 'Retirer des favoris'}">
+                                ★
+                            </button>
                         </div>
                     </div>
-                `;
-            }).join('')}
-        </div>
-    `;
+                </div>
+            `;
+        }).join('');
+        content += `</div>`;
+    }
+    
+    if (favoriteUpgrades.length > 0) {
+        content += `<h3>${t('vacpackTitle') || 'Améliorations Aspipack'}</h3>`;
+        content += `<div class="vacpack-upgrades-list">`;
+        content += favoriteUpgrades.map(upgrade => {
+            const isPurchased = userData.purchasedVacpackUpgrades.includes(upgrade.id);
+            const translatedName = VACPACK_TRANSLATIONS[upgrade.name]
+                ? VACPACK_TRANSLATIONS[upgrade.name][lang]
+                : upgrade.name;
+            
+            return `
+                <div class="vacpack-upgrade-card ${isPurchased ? 'purchased' : ''}">
+                    <div class="upgrade-icon">
+                        <img loading="lazy" src="assets/resources/vacpack_${upgrade.category}_${upgrade.level || upgrade.id}.png" 
+                             alt="${translatedName}"
+                             onerror="this.parentElement.innerHTML='${upgrade.icon}'">
+                    </div>
+                    <div class="upgrade-details">
+                        <div class="upgrade-name">${translatedName}</div>
+                        <div class="upgrade-price">${formatPrice(upgrade.price)}</div>
+                    </div>
+                    <button class="btn-favorite active" onclick="toggleUpgradeFavorite(${upgrade.id})" title="${t('removeFavorite') || 'Retirer des favoris'}">
+                        ★
+                    </button>
+                    <button class="btn-upgrade ${isPurchased ? 'purchased' : ''}" onclick="toggleVacpackUpgrade(${upgrade.id})">
+                        ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small"> ' + t('purchased') : (upgrade.price === 0 ? t('obtain') : t('purchase'))}
+                    </button>
+                </div>
+            `;
+        }).join('');
+        content += `</div>`;
+    }
+    
+    if (favoriteZones.length > 0) {
+        content += `<h3>${t('zonesTitle') || 'Terres'}</h3>`;
+        content += `<div class="zones-grid">`;
+        content += favoriteZones.map(zone => {
+            const isOwned = userData.ownedZones.includes(zone.id);
+            const translatedName = ZONES_TRANSLATIONS[zone.nameKey]
+                ? ZONES_TRANSLATIONS[zone.nameKey][lang]
+                : zone.nameKey;
+            const zoneImage = zone.image || `iconExpan${zone.id.charAt(0).toUpperCase() + zone.id.slice(1)}.png`;
+            
+            return `
+                <div class="zone-card ${isOwned ? 'owned' : ''}">
+                    <div class="zone-image-container">
+                        <img loading="lazy" src="assets/resources/${zoneImage}" alt="${translatedName}" class="zone-img">
+                        ${isOwned ? '<div class="zone-owned-badge"><img src="assets/resources/icon_check.png" class="check-icon-small"></div>' : ''}
+                    </div>
+                    <div class="zone-header">
+                        <div class="zone-title-wrapper">
+                            <h3 class="zone-name">${translatedName}</h3>
+                            <div class="zone-price">${formatPrice(zone.price)}</div>
+                        </div>
+                    </div>
+                    <button class="btn-favorite active" onclick="toggleZoneFavorite('${zone.id}')" title="${t('removeFavorite') || 'Retirer des favoris'}">
+                        ★
+                    </button>
+                    <button class="btn-zone ${isOwned ? 'owned' : ''}" onclick="toggleZone('${zone.id}')">
+                        ${isOwned ? '<img src="assets/resources/icon_check.png" class="check-icon-small"> ' + (t('zoneOwned') || 'Acheté') : (t('zoneBuy') || 'Acheter')}
+                    </button>
+                </div>
+            `;
+        }).join('');
+        content += `</div>`;
+    }
+    
+    if (favoriteDlcs.length > 0) {
+        content += `<h3>${t('dlcsTitle') || 'DLCs'}</h3>`;
+        content += `<div class="dlcs-grid">`;
+        content += favoriteDlcs.map(dlc => {
+            const isOwned = userData.ownedDlcs.includes(dlc.id);
+            const translatedName = DLC_TRANSLATIONS[dlc.name]
+                ? DLC_TRANSLATIONS[dlc.name][lang]
+                : dlc.name;
+            
+            return `
+                <div class="dlc-card ${isOwned ? 'owned' : ''}">
+                    <div class="dlc-header">
+                        <h3 class="dlc-name">${translatedName}</h3>
+                        <div class="dlc-price">${formatPrice(dlc.price)}</div>
+                    </div>
+                    <button class="btn-favorite active" onclick="toggleDlcFavorite('${dlc.id}')" title="${t('removeFavorite') || 'Retirer des favoris'}">
+                        ★
+                    </button>
+                    <button class="btn-dlc ${isOwned ? 'owned' : ''}" onclick="toggleDlcOwnership('${dlc.id}')">
+                        ${isOwned ? t('dlcOwned') : t('dlcBuy')}
+                    </button>
+                </div>
+            `;
+        }).join('');
+        content += `</div>`;
+    }
+    
+    favoritesContainer.innerHTML = content;
 }
 
 

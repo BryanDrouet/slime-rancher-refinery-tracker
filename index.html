@@ -99,6 +99,10 @@
         <section id="refinery-section" class="content-section active">
             <h2 data-i18n="refineryTitle">Dépôts de la Raffinerie</h2>
             
+            <div class="zone-notice" id="lab-warning-refinery" style="display: none;">
+                <p data-i18n="zoneRequired">⚠️ Le Laboratoire est requis pour débloquer la raffinerie et certaines recettes</p>
+            </div>
+            
             <div class="filters">
                 <button onclick="filterRefinery('all')" class="filter-btn active" data-i18n="filterAllResources">Toutes</button>
                 <button onclick="filterRefinery('drill')" class="filter-btn" data-i18n="filterDrill">Foreuse</button>
@@ -115,6 +119,11 @@
         <!-- Section Recettes -->
         <section id="recipes-section" class="content-section">
             <h2 data-i18n="recipesTitle">Recettes</h2>
+            
+            <div class="zone-notice" id="lab-warning-recipes" style="display: none;">
+                <p data-i18n="zoneRequired">⚠️ Le Laboratoire est requis pour débloquer la raffinerie et certaines recettes</p>
+            </div>
+            
             <div class="filters">
                 <button onclick="filterRecipes('all')" class="filter-btn active" data-i18n="filterAll">Toutes</button>
                 <button onclick="filterRecipes('purchased')" class="filter-btn" data-i18n="filterPurchased">Achetées</button>
@@ -158,9 +167,6 @@
         <!-- Section Zones/Terres -->
         <section id="zones-section" class="content-section">
             <h2 data-i18n="zonesTitle">Terres Achetées</h2>
-            <div class="zone-notice" id="lab-warning" style="display: none;">
-                <p data-i18n="zoneRequired">⚠️ Le Laboratoire est requis pour débloquer la raffinerie et certaines recettes</p>
-            </div>
             <div id="zones-list" class="zones-grid"></div>
         </section>
 

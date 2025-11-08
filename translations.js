@@ -57,6 +57,7 @@ const translations = {
         purchase: "Acheter",
         purchased: "Acheté",
         addFavorite: "Ajouter aux favoris",
+        buyLabFirst: "Commencez à acheter le labo !",
         noPurchasedRecipes: "Aucune recette achetée. Commencez à acheter des recettes !",
         allRecipesPurchased: "Toutes les recettes ont été achetées ! Bravo ! 🎉",
         noRecipes: "Aucune recette disponible.",
@@ -94,7 +95,9 @@ const translations = {
         loadError: "Erreur de chargement:",
         enterItemName: "Veuillez entrer le nom de l'objet",
         enterValidQuantity: "Veuillez entrer une quantité valide",
-        confirmLogout: "Voulez-vous vraiment vous déconnecter ?",
+        confirmLogout: "Déconnexion",
+        confirmLogoutMessage: "Voulez-vous vraiment vous déconnecter ?",
+        cancel: "Annuler",
         dataSaved: "Informations sauvegardées !",
         
         
@@ -137,7 +140,7 @@ const translations = {
         zoneBuy: "Acheter",
         zonePrice: "Prix",
         zoneUnlock: "Débloque",
-        zoneRequired: "Requis pour débloquer la raffinerie et certaines recettes",
+        zoneRequired: "Le labo est requis pour accéder à cette section",
         zoneAdded: "Terre achetée avec succès !",
         zoneRemoved: "Terre retirée",
         cannotRemoveLab: "Impossible de retirer le labo avec des ressources dans la raffinerie",
@@ -213,6 +216,7 @@ const translations = {
         purchase: "Purchase",
         purchased: "Purchased",
         addFavorite: "Add to favorites",
+        buyLabFirst: "Start by buying the lab!",
         noPurchasedRecipes: "No purchased recipes. Start buying recipes!",
         allRecipesPurchased: "All recipes have been purchased! Congratulations! 🎉",
         noRecipes: "No recipes available.",
@@ -253,7 +257,9 @@ const translations = {
         loadError: "Loading error:",
         enterItemName: "Please enter the item name",
         enterValidQuantity: "Please enter a valid quantity",
-        confirmLogout: "Do you really want to log out?",
+        confirmLogout: "Logout",
+        confirmLogoutMessage: "Do you really want to log out?",
+        cancel: "Cancel",
         dataSaved: "Information saved!",
         
         
@@ -296,7 +302,7 @@ const translations = {
         zoneBuy: "Purchase",
         zonePrice: "Price",
         zoneUnlock: "Unlocks",
-        zoneRequired: "Required to unlock refinery and certain recipes",
+        zoneRequired: "The lab is required to access this section",
         zoneAdded: "Land purchased successfully!",
         zoneRemoved: "Land removed",
         cannotRemoveLab: "Cannot remove Lab with resources in the refinery",
@@ -372,6 +378,7 @@ const translations = {
         purchase: "Comprar",
         purchased: "Comprado",
         addFavorite: "Añadir a favoritos",
+        buyLabFirst: "¡Comienza comprando el laboratorio!",
         noPurchasedRecipes: "No hay recetas compradas. ¡Comienza a comprar recetas!",
         allRecipesPurchased: "¡Todas las recetas han sido compradas! ¡Felicidades! 🎉",
         noRecipes: "No hay recetas disponibles.",
@@ -411,7 +418,9 @@ const translations = {
         loadError: "Error de carga:",
         enterItemName: "Por favor, introduce el nombre del objeto",
         enterValidQuantity: "Por favor, introduce una cantidad válida",
-        confirmLogout: "¿Realmente quieres cerrar sesión?",
+        confirmLogout: "Cerrar sesión",
+        confirmLogoutMessage: "¿Realmente quieres cerrar sesión?",
+        cancel: "Cancelar",
         dataSaved: "¡Información guardada!",
         
         
@@ -454,7 +463,7 @@ const translations = {
         zoneBuy: "Comprar",
         zonePrice: "Precio",
         zoneUnlock: "Desbloquea",
-        zoneRequired: "Requerido para desbloquear la refinería y ciertas recetas",
+        zoneRequired: "Se requiere el laboratorio para acceder a esta sección",
         zoneAdded: "¡Tierra comprada con éxito!",
         zoneRemoved: "Tierra eliminada",
         cannotRemoveLab: "No se puede eliminar el Lab con recursos en la refinería",
@@ -491,12 +500,16 @@ function t(key) {
 }
 
 
-function changeLanguage(lang) {
-    if (currentLanguage === lang) return; 
+function changeLanguage(lang, forceUpdate = false) {
+    if (currentLanguage === lang && !forceUpdate) return; 
     
     currentLanguage = lang;
     localStorage.setItem('language', lang);
     updateLanguageFlags();
+    
+    if (forceUpdate) {
+        updatePageTranslations();
+    }
     
     
     if (languageChangeTimeout) {
@@ -510,8 +523,19 @@ function changeLanguage(lang) {
     }, 100); 
     
     
-    const url = new URL(window.location);
-    url.searchParams.set('lang', lang);
+    const hash = window.location.hash.substring(1) || 'refinery';
+    let url;
+    
+    if (hash === 'refinery') {
+        const refineryFilter = typeof currentRefineryFilter !== 'undefined' ? currentRefineryFilter : 'all';
+        url = `${window.location.pathname}?lang=${lang}&refineryFilter=${refineryFilter}#${hash}`;
+    } else if (hash === 'recipes') {
+        const recipeFilter = typeof currentFilter !== 'undefined' ? currentFilter : 'all';
+        url = `${window.location.pathname}?lang=${lang}&recipeFilter=${recipeFilter}#${hash}`;
+    } else {
+        url = `${window.location.pathname}?lang=${lang}#${hash}`;
+    }
+    
     window.history.replaceState({}, '', url);
     
     console.log(`Language changed to: ${lang}`);

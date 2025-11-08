@@ -79,3 +79,75 @@ function showWarning(message, duration = 4000) {
 function showInfo(message, duration = 4000) {
     return showNotification(message, NotificationTypes.INFO, duration);
 }
+
+function showConfirmDialog(options) {
+    const {
+        title = 'Confirmation',
+        message = 'Êtes-vous sûr ?',
+        confirmText = 'Confirmer',
+        cancelText = 'Annuler',
+        isDanger = false,
+        icon = '❓'
+    } = options;
+
+    return new Promise((resolve) => {
+        const overlay = document.createElement('div');
+        overlay.className = 'confirmation-dialog-overlay';
+        
+        const dialog = document.createElement('div');
+        dialog.className = 'confirmation-dialog';
+        
+        dialog.innerHTML = `
+            <div class="confirmation-dialog-header">
+                <div class="confirmation-dialog-icon">${icon}</div>
+                <div class="confirmation-dialog-title">${title}</div>
+            </div>
+            <div class="confirmation-dialog-message">${message}</div>
+            <div class="confirmation-dialog-buttons">
+                <button class="confirmation-dialog-button cancel">${cancelText}</button>
+                <button class="confirmation-dialog-button confirm ${isDanger ? 'danger' : ''}">${confirmText}</button>
+            </div>
+        `;
+        
+        overlay.appendChild(dialog);
+        document.body.appendChild(overlay);
+        
+        const removeDialog = () => {
+            overlay.style.animation = 'fadeOut 0.2s ease-out';
+            dialog.style.animation = 'scaleOut 0.2s ease-out';
+            setTimeout(() => {
+                if (overlay.parentNode) {
+                    overlay.parentNode.removeChild(overlay);
+                }
+            }, 200);
+        };
+        
+        const cancelBtn = dialog.querySelector('.cancel');
+        const confirmBtn = dialog.querySelector('.confirm');
+        
+        cancelBtn.addEventListener('click', () => {
+            removeDialog();
+            resolve(false);
+        });
+        
+        confirmBtn.addEventListener('click', () => {
+            removeDialog();
+            resolve(true);
+        });
+        
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) {
+                removeDialog();
+                resolve(false);
+            }
+        });
+        
+        document.addEventListener('keydown', function escapeHandler(e) {
+            if (e.key === 'Escape') {
+                document.removeEventListener('keydown', escapeHandler);
+                removeDialog();
+                resolve(false);
+            }
+        });
+    });
+}
