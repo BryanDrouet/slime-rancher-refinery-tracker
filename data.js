@@ -124,8 +124,7 @@ const RECIPES_TRANSLATIONS = {
 
 
 const RECIPES_DATA = [
-    
-    { id: 1, name: "Novice Drill", category: "Extractors", price: 0, blueprintCost: 0, ingredients: ["Pink Plort x10", "Rock Plort x6", "Rad Plort x3"], icon: "⛏️", image: "https:
+    { id: 1, name: "Novice Drill", category: "Extractors", price: 0, blueprintCost: 0, ingredients: ["Pink Plort x10", "Rock Plort x6", "Rad Plort x3"], icon: "⛏️", image: "https://static.wikia.nocookie.net/slimerancher/images/a/a0/Drill1.png" },
     { id: 2, name: "Advanced Drill", category: "Extractors", price: 450, blueprintCost: 450, ingredients: ["Jellystone x15", "Slime Fossil x10", "Buzz Wax x8"], icon: "⛏️", image: "" },
     { id: 3, name: "Master Drill", category: "Extractors", price: 1000, blueprintCost: 1000, ingredients: ["Jellystone x30", "Indigonium x20", "Slime Fossil x20"], icon: "⛏️", image: "" },
     { id: 4, name: "Novice Pump", category: "Extractors", price: 0, blueprintCost: 0, ingredients: ["Pink Plort x10", "Tabby Plort x6", "Phosphor Plort x3"], icon: "💧", image: "" },
