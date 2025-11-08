@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slime Rancher - Refinery Tracker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Écran de connexion -->
+    <div id="auth-container" class="auth-container">
+        <div class="auth-box">
+            <h1>🌈 Slime Rancher Refinery Tracker</h1>
+            <div id="login-section">
+                <h2>Connexion</h2>
+                <input type="email" id="login-email" placeholder="Email">
+                <input type="password" id="login-password" placeholder="Mot de passe">
+                <button onclick="loginWithEmail()" class="btn-primary">Se connecter</button>
+                <button onclick="loginWithGoogle()" class="btn-google">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="20">
+                    Connexion avec Google
+                </button>
+                <p class="switch-auth">Pas de compte ? <a href="#" onclick="showRegister()">S'inscrire</a></p>
+            </div>
+            <div id="register-section" style="display: none;">
+                <h2>Inscription</h2>
+                <input type="email" id="register-email" placeholder="Email">
+                <input type="password" id="register-password" placeholder="Mot de passe">
+                <button onclick="registerWithEmail()" class="btn-primary">S'inscrire</button>
+                <p class="switch-auth">Déjà un compte ? <a href="#" onclick="showLogin()">Se connecter</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application principale -->
+    <div id="app-container" class="app-container" style="display: none;">
+        <!-- Header -->
+        <header>
+            <h1>🌈 Slime Rancher Refinery Tracker</h1>
+            <div class="user-info">
+                <span id="user-email"></span>
+                <button onclick="logout()" class="btn-logout">Déconnexion</button>
+            </div>
+        </header>
+
+        <!-- Navigation -->
+        <nav class="main-nav">
+            <button class="nav-btn active" onclick="showSection('refinery')">Raffinerie</button>
+            <button class="nav-btn" onclick="showSection('recipes')">Recettes</button>
+            <button class="nav-btn" onclick="showSection('club7zee')">Club 7Zee</button>
+            <button class="nav-btn" onclick="showSection('favorites')">Favoris</button>
+        </nav>
+
+        <!-- Section Raffinerie -->
+        <section id="refinery-section" class="content-section active">
+            <h2>Dépôts de la Raffinerie</h2>
+            <div class="refinery-controls">
+                <input type="text" id="refinery-item" placeholder="Nom de l'objet">
+                <input type="number" id="refinery-quantity" placeholder="Quantité" min="1" value="1">
+                <button onclick="addRefineryDeposit()" class="btn-add">Ajouter</button>
+            </div>
+            <div id="refinery-list" class="item-list"></div>
+        </section>
+
+        <!-- Section Recettes -->
+        <section id="recipes-section" class="content-section">
+            <h2>Recettes</h2>
+            <div class="filters">
+                <button onclick="filterRecipes('all')" class="filter-btn active">Toutes</button>
+                <button onclick="filterRecipes('purchased')" class="filter-btn">Achetées</button>
+                <button onclick="filterRecipes('not-purchased')" class="filter-btn">Non achetées</button>
+            </div>
+            <div id="recipes-list" class="recipes-grid"></div>
+            <div class="total-price">
+                <strong>Prix total des recettes non achetées: </strong>
+                <span id="total-unpurchased-price">0</span> Newbucks
+            </div>
+        </section>
+
+        <!-- Section Club 7Zee -->
+        <section id="club7zee-section" class="content-section">
+            <h2>Club 7Zee</h2>
+            <div class="club-info">
+                <div class="input-group">
+                    <label>Argent actuel:</label>
+                    <input type="number" id="current-money" placeholder="0" min="0">
+                    <span>Newbucks</span>
+                </div>
+                <div class="input-group">
+                    <label>Palier actuel:</label>
+                    <select id="current-tier">
+                        <option value="0">Niveau 0</option>
+                        <option value="1">Niveau 1</option>
+                        <option value="2">Niveau 2</option>
+                        <option value="3">Niveau 3</option>
+                        <option value="4">Niveau 4</option>
+                        <option value="5">Niveau 5</option>
+                        <option value="6">Niveau 6</option>
+                        <option value="7">Niveau 7</option>
+                    </select>
+                </div>
+                <button onclick="saveClubInfo()" class="btn-save">Sauvegarder</button>
+            </div>
+            <div id="club-rewards" class="club-rewards"></div>
+        </section>
+
+        <!-- Section Favoris -->
+        <section id="favorites-section" class="content-section">
+            <h2>Items Favoris & Ressources Nécessaires</h2>
+            <div id="favorites-list" class="favorites-container"></div>
+            <div id="crafting-requirements" class="crafting-section">
+                <h3>Ressources totales nécessaires:</h3>
+                <div id="total-requirements" class="requirements-list"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    
+    <!-- Application Scripts -->
+    <script src="firebase-config.js"></script>
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
