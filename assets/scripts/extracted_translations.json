@@ -1,0 +1,88 @@
+{
+  "resources": {
+    "en": {
+      "Pink Plort": "Plorte rose",
+      "Rock Plort": "Plorte rocheux",
+      "Tabby Plort": "Plorte tigré",
+      "Phosphor Plort": "Plorte phosphorescent",
+      "Honey Plort": "Plorte mielleux",
+      "Boom Plort": "Plorte boum",
+      "Crystal Plort": "Plorte de cristal",
+      "Rad Plort": "Plorte rad",
+      "Hunter Plort": "Plorte chasseur",
+      "Quantum Plort": "Plorte quantique",
+      "Mosaic Plort": "Plorte mosaïque",
+      "Dervish Plort": "Plorte derviche",
+      "Tangle Plort": "Plorte vrillé",
+      "Saber Plort": "Plorte à dents de sabre",
+      "Fire Plort": "Plorte ardent",
+      "Puddle Plort": "Plorte aqueux"
+    },
+    "fr": {
+      "Pink Plort": "Rosa Plort",
+      "Rock Plort": "Stenplort",
+      "Tabby Plort": "Tabbyplort",
+      "Phosphor Plort": "Fosforplort",
+      "Honey Plort": "Honungsplort",
+      "Boom Plort": "Dunderplort",
+      "Crystal Plort": "Kristallplort",
+      "Rad Plort": "Rad Plort",
+      "Hunter Plort": "Jägarplort",
+      "Quantum Plort": "Kvantplort",
+      "Mosaic Plort": "Mosaikplort",
+      "Dervish Plort": "Dervischplort",
+      "Tangle Plort": "Trasselplort",
+      "Saber Plort": "Sabelplort",
+      "Fire Plort": "Eldplort",
+      "Puddle Plort": "Pölplort"
+    },
+    "es": {
+      "Pink Plort": "Plort Rosa",
+      "Rock Plort": "Plort Roca",
+      "Tabby Plort": "Plort Atigrado",
+      "Phosphor Plort": "Plort Fósforo",
+      "Honey Plort": "Plort Miel",
+      "Boom Plort": "Plort Búm",
+      "Crystal Plort": "Plort Cristal",
+      "Rad Plort": "Plort Rad",
+      "Hunter Plort": "Plort Cazador",
+      "Quantum Plort": "Plort Cuántico",
+      "Mosaic Plort": "Plort Mosaico",
+      "Dervish Plort": "Plort Derviche",
+      "Tangle Plort": "Plort Maraña",
+      "Saber Plort": "Plort Sable",
+      "Fire Plort": "Plort Fuego",
+      "Puddle Plort": "Plort Charco"
+    }
+  },
+  "gadgets": {
+    "en": {},
+    "fr": {},
+    "es": {}
+  },
+  "club": {
+    "en": {},
+    "fr": {},
+    "es": {}
+  },
+  "common": {
+    "en": {
+      "ok": "OK",
+      "cancel": "Cancel",
+      "day": "Day {0}",
+      "empty": "EMPTY"
+    },
+    "fr": {
+      "ok": "OK",
+      "cancel": "Annuler",
+      "day": "Jour {0}",
+      "empty": "VIDE"
+    },
+    "es": {
+      "ok": "OK",
+      "cancel": "Cancelar",
+      "day": "Día {0}",
+      "empty": "VACÍO"
+    }
+  }
+}

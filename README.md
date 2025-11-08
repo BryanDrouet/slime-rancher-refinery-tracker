@@ -1,18 +1,49 @@
 # Slime Rancher Refinery Tracker
 
-Application web pour suivre vos dépôts de raffinerie dans Slime Rancher 1, gérer vos recettes, et tracker votre progression du Club 7Zee.
+Application web complète pour tracker vos dépôts de raffinerie dans Slime Rancher 1, avec toutes les recettes du jeu, le système Club 7Zee et synchronisation cloud.
 
 ## 🌟 Fonctionnalités
 
-- **Authentification Firebase** : Connexion avec Google ou email/mot de passe
-- **Gestion de la raffinerie** : Enregistrez ce que vous avez déposé dans votre raffinerie
-- **Suivi des recettes** : 
-  - Marquez les recettes achetées/non achetées
-  - Visualisez le prix total des recettes restantes
-  - Ajoutez vos recettes préférées aux favoris
-- **Club 7Zee** : Suivez votre argent et votre palier actuel
-- **Système de favoris** : Calculez automatiquement les ressources nécessaires pour crafter vos items favoris
-- **Synchronisation cloud** : Toutes vos données sont sauvegardées sur Firebase
+### 🔐 Authentification Firebase
+- Connexion avec Google
+- Connexion par email/mot de passe
+- Sécurité complète avec Firestore
+
+### 🌍 Multilingue
+- **Sélecteur visuel avec drapeaux** : 🇫🇷 Français, 🇬🇧 English, 🇪🇸 Español
+- Changement de langue instantané
+- Traductions complètes de l'interface
+
+### 🔬 Gestion de la Raffinerie
+- **Liste déroulante auto-complète** avec toutes les ressources du jeu
+- 36+ ressources disponibles (Drill, Pump, Apiary, Plorts)
+- Suivi en temps réel de vos dépôts
+
+### 📋 Recettes Complètes (51+ Gadgets)
+- **Extractors** : Drills, Pumps, Apiaries (Novice, Advanced, Master)
+- **Utilities** : Dash Boots, Jetpack, Tank Boosters, Heart Module, Turrets, Drones, Gordo Snares
+- **Warp Tech** : Teleporter, Warp Depot, Refinery Link, Market Link
+- **Decorations** : Slime Lamps, Statues, Echo Net
+- **Curios** : Slime Toys, Fashion Pods
+- **Personal Upgrades** : Slime Key, Treasure Crackers, Nimble Valley
+- Prix et ingrédients exacts du jeu
+- Système de favoris intelligent
+
+### 🏆 Club 7Zee (28 Paliers)
+- Tous les paliers de Initiate à Golden Owl III
+- Coûts cumulatifs précis (jusqu'à 1,326,500 Newbucks)
+- Récompenses détaillées (Chroma Packs, Upgrades, Gadgets)
+- Suivi de votre argent et progression
+
+### ⭐ Système de Favoris
+- Ajoutez vos recettes favorites
+- **Calcul automatique** des ressources totales nécessaires
+- Vue d'ensemble pour planifier votre farming
+
+### ☁️ Synchronisation Cloud
+- Toutes vos données sauvegardées sur Firebase
+- Accès depuis n'importe quel appareil
+- Mise à jour en temps réel
 
 ## 🚀 Installation & Configuration
 

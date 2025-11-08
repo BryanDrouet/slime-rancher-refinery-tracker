@@ -3,115 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slime Rancher - Refinery Tracker</title>
+    <title data-i18n="title">Slime Rancher - Refinery Tracker</title>
+    <link rel="icon" type="image/png" href="assets/icon.png">
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Écran de connexion -->
     <div id="auth-container" class="auth-container">
         <div class="auth-box">
-            <h1>🌈 Slime Rancher Refinery Tracker</h1>
+            <h1 data-i18n="mainTitle"><img src="assets/icon.png" alt="Slime" class="title-icon"> Slime Rancher Refinery Tracker</h1>
             <div id="login-section">
-                <h2>Connexion</h2>
-                <input type="email" id="login-email" placeholder="Email">
-                <input type="password" id="login-password" placeholder="Mot de passe">
-                <button onclick="loginWithEmail()" class="btn-primary">Se connecter</button>
+                <h2 data-i18n="login">Connexion</h2>
+                <input type="email" id="login-email" data-i18n="email" placeholder="Email">
+                <input type="password" id="login-password" data-i18n="password" placeholder="Mot de passe">
+                <button onclick="loginWithEmail()" class="btn-primary" data-i18n="loginButton">Se connecter</button>
                 <button onclick="loginWithGoogle()" class="btn-google">
                     <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="20">
-                    Connexion avec Google
+                    <span data-i18n="googleLogin">Connexion avec Google</span>
                 </button>
-                <p class="switch-auth">Pas de compte ? <a href="#" onclick="showRegister()">S'inscrire</a></p>
+                <p class="switch-auth"><span data-i18n="noAccount">Pas de compte ?</span> <a href="#" onclick="showRegister()" data-i18n="signupLink">S'inscrire</a></p>
             </div>
             <div id="register-section" style="display: none;">
-                <h2>Inscription</h2>
-                <input type="email" id="register-email" placeholder="Email">
-                <input type="password" id="register-password" placeholder="Mot de passe">
-                <button onclick="registerWithEmail()" class="btn-primary">S'inscrire</button>
-                <p class="switch-auth">Déjà un compte ? <a href="#" onclick="showLogin()">Se connecter</a></p>
+                <h2 data-i18n="register">Inscription</h2>
+                <input type="email" id="register-email" data-i18n="email" placeholder="Email">
+                <input type="password" id="register-password" data-i18n="password" placeholder="Mot de passe">
+                <button onclick="registerWithEmail()" class="btn-primary" data-i18n="registerButton">S'inscrire</button>
+                <p class="switch-auth"><span data-i18n="hasAccount">Déjà un compte ?</span> <a href="#" onclick="showLogin()" data-i18n="loginLink">Se connecter</a></p>
             </div>
         </div>
+        
+        <!-- Sélecteur de langue en bas à droite -->
+        <div class="language-flags-corner">
+            <button class="flag-btn active" onclick="changeLanguage('fr')" data-lang="fr" title="Français">
+                <img src="assets/fr.png" alt="Français">
+            </button>
+            <button class="flag-btn" onclick="changeLanguage('en')" data-lang="en" title="English">
+                <img src="assets/gb.png" alt="English">
+            </button>
+            <button class="flag-btn" onclick="changeLanguage('es')" data-lang="es" title="Español">
+                <img src="assets/es.png" alt="Español">
+            </button>
+        </div>
     </div>
+
+    <!-- Conteneur de notifications -->
+    <div id="notification-container"></div>
 
     <!-- Application principale -->
     <div id="app-container" class="app-container" style="display: none;">
         <!-- Header -->
         <header>
-            <h1>🌈 Slime Rancher Refinery Tracker</h1>
-            <div class="user-info">
-                <span id="user-email"></span>
-                <button onclick="logout()" class="btn-logout">Déconnexion</button>
+            <div class="header-content">
+                <h1 data-i18n="mainTitle"><img src="assets/icon.png" alt="Slime" class="title-icon"> Slime Rancher Refinery Tracker</h1>
+                <div class="header-info">
+                    <span id="currency-display" style="font-size: 0.8em; opacity: 0.8;"></span>
+                    <button onclick="logout()" class="btn-logout" data-i18n="logout">Déconnexion</button>
+                </div>
             </div>
         </header>
-
         <!-- Navigation -->
         <nav class="main-nav">
-            <button class="nav-btn active" onclick="showSection('refinery')">Raffinerie</button>
-            <button class="nav-btn" onclick="showSection('recipes')">Recettes</button>
-            <button class="nav-btn" onclick="showSection('club7zee')">Club 7Zee</button>
-            <button class="nav-btn" onclick="showSection('favorites')">Favoris</button>
+            <button class="burger-menu" onclick="toggleMobileMenu()" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="nav-links">
+                <button class="nav-btn active" onclick="showSection('refinery')" data-i18n="navRefinery">Raffinerie</button>
+                <button class="nav-btn" onclick="showSection('recipes')" data-i18n="navRecipes">Recettes</button>
+                <button class="nav-btn" onclick="showSection('vacpack')" data-i18n="navVacpack">Aspipack</button>
+                <button class="nav-btn" onclick="showSection('club7zee')" data-i18n="navClub">Club 7Zee</button>
+                <button class="nav-btn" onclick="showSection('zones')" data-i18n="navZones">Terres</button>
+                <button class="nav-btn" onclick="showSection('dlcs')" data-i18n="navDlcs">DLCs</button>
+                <button class="nav-btn" onclick="showSection('favorites')" data-i18n="navFavorites">Favoris</button>
+            </div>
         </nav>
+        
+        <!-- Sélecteur de langue en bas à droite -->
+        <div class="language-flags-corner">
+            <button class="flag-btn active" onclick="changeLanguage('fr')" data-lang="fr" title="Français">
+                <img src="assets/fr.png" alt="Français">
+            </button>
+            <button class="flag-btn" onclick="changeLanguage('en')" data-lang="en" title="English">
+                <img src="assets/gb.png" alt="English">
+            </button>
+            <button class="flag-btn" onclick="changeLanguage('es')" data-lang="es" title="Español">
+                <img src="assets/es.png" alt="Español">
+            </button>
+        </div>
 
         <!-- Section Raffinerie -->
         <section id="refinery-section" class="content-section active">
-            <h2>Dépôts de la Raffinerie</h2>
-            <div class="refinery-controls">
-                <input type="text" id="refinery-item" placeholder="Nom de l'objet">
-                <input type="number" id="refinery-quantity" placeholder="Quantité" min="1" value="1">
-                <button onclick="addRefineryDeposit()" class="btn-add">Ajouter</button>
+            <h2 data-i18n="refineryTitle">Dépôts de la Raffinerie</h2>
+            
+            <div class="filters">
+                <button onclick="filterRefinery('all')" class="filter-btn active" data-i18n="filterAllResources">Toutes</button>
+                <button onclick="filterRefinery('drill')" class="filter-btn" data-i18n="filterDrill">Foreuse</button>
+                <button onclick="filterRefinery('pump')" class="filter-btn" data-i18n="filterPump">Pompe</button>
+                <button onclick="filterRefinery('apiary')" class="filter-btn" data-i18n="filterApiary">Ruche</button>
+                <button onclick="filterRefinery('plorts')" class="filter-btn" data-i18n="filterPlorts">Plorts</button>
             </div>
-            <div id="refinery-list" class="item-list"></div>
+            
+            <div class="refinery-grid" id="refinery-grid">
+                <!-- La grille sera générée dynamiquement -->
+            </div>
         </section>
 
         <!-- Section Recettes -->
         <section id="recipes-section" class="content-section">
-            <h2>Recettes</h2>
+            <h2 data-i18n="recipesTitle">Recettes</h2>
             <div class="filters">
-                <button onclick="filterRecipes('all')" class="filter-btn active">Toutes</button>
-                <button onclick="filterRecipes('purchased')" class="filter-btn">Achetées</button>
-                <button onclick="filterRecipes('not-purchased')" class="filter-btn">Non achetées</button>
+                <button onclick="filterRecipes('all')" class="filter-btn active" data-i18n="filterAll">Toutes</button>
+                <button onclick="filterRecipes('purchased')" class="filter-btn" data-i18n="filterPurchased">Achetées</button>
+                <button onclick="filterRecipes('not-purchased')" class="filter-btn" data-i18n="filterNotPurchased">Non achetées</button>
+            </div>
+            <div class="sort-controls">
+                <label data-i18n="sortBy">Trier par:</label>
+                <select id="recipe-sort" onchange="sortRecipes(this.value)">
+                    <option value="default" data-i18n="sortDefault">Par défaut</option>
+                    <option value="name-asc" data-i18n="sortNameAsc">Nom (A-Z)</option>
+                    <option value="name-desc" data-i18n="sortNameDesc">Nom (Z-A)</option>
+                    <option value="price-asc" data-i18n="sortPriceAsc">Prix croissant</option>
+                    <option value="price-desc" data-i18n="sortPriceDesc">Prix décroissant</option>
+                </select>
             </div>
             <div id="recipes-list" class="recipes-grid"></div>
-            <div class="total-price">
-                <strong>Prix total des recettes non achetées: </strong>
-                <span id="total-unpurchased-price">0</span> Newbucks
+            <div class="total-price" style="display: none;">
+                <strong><span data-i18n="totalPrice">Prix total des recettes non achetées:</span> </strong>
+                <span id="total-unpurchased-price">0</span> <span data-i18n="newbucks">Newbucks</span>
             </div>
+        </section>
+
+        <!-- Section Aspipack/Vacpack -->
+        <section id="vacpack-section" class="content-section">
+            <h2 data-i18n="vacpackTitle">Améliorations Aspipack</h2>
+            <div id="vacpack-upgrades" class="vacpack-grid"></div>
         </section>
 
         <!-- Section Club 7Zee -->
         <section id="club7zee-section" class="content-section">
-            <h2>Club 7Zee</h2>
-            <div class="club-info">
-                <div class="input-group">
-                    <label>Argent actuel:</label>
-                    <input type="number" id="current-money" placeholder="0" min="0">
-                    <span>Newbucks</span>
-                </div>
-                <div class="input-group">
-                    <label>Palier actuel:</label>
-                    <select id="current-tier">
-                        <option value="0">Niveau 0</option>
-                        <option value="1">Niveau 1</option>
-                        <option value="2">Niveau 2</option>
-                        <option value="3">Niveau 3</option>
-                        <option value="4">Niveau 4</option>
-                        <option value="5">Niveau 5</option>
-                        <option value="6">Niveau 6</option>
-                        <option value="7">Niveau 7</option>
-                    </select>
-                </div>
-                <button onclick="saveClubInfo()" class="btn-save">Sauvegarder</button>
-            </div>
+            <h2 data-i18n="clubTitle">Club 7Zee</h2>
             <div id="club-rewards" class="club-rewards"></div>
+        </section>
+
+        <!-- Section DLCs -->
+        <section id="dlcs-section" class="content-section">
+            <h2 data-i18n="dlcsTitle">DLCs</h2>
+            <div id="dlcs-list" class="dlcs-grid"></div>
+        </section>
+
+        <!-- Section Zones/Terres -->
+        <section id="zones-section" class="content-section">
+            <h2 data-i18n="zonesTitle">Terres Achetées</h2>
+            <div class="zone-notice" id="lab-warning" style="display: none;">
+                <p data-i18n="zoneRequired">⚠️ Le Laboratoire est requis pour débloquer la raffinerie et certaines recettes</p>
+            </div>
+            <div id="zones-list" class="zones-grid"></div>
         </section>
 
         <!-- Section Favoris -->
         <section id="favorites-section" class="content-section">
-            <h2>Items Favoris & Ressources Nécessaires</h2>
+            <h2 data-i18n="favoritesTitle">Items Favoris</h2>
             <div id="favorites-list" class="favorites-container"></div>
-            <div id="crafting-requirements" class="crafting-section">
-                <h3>Ressources totales nécessaires:</h3>
-                <div id="total-requirements" class="requirements-list"></div>
-            </div>
         </section>
     </div>
 
@@ -121,8 +177,11 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     
     <!-- Application Scripts -->
+    <script src="cache-manager.js"></script>
+    <script src="translations.js"></script>
     <script src="firebase-config.js"></script>
     <script src="data.js"></script>
+    <script src="notifications.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
