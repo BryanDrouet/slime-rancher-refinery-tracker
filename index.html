@@ -119,24 +119,6 @@
                 <p data-i18n="zoneRequired">⚠️ Le Laboratoire est requis pour débloquer la raffinerie et certaines recettes</p>
             </div>
             
-            <div class="filters">
-                <button onclick="filterRefinery('all')" class="filter-btn active" data-i18n="filterAllResources">Toutes</button>
-                <button onclick="filterRefinery('drill')" class="filter-btn" data-i18n="filterDrill">Foreuse</button>
-                <button onclick="filterRefinery('pump')" class="filter-btn" data-i18n="filterPump">Pompe</button>
-                <button onclick="filterRefinery('apiary')" class="filter-btn" data-i18n="filterApiary">Ruche</button>
-                <button onclick="filterRefinery('plorts')" class="filter-btn" data-i18n="filterPlorts">Plorts</button>
-            </div>
-            <div class="sort-controls">
-                <label for="refinery-sort" data-i18n="sortBy">Trier par:</label>
-                <select id="refinery-sort" onchange="sortRefineryDeposits(this.value)">
-                    <option value="default" data-i18n="sortDefault">Par défaut</option>
-                    <option value="name-asc" data-i18n="sortNameAsc">Nom (A-Z)</option>
-                    <option value="name-desc" data-i18n="sortNameDesc">Nom (Z-A)</option>
-                    <option value="quantity-asc" data-i18n="sortQuantityAsc">Quantité croissante</option>
-                    <option value="quantity-desc" data-i18n="sortQuantityDesc">Quantité décroissante</option>
-                </select>
-            </div>
-            
             <div class="refinery-grid" id="refinery-grid">
                 
             </div>
@@ -174,8 +156,8 @@
 
         
         <section id="vacpack-section" class="content-section">
-            <h2 data-i18n="vacpackTitle">Améliorations Aspipack</h2>
-            <div id="vacpack-upgrades" class="vacpack-grid"></div>
+                <h2 data-i18n="vacpackTitle">Améliorations Aspipack</h2>
+                <div id="vacpack-upgrades" class="vacpack-grid"></div>
         </section>
 
         

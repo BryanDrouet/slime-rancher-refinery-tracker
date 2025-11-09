@@ -1,3 +1,147 @@
+// Mapping officiel multilingue des descriptions pour chaque upgrade Vacpack
+function getVacpackDescription(upgrade) {
+    const lang = (typeof currentLanguage !== 'undefined' ? currentLanguage : 'fr') || 'fr';
+    const descMap = {
+        fr: {
+            1: "Synchronisez votre propre corps pour améliorer les systèmes de vie, et boostez votre barre de vie jusqu'à 150. En plus, ça brille.<br><b>Déblocage :</b> Disponible à l'achat au début du jeu.",
+            2: "Un cardio-module encore plus avancé et encore plus brillant qui booste votre barre de vie jusque 200.<br><b>Déblocage :</b> 2 jours en jeu après avoir acheté le Cardio-Module.",
+            3: "Le modèle dernier-cri en matière d'amplification de vie et de brillance, qui booste votre barre de vie jusque 250.<br><b>Déblocage :</b> 3 jours en jeu après avoir acheté le Cardio-Module Mk II.",
+            4: "Un système d'amplification de vie expérimental qui pousse la technologie jusqu'à... la santé.<br><b>Déblocage :</b> Rang 21 du 7Zee, Montagne Infinie II.",
+            5: "Ajoute un réservoir spécialisé qui vous permet de stocker de l'eau douce.<br><b>Déblocage :</b> Disponible à l'achat au début du jeu.",
+            6: "Ayez la tête dans les nuages grâce à votre propre super jetpack !<br><b>Déblocage :</b> Disponible à l'achat au début du jeu.",
+            7: "Un propulseur pour jetpack amélioré qui consomme 20 % d'énergie en moins, mais double le fun.<br><b>Déblocage :</b> 5 jours en jeu après avoir acheté le Jetpack.",
+            8: "Ces bottes très avancées et, franchement, avant-gardistes réduisent l'énergie consommée lorsque vous courez.<br><b>Déblocage :</b> Jour 3.",
+            9: "Des chaussures expérimentales capables de réduire encore plus le coût de sprint, et de vous pousser à dénigrer la marche.<br><b>Déblocage :</b> Rang 19 du 7Zee, Mangouste Dansante III.",
+            10: "Ajoute un émetteur d'ondes de choc à votre aspipack qui repousse les slimes, lorsque vous vous sentez envahi(e).<br><b>Déblocage :</b> 0:00 au Jour 4.",
+            11: "Améliore votre aspipack grâce à un générateur à microfusion probablement pas dangereux, qui booste votre barre d'énergie jusqu'à 150.<br><b>Déblocage :</b> Disponible à l'achat au début du jeu.",
+            12: "Ce générateur à microfusion amélioré booste votre barre d'énergie jusqu'à 200, mais surtout, il est plus petit.<br><b>Déblocage :</b> 2 jours en jeu après avoir acheté le Noyau de Puissance.",
+            13: "Le dernier générateur à microfusion amélioré qui booste votre barre d'énergie à 250, ce qui n'est pas assez pour vous pousser à arrêter le café.<br><b>Déblocage :</b> 3 jours en jeu après avoir acheté le Noyau de Puissance Mk II.",
+            14: "Un nano-réservoir portable amélioré qui permet à votre réservoir de contenir 30 unités de ce que vous aspirez.<br><b>Déblocage :</b> Disponible à l'achat au début du jeu.",
+            15: "Ces nano-réservoirs portables envoient valser toute prudence et vous permettent d'aspirer 40 unités dans chaque réservoir.<br><b>Déblocage :</b> 2 jours en jeu après avoir acheté le Amplificateur de Réservoir.",
+            16: "Plus il y en a, mieux c'est, surtout dans ce cas. Ces nano-réservoirs premiums peuvent contenir 50 unités dans chaque réservoir.<br><b>Déblocage :</b> 3 jours en jeu après avoir acheté le Amplificateur de Réservoir Mk II.",
+            17: "Le meilleur réservoir secret, doté d'une technologie de nano-réservoirs expérimentale qui est sûrement possiblement légale. Probablement.<br><b>Déblocage :</b> Rang 20 du 7Zee, Montagne Infinie I."
+        },
+        en: {
+            1: "Synchronize your own body to improve life systems and boost your health bar to 150. Plus, it glows.<br><b>Unlock:</b> Available for purchase at the start of the game.",
+            2: "An even more advanced and shinier cardio module that boosts your health bar to 200.<br><b>Unlock:</b> 2 in-game days after buying the Cardio Module.",
+            3: "The latest in life amplification and shininess, boosting your health bar to 250.<br><b>Unlock:</b> 3 in-game days after buying Cardio Module Mk II.",
+            4: "An experimental life amplification system that pushes technology to... health.<br><b>Unlock:</b> 7Zee Rank 21, Infinite Mountain II.",
+            5: "Adds a specialized tank that lets you store fresh water.<br><b>Unlock:</b> Available for purchase at the start of the game.",
+            6: "Keep your head in the clouds with your very own super jetpack!<br><b>Unlock:</b> Available for purchase at the start of the game.",
+            7: "An improved jetpack thruster that uses 20% less energy, but doubles the fun.<br><b>Unlock:</b> 5 in-game days after buying the Jetpack.",
+            8: "These very advanced, frankly avant-garde boots reduce energy consumption when running.<br><b>Unlock:</b> Day 3.",
+            9: "Experimental shoes that further reduce sprint cost and make you want to never walk again.<br><b>Unlock:</b> 7Zee Rank 19, Dancing Mongoose III.",
+            10: "Adds a shockwave emitter to your vacpack that repels slimes when you feel overwhelmed.<br><b>Unlock:</b> 0:00 on Day 4.",
+            11: "Upgrade your vacpack with a probably-not-dangerous microfusion generator, boosting your energy bar to 150.<br><b>Unlock:</b> Available for purchase at the start of the game.",
+            12: "This improved microfusion generator boosts your energy bar to 200, and it's smaller too.<br><b>Unlock:</b> 2 in-game days after buying the Power Core.",
+            13: "The latest improved microfusion generator boosts your energy bar to 250, which still isn't enough to make you quit coffee.<br><b>Unlock:</b> 3 in-game days after buying Power Core Mk II.",
+            14: "An improved portable nano-tank lets your tank hold 30 units of whatever you vacuum.<br><b>Unlock:</b> Available for purchase at the start of the game.",
+            15: "These portable nano-tanks throw caution to the wind and let you vacuum 40 units in each tank.<br><b>Unlock:</b> 2 in-game days after buying the Tank Booster.",
+            16: "More is better, especially here. These premium nano-tanks can hold 50 units in each tank.<br><b>Unlock:</b> 3 in-game days after buying Tank Booster Mk II.",
+            17: "The best secret tank, with experimental nano-tank technology that's probably possibly legal. Probably.<br><b>Unlock:</b> 7Zee Rank 20, Infinite Mountain I."
+        },
+        es: {
+            1: "Sincroniza tu propio cuerpo para mejorar los sistemas de vida y aumenta tu barra de salud hasta 150. Además, ¡brilla!<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
+            2: "Un cardio-módulo aún más avanzado y brillante que aumenta tu barra de salud hasta 200.<br><b>Desbloqueo:</b> 2 días en el juego después de comprar el Cardio-Módulo.",
+            3: "El último modelo en amplificación de vida y brillo, que aumenta tu barra de salud hasta 250.<br><b>Desbloqueo:</b> 3 días en el juego después de comprar el Cardio-Módulo Mk II.",
+            4: "Un sistema experimental de amplificación de vida que lleva la tecnología hasta... la salud.<br><b>Desbloqueo:</b> Rango 21 de 7Zee, Montaña Infinita II.",
+            5: "Agrega un depósito especializado que te permite almacenar agua dulce.<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
+            6: "¡Mantén la cabeza en las nubes con tu propio super jetpack!<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
+            7: "Un propulsor mejorado para el jetpack que consume un 20% menos de energía, pero duplica la diversión.<br><b>Desbloqueo:</b> 5 días en el juego después de comprar el Jetpack.",
+            8: "Estas botas muy avanzadas y, francamente, vanguardistas reducen el consumo de energía al correr.<br><b>Desbloqueo:</b> Día 3.",
+            9: "Zapatos experimentales que reducen aún más el coste de sprint y te hacen despreciar caminar.<br><b>Desbloqueo:</b> Rango 19 de 7Zee, Mangosta Bailarina III.",
+            10: "Agrega un emisor de ondas de choque a tu aspipack que repele slimes cuando te sientes abrumado.<br><b>Desbloqueo:</b> 0:00 en el Día 4.",
+            11: "Mejora tu aspipack con un generador de microfusión probablemente no peligroso, que aumenta tu barra de energía hasta 150.<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
+            12: "Este generador de microfusión mejorado aumenta tu barra de energía hasta 200, y además es más pequeño.<br><b>Desbloqueo:</b> 2 días en el juego después de comprar el Núcleo de Energía.",
+            13: "El último generador de microfusión mejorado aumenta tu barra de energía hasta 250, lo que no es suficiente para dejar el café.<br><b>Desbloqueo:</b> 3 días en el juego después de comprar el Núcleo de Energía Mk II.",
+            14: "Un nano-depósito portátil mejorado permite que tu depósito contenga 30 unidades de lo que aspiras.<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
+            15: "Estos nano-depósitos portátiles dejan de lado la prudencia y te permiten aspirar 40 unidades en cada depósito.<br><b>Desbloqueo:</b> 2 días en el juego después de comprar el Amplificador de Depósito.",
+            16: "Cuantos más, mejor, especialmente en este caso. Estos nano-depósitos premium pueden contener 50 unidades en cada depósito.<br><b>Desbloqueo:</b> 3 días en el juego después de comprar el Amplificador de Depósito Mk II.",
+            17: "El mejor depósito secreto, con tecnología experimental de nano-depósitos que seguramente es posiblemente legal. Probablemente.<br><b>Desbloqueo:</b> Rango 20 de 7Zee, Montaña Infinita I."
+        }
+    };
+    return descMap[lang] && descMap[lang][upgrade.id] ? descMap[lang][upgrade.id] : (descMap['fr'][upgrade.id] || '');
+}
+
+// Mapping officiel multilingue des descriptions pour chaque recette
+function getRecipeDescription(recipe) {
+    const lang = (typeof currentLanguage !== 'undefined' ? currentLanguage : 'fr') || 'fr';
+    const descMap = {
+        fr: {
+            2: "Ajoute un réservoir spécialisé qui vous permet de stocker de l'eau douce.<br><b>Déblocage :</b> Disponible à l'achat au début du jeu.",
+            3: "Ayez la tête dans les nuages grâce à votre propre super jetpack !<br><b>Déblocage :</b> Disponible à l'achat au début du jeu.",
+            4: "Un propulseur pour jetpack amélioré qui consomme 20 % d'énergie en moins, mais double le fun.<br><b>Déblocage :</b> 5 jours en jeu après avoir acheté le Jetpack.",
+            5: "Ces bottes très avancées et, franchement, avant-gardistes réduisent l'énergie consommée lorsque vous courez.<br><b>Déblocage :</b> Jour 3.",
+            6: "Des chaussures expérimentales capables de réduire encore plus le coût de sprint, et de vous pousser à dénigrer la marche.<br><b>Déblocage :</b> Rang 19 du 7Zee, Mangouste Dansante III.",
+            7: "Ajoute un émetteur d'ondes de choc à votre aspipack qui repousse les slimes, lorsque vous vous sentez envahi(e).<br><b>Déblocage :</b> 0:00 au Jour 4.",
+            8: "Synchronisez votre propre corps pour améliorer les systèmes de vie, et boostez votre barre de vie jusqu'à 150. En plus, ça brille.<br><b>Déblocage :</b> Disponible à l'achat au début du jeu.",
+            9: "Un cardio-module encore plus avancé et encore plus brillant qui booste votre barre de vie jusque 200.<br><b>Déblocage :</b> 2 jours en jeu après avoir acheté le Cardio-Module.",
+            10: "Le modèle dernier-cri en matière d'amplification de vie et de brillance, qui booste votre barre de vie jusque 250.<br><b>Déblocage :</b> 3 jours en jeu après avoir acheté le Cardio-Module Mk II.",
+            11: "Un système d'amplification de vie expérimental qui pousse la technologie jusqu'à... la santé.<br><b>Déblocage :</b> Rang 21 du 7Zee, Montagne Infinie II.",
+            12: "Améliore votre aspipack grâce à un générateur à microfusion probablement pas dangereux, qui booste votre barre d'énergie jusqu'à 150.<br><b>Déblocage :</b> Disponible à l'achat au début du jeu.",
+            13: "Ce générateur à microfusion amélioré booste votre barre d'énergie jusqu'à 200, mais surtout, il est plus petit.<br><b>Déblocage :</b> 2 jours en jeu après avoir acheté le Noyau de Puissance.",
+            14: "Le dernier générateur à microfusion amélioré qui booste votre barre d'énergie à 250, ce qui n'est pas assez pour vous pousser à arrêter le café.<br><b>Déblocage :</b> 3 jours en jeu après avoir acheté le Noyau de Puissance Mk II.",
+            15: "Un nano-réservoir portable amélioré qui permet à votre réservoir de contenir 30 unités de ce que vous aspirez.<br><b>Déblocage :</b> Disponible à l'achat au début du jeu.",
+            16: "Ces nano-réservoirs portables envoient valser toute prudence et vous permettent d'aspirer 40 unités dans chaque réservoir.<br><b>Déblocage :</b> 2 jours en jeu après avoir acheté le Amplificateur de Réservoir.",
+            17: "Plus il y en a, mieux c'est, surtout dans ce cas. Ces nano-réservoirs premiums peuvent contenir 50 unités dans chaque réservoir.<br><b>Déblocage :</b> 3 jours en jeu après avoir acheté le Amplificateur de Réservoir Mk II.",
+            18: "Le meilleur réservoir secret, doté d'une technologie de nano-réservoirs expérimentale qui est sûrement possiblement légale. Probablement.<br><b>Déblocage :</b> Rang 20 du 7Zee, Montagne Infinie I.",
+            19: "Vous permet de déverrouiller une capsule au trésor de base.<br>L'Ouvre-Capsule vous permet d'ouvrir les Capsules Vertes ; il deviendra disponible une fois que Le Labo sera déverrouillé et que votre premier gadget aura été fabriqué.",
+            20: "Vous permet de déverrouiller une capsule au trésor avec une serrure plus avancée.<br>L'Ouvre-Capsule Mk II vous permet d'ouvrir les Capsules Bleues et deviendra disponible après l'achat de l'amélioration Mk I ainsi qu'un total de 20 gadgets fabriqués dans Le Labo.",
+            21: "Vous permet de déverrouiller les capsules au trésor les plus avancées.<br>L'Ouvre-Capsule Mk III vous permet d'ouvrir les Capsules Violettes et devient disponible après l'achat de l'amélioration Mk II ainsi qu'un total de 50 gadgets fabriqués dans Le Labo.",
+            22: "Une amélioration pour aspipack spéciale qui vise le point sensible d'un slime doré (son nombril secret ?) et triple le nombre de plortes dorés qu'il produit lorsqu'il est touché.<br><b>Déblocage :</b> Rang 22 du 7Zee, Montagne Infinie III.",
+            23: "Une simple clé supplémentaire au cas où la dernière clé aurait été égarée !<br><b>Déblocage :</b> Il devient disponible trois heures dans le jeu après avoir lu le dernier courrier de Casey."
+        },
+        en: {
+            2: "Adds a specialized tank that lets you store fresh water.<br><b>Unlock:</b> Available for purchase at the start of the game.",
+            3: "Keep your head in the clouds with your very own super jetpack!<br><b>Unlock:</b> Available for purchase at the start of the game.",
+            4: "An improved jetpack thruster that uses 20% less energy, but doubles the fun.<br><b>Unlock:</b> 5 in-game days after buying the Jetpack.",
+            5: "These very advanced, frankly avant-garde boots reduce energy consumption when running.<br><b>Unlock:</b> Day 3.",
+            6: "Experimental shoes that further reduce sprint cost and make you want to never walk again.<br><b>Unlock:</b> 7Zee Rank 19, Dancing Mongoose III.",
+            7: "Adds a shockwave emitter to your vacpack that repels slimes when you feel overwhelmed.<br><b>Unlock:</b> 0:00 on Day 4.",
+            8: "Synchronize your own body to improve life systems and boost your health bar to 150. Plus, it glows.<br><b>Unlock:</b> Available for purchase at the start of the game.",
+            9: "An even more advanced and shinier cardio module that boosts your health bar to 200.<br><b>Unlock:</b> 2 in-game days after buying the Cardio Module.",
+            10: "The latest in life amplification and shininess, boosting your health bar to 250.<br><b>Unlock:</b> 3 in-game days after buying Cardio Module Mk II.",
+            11: "An experimental life amplification system that pushes technology to... health.<br><b>Unlock:</b> 7Zee Rank 21, Infinite Mountain II.",
+            12: "Upgrade your vacpack with a probably-not-dangerous microfusion generator, boosting your energy bar to 150.<br><b>Unlock:</b> Available for purchase at the start of the game.",
+            13: "This improved microfusion generator boosts your energy bar to 200, and it's smaller too.<br><b>Unlock:</b> 2 in-game days after buying the Power Core.",
+            14: "The latest improved microfusion generator boosts your energy bar to 250, which still isn't enough to make you quit coffee.<br><b>Unlock:</b> 3 in-game days after buying Power Core Mk II.",
+            15: "An improved portable nano-tank lets your tank hold 30 units of whatever you vacuum.<br><b>Unlock:</b> Available for purchase at the start of the game.",
+            16: "These portable nano-tanks throw caution to the wind and let you vacuum 40 units in each tank.<br><b>Unlock:</b> 2 in-game days after buying the Tank Booster.",
+            17: "More is better, especially here. These premium nano-tanks can hold 50 units in each tank.<br><b>Unlock:</b> 3 in-game days after buying Tank Booster Mk II.",
+            18: "The best secret tank, with experimental nano-tank technology that's probably possibly legal. Probably.<br><b>Unlock:</b> 7Zee Rank 20, Infinite Mountain I.",
+            19: "Lets you unlock a basic treasure pod.<br>The Treasure Cracker lets you open Green Pods; it becomes available once the Lab is unlocked and your first gadget is crafted.",
+            20: "Lets you unlock a treasure pod with a more advanced lock.<br>Treasure Cracker Mk II lets you open Blue Pods and becomes available after buying Mk I and crafting a total of 20 gadgets in the Lab.",
+            21: "Lets you unlock the most advanced treasure pods.<br>Treasure Cracker Mk III lets you open Purple Pods and becomes available after buying Mk II and crafting a total of 50 gadgets in the Lab.",
+            22: "A special vacpack upgrade that targets the secret belly button of a gold slime and triples the number of gold plorts it produces when hit.<br><b>Unlock:</b> 7Zee Rank 22, Infinite Mountain III.",
+            23: "A simple extra key in case the last one was lost!<br><b>Unlock:</b> Becomes available three hours into the game after reading Casey's last mail."
+        },
+        es: {
+            2: "Agrega un depósito especializado que te permite almacenar agua dulce.<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
+            3: "¡Mantén la cabeza en las nubes con tu propio super jetpack!<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
+            4: "Un propulsor mejorado para el jetpack que consume un 20% menos de energía, pero duplica la diversión.<br><b>Desbloqueo:</b> 5 días en el juego después de comprar el Jetpack.",
+            5: "Estas botas muy avanzadas y, francamente, vanguardistas reducen el consumo de energía al correr.<br><b>Desbloqueo:</b> Día 3.",
+            6: "Zapatos experimentales que reducen aún más el coste de sprint y te hacen despreciar caminar.<br><b>Desbloqueo:</b> Rango 19 de 7Zee, Mangosta Bailarina III.",
+            7: "Agrega un emisor de ondas de choque a tu aspipack que repele slimes cuando te sientes abrumado.<br><b>Desbloqueo:</b> 0:00 en el Día 4.",
+            8: "Sincroniza tu propio cuerpo para mejorar los sistemas de vida y aumenta tu barra de salud hasta 150. Además, ¡brilla!<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
+            9: "Un cardio-módulo aún más avanzado y brillante que aumenta tu barra de salud hasta 200.<br><b>Desbloqueo:</b> 2 días en el juego después de comprar el Cardio-Módulo.",
+            10: "El último modelo en amplificación de vida y brillo, que aumenta tu barra de salud hasta 250.<br><b>Desbloqueo:</b> 3 días en el juego después de comprar el Cardio-Módulo Mk II.",
+            11: "Un sistema experimental de amplificación de vida que lleva la tecnología hasta... la salud.<br><b>Desbloqueo:</b> Rango 21 de 7Zee, Montaña Infinita II.",
+            12: "Mejora tu aspipack con un generador de microfusión probablemente no peligroso, que aumenta tu barra de energía hasta 150.<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
+            13: "Este generador de microfusión mejorado aumenta tu barra de energía hasta 200, y además es más pequeño.<br><b>Desbloqueo:</b> 2 días en el juego después de comprar el Núcleo de Energía.",
+            14: "El último generador de microfusión mejorado aumenta tu barra de energía hasta 250, lo que no es suficiente para dejar el café.<br><b>Desbloqueo:</b> 3 días en el juego después de comprar el Núcleo de Energía Mk II.",
+            15: "Un nano-depósito portátil mejorado permite que tu depósito contenga 30 unidades de lo que aspiras.<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
+            16: "Estos nano-depósitos portátiles dejan de lado la prudencia y te permiten aspirar 40 unidades en cada depósito.<br><b>Desbloqueo:</b> 2 días en el juego después de comprar el Amplificador de Depósito.",
+            17: "Cuantos más, mejor, especialmente en este caso. Estos nano-depósitos premium pueden contener 50 unidades en cada depósito.<br><b>Desbloqueo:</b> 3 días en el juego después de comprar el Amplificador de Depósito Mk II.",
+            18: "El mejor depósito secreto, con tecnología experimental de nano-depósitos que seguramente es posiblemente legal. Probablemente.<br><b>Desbloqueo:</b> Rango 20 de 7Zee, Montaña Infinita I.",
+            19: "Te permite desbloquear una cápsula del tesoro básica.<br>El Abre-Cápsulas te permite abrir Cápsulas Verdes; estará disponible una vez que el Laboratorio esté desbloqueado y tu primer gadget haya sido fabricado.",
+            20: "Te permite desbloquear una cápsula del tesoro con una cerradura más avanzada.<br>El Abre-Cápsulas Mk II te permite abrir Cápsulas Azules y estará disponible después de comprar la mejora Mk I y fabricar un total de 20 gadgets en el Laboratorio.",
+            21: "Te permite desbloquear las cápsulas del tesoro más avanzadas.<br>El Abre-Cápsulas Mk III te permite abrir Cápsulas Moradas y estará disponible después de comprar la mejora Mk II y fabricar un total de 50 gadgets en el Laboratorio.",
+            22: "Una mejora especial para aspipack que apunta al ombligo secreto de un slime dorado y triplica la cantidad de plortes dorados que produce cuando es golpeado.<br><b>Desbloqueo:</b> Rango 22 de 7Zee, Montaña Infinita III.",
+            23: "¡Una simple llave extra por si la última se perdió!<br><b>Desbloqueo:</b> Disponible tres horas en el juego después de leer el último correo de Casey."
+        }
+    };
+    return descMap[lang] && descMap[lang][recipe.id] ? descMap[lang][recipe.id] : (descMap['fr'][recipe.id] || '');
+}
 let currentUser = null;
 let userData = {
     refineryDeposits: {}, 
@@ -17,6 +161,9 @@ let userData = {
 let autoSaveInterval = null;
 let lastSaveTime = Date.now();
 let hasUnsavedChanges = false;
+// Vacpack filter/sort state (declared early so URL navigation can set them)
+let vacpackFilter = 'all';
+let vacpackSort = 'default';
 
 
 function formatPrice(priceUSD) {
@@ -247,47 +394,21 @@ function showSection(sectionName) {
         navBtn.classList.add('active');
     }
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const lang = urlParams.get('lang') || 'fr';
-
-    let newUrl;
     if (sectionName === 'refinery') {
-        const refineryFilter = currentRefineryFilter || 'all';
-        newUrl = `${window.location.pathname}?lang=${lang}&refineryFilter=${refineryFilter}#${sectionName}`;
+        displayRefineryDeposits();
     } else if (sectionName === 'recipes') {
-        const recipeFilter = currentFilter || 'all';
-        const recipeSort = currentSort || 'default';
-        newUrl = `${window.location.pathname}?lang=${lang}&recipeFilter=${recipeFilter}&sort=${recipeSort}#${sectionName}`;
-    } else {
-        newUrl = `${window.location.pathname}?lang=${lang}#${sectionName}`;
+        displayRecipes(currentFilter);
+    } else if (sectionName === 'vacpack') {
+        displayVacpackUpgrades();
+    } else if (sectionName === 'club7zee') {
+        displayClubRewards();
+    } else if (sectionName === 'zones') {
+        displayZones();
+    } else if (sectionName === 'dlcs') {
+        displayDlcs();
+    } else if (sectionName === 'favorites') {
+        displayFavorites();
     }
-
-    window.history.replaceState({}, '', newUrl);
-
-    // Recharge les données utilisateur avant d'afficher la section
-    loadUserData().then(() => {
-        if (sectionName === 'vacpack') {
-            displayVacpackUpgrades();
-        } else if (sectionName === 'club7zee') {
-            displayClubRewards();
-        } else if (sectionName === 'zones') {
-            displayZones();
-        } else if (sectionName === 'dlcs') {
-            displayDlcs();
-        } else if (sectionName === 'favorites') {
-            displayFavorites();
-        } else if (sectionName === 'refinery') {
-            const refineryFilter = currentRefineryFilter || 'all';
-            const refinerySort = currentRefinerySort || 'default';
-            const newUrl = `${window.location.pathname}?lang=${lang}&refineryFilter=${refineryFilter}&sort=${refinerySort}#${sectionName}`;
-            window.history.replaceState({}, '', newUrl);
-            updateRefinerySortDropdown(refinerySort);
-            displayRefineryDeposits();
-        } else if (sectionName === 'recipes') {
-            displayRecipes(currentFilter);
-        }
-    });
-
     closeMobileMenu();
 }
 
@@ -335,6 +456,15 @@ function handleURLNavigation() {
             updateSortDropdown(recipeSort);
             displayRecipes(recipeFilter);
         } else if (hash === 'vacpack') {
+            // read vacpack filter and sort from URL
+            vacpackFilter = urlParams.get('vacpackFilter') || 'all';
+            vacpackSort = urlParams.get('sort') || 'default';
+            // update UI
+            document.querySelectorAll('#vacpack-section .filter-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.querySelector(`#vacpack-section .filter-btn[onclick="filterVacpack('${vacpackFilter}')"]`);
+            if (activeBtn) activeBtn.classList.add('active');
+            const sortSelect = document.getElementById('vacpack-sort');
+            if (sortSelect) sortSelect.value = vacpackSort;
             displayVacpackUpgrades();
         } else if (hash === 'club7zee') {
             displayClubRewards();
@@ -587,9 +717,7 @@ function displayRefineryDeposits() {
     const lang = currentLanguage || 'en';
     
     let resourcesToDisplay = ALL_RESOURCES;
-    if (currentRefineryFilter !== 'all') {
-        resourcesToDisplay = RESOURCE_CATEGORIES[currentRefineryFilter] || ALL_RESOURCES;
-    }
+    // Filtrage désactivé : toujours afficher tout
 
     // Tri selon currentRefinerySort
     if (currentRefinerySort === 'name-asc') {
@@ -662,17 +790,8 @@ function displayRefineryDeposits() {
 
 
 function filterRefinery(category) {
-    currentRefineryFilter = category;
-    const urlParams = new URLSearchParams(window.location.search);
-    const lang = urlParams.get('lang') || 'fr';
-    const sort = currentRefinerySort || 'default';
-    const newUrl = `${window.location.pathname}?lang=${lang}&refineryFilter=${category}&sort=${sort}#refinery`;
-    window.history.replaceState({}, '', newUrl);
-    document.querySelectorAll('#refinery-section .filter-btn').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    event.target.classList.add('active');
-    displayRefineryDeposits();
+    // Filtrage désactivé
+    return;
 }
 
 
@@ -992,8 +1111,8 @@ function displayRecipes(filter) {
                     </div>
                     <div class="recipe-ingredients">
                         ${translatedIngredients}
-                        <div class="recipe-producible">${producibleLabel} ${producibleQty > 0 ? `<b>${producibleQty}</b>` : ''}</div>
                     </div>
+                    <div class="recipe-producible${producibleQty === 0 ? ' recipe-producible-impossible' : ''}">${producibleLabel} ${producibleQty > 0 ? `<b>${producibleQty}</b>` : ''}</div>
                 </div>
                 <div class="recipe-actions">
                     <button class="btn-purchase ${isPurchased ? 'purchased' : ''} ${cannotTogglePurchase ? 'disabled' : ''}" 
@@ -1043,7 +1162,7 @@ async function toggleClubTierPurchase(tierNumber) {
         // Vérifie si le niveau supérieur est acheté
         const nextTierPurchased = userData.purchasedClubTiers.includes(tierNumber + 1);
         if (nextTierPurchased) {
-            showWarning(t('cannotRemoveTierWithNextPurchased'));
+            showError(t('cannotRemoveTierWithNextPurchased'));
             return;
         }
         userData.purchasedClubTiers.splice(index, 1);
@@ -1341,9 +1460,7 @@ async function toggleVacpackUpgrade(upgradeId) {
     if (!upgrade) return;
     
     
-    if (upgrade.price === 0 && userData.purchasedVacpackUpgrades.includes(upgradeId)) {
-        return;
-    }
+    // Suppression de la restriction : on peut retirer les gratuits
     
     
     const previousUpgrade = VACPACK_UPGRADES.find(u => 
@@ -1357,6 +1474,13 @@ async function toggleVacpackUpgrade(upgradeId) {
     
     const index = userData.purchasedVacpackUpgrades.indexOf(upgradeId);
     if (index >= 0) {
+        // Protection : impossible de retirer si le niveau suivant est acheté
+        const upgrade = VACPACK_UPGRADES.find(u => u.id === upgradeId);
+        const nextUpgrade = VACPACK_UPGRADES.find(u => u.category === upgrade.category && u.level === upgrade.level + 1);
+        if (nextUpgrade && userData.purchasedVacpackUpgrades.includes(nextUpgrade.id)) {
+            showError(t('cannotRemoveTierWithNextPurchased') || 'Impossible de retirer ce niveau tant que le suivant est acheté.');
+            return;
+        }
         userData.purchasedVacpackUpgrades.splice(index, 1);
         showInfo(t('upgradeRemoved') || 'Amélioration retirée');
     } else {
@@ -1367,6 +1491,67 @@ async function toggleVacpackUpgrade(upgradeId) {
     markAsChanged();
     await saveUserData();
     displayVacpackUpgrades();
+}
+
+
+
+function filterVacpack(filter) {
+    vacpackFilter = filter;
+    // update URL like recipes page
+    const urlParams = new URLSearchParams(window.location.search);
+    const lang = urlParams.get('lang') || 'fr';
+    const sort = urlParams.get('sort') || vacpackSort || 'default';
+    const newUrl = `${window.location.pathname}?lang=${lang}&vacpackFilter=${filter}&sort=${sort}#vacpack`;
+    window.history.replaceState({}, '', newUrl);
+
+    // update UI buttons
+    document.querySelectorAll('#vacpack-section .filter-btn').forEach(btn => btn.classList.remove('active'));
+    const btn = document.querySelector(`#vacpack-section .filter-btn[onclick="filterVacpack('${filter}')"]`);
+    if (btn) btn.classList.add('active');
+
+    displayVacpackUpgrades();
+}
+
+function sortVacpackUpgrades(sort) {
+    vacpackSort = sort;
+    const urlParams = new URLSearchParams(window.location.search);
+    const lang = urlParams.get('lang') || 'fr';
+    const newUrl = `${window.location.pathname}?lang=${lang}&vacpackFilter=${vacpackFilter}&sort=${sort}#vacpack`;
+    window.history.replaceState({}, '', newUrl);
+    displayVacpackUpgrades();
+}
+
+function getFilteredSortedVacpackUpgrades() {
+    const lang = currentLanguage || 'en';
+    let upgrades = [...VACPACK_UPGRADES];
+    // Filtrage désactivé : toujours tout afficher
+    // sort
+    switch (vacpackSort) {
+        case 'name-asc':
+            upgrades.sort((a, b) => {
+                const nameA = VACPACK_TRANSLATIONS[a.name] ? VACPACK_TRANSLATIONS[a.name][lang] : a.name;
+                const nameB = VACPACK_TRANSLATIONS[b.name] ? VACPACK_TRANSLATIONS[b.name][lang] : b.name;
+                return nameA.localeCompare(nameB);
+            });
+            break;
+        case 'name-desc':
+            upgrades.sort((a, b) => {
+                const nameA = VACPACK_TRANSLATIONS[a.name] ? VACPACK_TRANSLATIONS[a.name][lang] : a.name;
+                const nameB = VACPACK_TRANSLATIONS[b.name] ? VACPACK_TRANSLATIONS[b.name][lang] : b.name;
+                return nameB.localeCompare(nameA);
+            });
+            break;
+        case 'price-asc':
+            upgrades.sort((a, b) => a.price - b.price);
+            break;
+        case 'price-desc':
+            upgrades.sort((a, b) => b.price - a.price);
+            break;
+        default:
+            // default keep original order
+            break;
+    }
+    return upgrades;
 }
 
 function displayVacpackUpgrades() {
@@ -1384,71 +1569,59 @@ function displayVacpackUpgrades() {
     const lang = currentLanguage || 'en';
     
     
-    const categories = ['capacity', 'range', 'water', 'health', 'energy', 'ammo', 'movement', 'special', 'booster'];
-    
-    container.innerHTML = categories.map(category => {
-        const upgrades = VACPACK_UPGRADES.filter(u => u.category === category);
-        if (upgrades.length === 0) return '';
-        
-        const categoryName = VACPACK_CATEGORY_TRANSLATIONS[category]
-            ? VACPACK_CATEGORY_TRANSLATIONS[category][lang]
-            : category;
-        
-        return `
-            <div class="vacpack-category">
-                <h3 class="vacpack-category-title">${categoryName}</h3>
-                <div class="vacpack-upgrades-list">
-                    ${upgrades.map((upgrade, index) => {
-                        const isPurchased = userData.purchasedVacpackUpgrades.includes(upgrade.id);
-                        
-                        
-                        const hasLevels = upgrades.length > 1 && upgrades.some(u => u.level > 1);
-                        let canPurchase = true;
-                        
-                        if (hasLevels) {
-                            const previousUpgrade = index > 0 ? upgrades[index - 1] : null;
-                            canPurchase = !previousUpgrade || userData.purchasedVacpackUpgrades.includes(previousUpgrade.id);
-                        }
-                        
-                        const translatedName = VACPACK_TRANSLATIONS[upgrade.name]
-                            ? VACPACK_TRANSLATIONS[upgrade.name][lang]
-                            : upgrade.name;
-                        
-                        const isFavorite = userData.favoriteUpgrades.includes(upgrade.id);
-                        const isFree = upgrade.price === 0;
-                        
-                        return `
-                            <div class="vacpack-upgrade-card ${isPurchased ? 'owned' : ''} ${!canPurchase && !isPurchased ? 'locked' : ''} ${isFree ? 'free' : ''}">
-                                ${!canPurchase && !isPurchased ? '<div class="locked-overlay">🔒</div>' : ''}
-                                <div class="upgrade-header">
-                                    <h3 class="upgrade-name">${translatedName}</h3>
-                                    <div class="upgrade-price-badge">
-                                        ${isFree ? (t('free') || 'Gratuit') : formatPrice(upgrade.price)}
-                                        ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
-                                    </div>
-                                </div>
-                                <div class="upgrade-image-container">
-                                    <img loading="lazy" src="assets/resources/vacpack_${category}_${upgrade.level || upgrade.id}.png" 
-                                         alt="${translatedName}" class="upgrade-img"
-                                         onerror="this.parentElement.innerHTML='${upgrade.icon}'">
-                                </div>
-                                <div class="upgrade-actions">
-                                    <button class="btn-upgrade ${isPurchased ? 'owned' : ''}"
-                                            onclick="toggleVacpackUpgrade(${upgrade.id})"
-                                            ${!canPurchase && !isPurchased ? 'disabled' : ''}>
-                                        ${isPurchased ? t('purchased') : (isFree ? t('obtain') : t('purchase'))}
-                                    </button>
-                                    <button class="btn-favorite ${isFavorite ? 'active' : ''}" onclick="toggleUpgradeFavorite(${upgrade.id})" title="${t('addFavorite')}">
-                                        ${isFavorite ? '★' : '☆'}
-                                    </button>
-                                </div>
-                            </div>
-                        `;
-                    }).join('')}
+    const upgrades = getFilteredSortedVacpackUpgrades();
+    let html = '';
+    if (vacpackFilter === 'purchased' && upgrades.length === 0) {
+        html = `<div class="empty-message">${t('noPurchasedVacpackUpgrades') || 'Aucune amélioration achetée. Commencez à acheter des améliorations !'}</div>`;
+    } else {
+        html = upgrades.map((upgrade, index) => {
+            const isPurchased = userData.purchasedVacpackUpgrades.includes(upgrade.id);
+            const translatedName = VACPACK_TRANSLATIONS[upgrade.name]
+                ? VACPACK_TRANSLATIONS[upgrade.name][lang]
+                : upgrade.name;
+            const isFavorite = userData.favoriteUpgrades.includes(upgrade.id);
+            const isFree = upgrade.price === 0;
+            let canPurchase = true;
+            if (upgrade.level > 1) {
+                const previous = VACPACK_UPGRADES.find(u => u.category === upgrade.category && u.level === upgrade.level - 1);
+                if (previous && !userData.purchasedVacpackUpgrades.includes(previous.id)) {
+                    canPurchase = false;
+                }
+            }
+            const imageSrc = upgrade.image ? upgrade.image : `assets/resources/vacpack_${upgrade.category}_${upgrade.level || upgrade.id}.png`;
+            return `
+                <div class="vacpack-upgrade-card ${isPurchased ? 'owned' : ''} ${!canPurchase && !isPurchased ? 'locked' : ''} ${isFree ? 'free' : ''}">
+                    ${!canPurchase && !isPurchased ? '<div class="locked-overlay">🔒</div>' : ''}
+                    <div class="upgrade-header">
+                        <h3 class="upgrade-name">${translatedName}</h3>
+                        <div class="upgrade-price-badge">
+                            ${isFree ? (t('free') || 'Gratuit') : formatPrice(upgrade.price)}
+                            ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
+                        </div>
+                    </div>
+                    <div class="upgrade-image-container">
+                        <img loading="lazy" src="${imageSrc}" 
+                             alt="${translatedName}" class="upgrade-img"
+                             onerror="this.parentElement.innerHTML='${upgrade.icon}'">
+                    </div>
+                    <div class="upgrade-description" style="margin: 16px 0; color: #444; font-size: 15px; line-height: 1.5;">
+                        ${getVacpackDescription(upgrade)}
+                    </div>
+                    <div class="upgrade-actions">
+                        <button class="btn-upgrade ${isPurchased ? 'owned' : ''}"
+                                onclick="toggleVacpackUpgrade(${upgrade.id})"
+                                ${!canPurchase && !isPurchased ? 'disabled' : ''}>
+                            ${isPurchased ? t('purchased') : (isFree ? t('obtain') : t('purchase'))}
+                        </button>
+                        <button class="btn-favorite ${isFavorite ? 'active' : ''}" onclick="toggleUpgradeFavorite(${upgrade.id})" title="${t('addFavorite')}">
+                            ${isFavorite ? '★' : '☆'}
+                        </button>
+                    </div>
                 </div>
-            </div>
-        `;
-    }).filter(html => html !== '').join('');
+            `;
+        }).join('');
+    }
+    container.innerHTML = `<div class="vacpack-upgrades-list">${html}</div>`;
 }
 
 

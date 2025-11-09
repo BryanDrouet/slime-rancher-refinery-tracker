@@ -150,7 +150,9 @@ const translations = {
         
         
         favoritesTitle: "Items Favoris",
-        noFavorites: "Aucun favori pour le moment. Ajoutez des recettes en cliquant sur ☆",
+
+    noFavorites: "Aucun favori pour le moment. Ajoutez des recettes en cliquant sur ☆",
+    noPurchasedVacpackUpgrades: "Aucune amélioration Aspipack achetée. Commencez à acheter des améliorations !",
         
         
         fillAllFields: "Veuillez remplir tous les champs",
@@ -227,6 +229,7 @@ const translations = {
         zoneReef: "Récif Corallien",
         zoneRuins: "Ruines en Ruines"
     },
+    noPurchasedVacpackUpgrades: "Aucune amélioration Vacpack achetée. Commencez à acheter des améliorations!",
     
     en: {
         
@@ -239,7 +242,8 @@ const translations = {
         loginButton: "Sign In",
         registerButton: "Sign Up",
         googleLogin: "Sign in with Google",
-        noAccount: "No account?",
+    noAccount: "No account?",
+    noPurchasedVacpackUpgrades: "No Vacpack upgrades purchased. Start buying upgrades!",
         hasAccount: "Already have an account?",
         signupLink: "Sign up",
         loginLink: "Sign in",
@@ -319,6 +323,7 @@ const translations = {
         
         favoritesTitle: "Favorite Items",
         noFavorites: "No favorites yet. Add recipes by clicking on ☆",
+        noPurchasedVacpackUpgrades: "No Vacpack upgrades purchased. Start buying upgrades!",
         totalRequirements: "Total resources needed:",
         noFavorites: "No favorite recipes. Click ☆ to add some.",
         noRequirements: "No resources required",
@@ -489,6 +494,7 @@ const translations = {
         favoritesTitle: "Objetos Favoritos y Recursos Necesarios",
         totalRequirements: "Recursos totales necesarios:",
         noFavorites: "No hay recetas favoritas. Haz clic en ☆ para añadir.",
+        noPurchasedVacpackUpgrades: "No se han comprado mejoras de Vacpack. ¡Empieza a comprar mejoras!",
         noRequirements: "No se requieren recursos",
         
         
@@ -573,14 +579,24 @@ let languageChangeTimeout = null;
 
 
 function t(key) {
-    const keys = key.split('.');
+    // Support nested keys and flat keys
     let value = translations[currentLanguage];
-    
-    for (const k of keys) {
-        value = value?.[k];
+    if (value && Object.prototype.hasOwnProperty.call(value, key)) {
+        return value[key];
     }
-    
-    return value || key;
+    // fallback: try French
+    if (translations['fr'] && Object.prototype.hasOwnProperty.call(translations['fr'], key)) {
+        return translations['fr'][key];
+    }
+    // fallback: try English
+    if (translations['en'] && Object.prototype.hasOwnProperty.call(translations['en'], key)) {
+        return translations['en'][key];
+    }
+    // fallback: try Spanish
+    if (translations['es'] && Object.prototype.hasOwnProperty.call(translations['es'], key)) {
+        return translations['es'][key];
+    }
+    return key;
 }
 
 

@@ -197,169 +197,76 @@ const RECIPES_DATA = [
 
 
 const VACPACK_UPGRADES = [
-    
-    { id: 1, name: "Tank Capacity +25", category: "capacity", price: 2500, icon: "📦", level: 1 },
-    { id: 2, name: "Tank Capacity +25", category: "capacity", price: 5000, icon: "📦", level: 2 },
-    { id: 3, name: "Tank Capacity +25", category: "capacity", price: 7500, icon: "📦", level: 3 },
-    { id: 4, name: "Tank Capacity +25", category: "capacity", price: 10000, icon: "📦", level: 4 },
-    
-    
-    { id: 5, name: "Vac Range +5m", category: "range", price: 2500, icon: "📏", level: 1 },
-    { id: 6, name: "Vac Range +5m", category: "range", price: 5000, icon: "📏", level: 2 },
-    { id: 7, name: "Vac Range +5m", category: "range", price: 7500, icon: "📏", level: 3 },
-    { id: 8, name: "Vac Range +5m", category: "range", price: 10000, icon: "📏", level: 4 },
-    
-    
-    { id: 9, name: "Water Tank +25", category: "water", price: 2500, icon: "💧", level: 1 },
-    { id: 10, name: "Water Tank +25", category: "water", price: 5000, icon: "💧", level: 2 },
-    { id: 11, name: "Water Tank +25", category: "water", price: 7500, icon: "💧", level: 3 },
-    { id: 12, name: "Water Tank +25", category: "water", price: 10000, icon: "💧", level: 4 },
-    
-    
-    { id: 13, name: "Health +25", category: "health", price: 2500, icon: "❤️", level: 1 },
-    { id: 14, name: "Health +25", category: "health", price: 5000, icon: "❤️", level: 2 },
-    { id: 15, name: "Health +25", category: "health", price: 7500, icon: "❤️", level: 3 },
-    { id: 16, name: "Health +25", category: "health", price: 10000, icon: "❤️", level: 4 },
-    
-    
-    { id: 17, name: "Energy +100", category: "energy", price: 2500, icon: "⚡", level: 1 },
-    { id: 18, name: "Energy +100", category: "energy", price: 5000, icon: "⚡", level: 2 },
-    { id: 19, name: "Energy +100", category: "energy", price: 7500, icon: "⚡", level: 3 },
-    { id: 20, name: "Energy +100", category: "energy", price: 10000, icon: "⚡", level: 4 },
-    
-    
-    { id: 21, name: "Ammo +25", category: "ammo", price: 2500, icon: "🔫", level: 1 },
-    { id: 22, name: "Ammo +25", category: "ammo", price: 5000, icon: "🔫", level: 2 },
-    { id: 23, name: "Ammo +25", category: "ammo", price: 7500, icon: "🔫", level: 3 },
-    { id: 24, name: "Ammo +25", category: "ammo", price: 10000, icon: "🔫", level: 4 },
-    
-    
-    { id: 25, name: "Dash Boots", category: "movement", price: 500, icon: "👟", level: 1 },
-    
-    
-    { id: 26, name: "Jetpack", category: "movement", price: 3500, icon: "🚀", level: 1 },
-    
-    
-    { id: 27, name: "Heart Module", category: "special", price: 1750, icon: "💚", level: 1 },
-    
-    
-    { id: 28, name: "Tank Booster (Health)", category: "booster", price: 2500, icon: "💚", level: 1 },
-    { id: 29, name: "Tank Booster (Energy)", category: "booster", price: 2500, icon: "⚡", level: 2 },
-    { id: 30, name: "Tank Booster (Ammo)", category: "booster", price: 2500, icon: "🔫", level: 3 }
+    // Core Systems
+    { id: 1, name: "Heart Module", category: "core", price: 350, icon: "❤️", level: 1, unlock: "Start" },
+    { id: 2, name: "Heart Module Mk II", category: "core", price: 500, icon: "❤️", level: 2, unlock: "2 days after Mk I" },
+    { id: 3, name: "Heart Module Mk III", category: "core", price: 750, icon: "❤️", level: 3, unlock: "3 days after Mk II" },
+    { id: 4, name: "Heart Module Ultra", category: "core", price: 0, icon: "❤️", level: 4, unlock: "7Zee Rank 21" },
+
+    { id: 5, name: "Power Core", category: "core", price: 350, icon: "⚡", level: 1, unlock: "Start" },
+    { id: 6, name: "Power Core Mk II", category: "core", price: 650, icon: "⚡", level: 2, unlock: "2 days after Mk I" },
+    { id: 7, name: "Power Core Mk III", category: "core", price: 950, icon: "⚡", level: 3, unlock: "3 days after Mk II" },
+
+    // Capacity & Utility
+    { id: 8, name: "Tank Booster", category: "tank", price: 350, icon: "📦", level: 1, unlock: "Start" },
+    { id: 9, name: "Tank Booster Mk II", category: "tank", price: 500, icon: "📦", level: 2, unlock: "2 days after Mk I" },
+    { id: 10, name: "Tank Booster Mk III", category: "tank", price: 750, icon: "📦", level: 3, unlock: "3 days after Mk II" },
+    { id: 11, name: "Tank Booster Ultra", category: "tank", price: 0, icon: "📦", level: 4, unlock: "7Zee Rank 20" },
+
+    { id: 12, name: "Water Tank", category: "tank", price: 350, icon: "💧", level: 1, unlock: "Start" },
+
+    // Mobility
+    { id: 13, name: "Jetpack", category: "mobility", price: 350, icon: "🚀", level: 1, unlock: "Start" },
+    { id: 14, name: "Air Drive", category: "mobility", price: 500, icon: "🌬️", level: 2, unlock: "5 days after Jetpack" },
+    { id: 15, name: "Dash Boots", category: "mobility", price: 350, icon: "👟", level: 1, unlock: "Day 3" },
+    { id: 16, name: "Ultra Dash Boots", category: "mobility", price: 0, icon: "👟", level: 2, unlock: "7Zee Rank 19" },
+
+    // Special Upgrades
+    { id: 17, name: "Pulse Wave", category: "special", price: 350, icon: "💥", level: 1, unlock: "Day 4" },
+    { id: 18, name: "Treasure Cracker", category: "special", price: 4500, icon: "🔓", level: 1, unlock: "After building 1 gadget" },
+    { id: 19, name: "Treasure Cracker Mk II", category: "special", price: 9000, icon: "🔓", level: 2, unlock: "After Mk I + 20 gadgets" },
+    { id: 20, name: "Treasure Cracker Mk III", category: "special", price: 25000, icon: "🔓", level: 3, unlock: "After Mk II + 50 gadgets" },
+    { id: 21, name: "Golden Sureshot", category: "special", price: 0, icon: "🎯", level: 1, unlock: "7Zee Rank 22" },
+    { id: 22, name: "Slime Key", category: "special", price: 0, icon: "🗝️", level: 1, unlock: "After final Casey mail" }
 ];
 
-
 const VACPACK_TRANSLATIONS = {
-    "Tank Capacity +25": {
-        en: "Tank Capacity +25",
-        fr: "Capacité Réservoir +25",
-        es: "Capacidad Tanque +25"
-    },
-    "Vac Range +5m": {
-        en: "Vac Range +5m",
-        fr: "Portée Aspi +5m",
-        es: "Alcance Vac +5m"
-    },
-    "Water Tank +25": {
-        en: "Water Tank +25",
-        fr: "Réservoir d'Eau +25",
-        es: "Tanque de Agua +25"
-    },
-    "Health +25": {
-        en: "Health +25",
-        fr: "Santé +25",
-        es: "Salud +25"
-    },
-    "Energy +100": {
-        en: "Energy +100",
-        fr: "Énergie +100",
-        es: "Energía +100"
-    },
-    "Ammo +25": {
-        en: "Ammo +25",
-        fr: "Munitions +25",
-        es: "Munición +25"
-    },
-    "Dash Boots": {
-        en: "Dash Boots",
-        fr: "Bottes de Sprint",
-        es: "Botas de Carrera"
-    },
-    "Jetpack": {
-        en: "Jetpack",
-        fr: "Jetpack",
-        es: "Propulsor"
-    },
-    "Heart Module": {
-        en: "Heart Module",
-        fr: "Module Cœur",
-        es: "Módulo Corazón"
-    },
-    "Tank Booster (Health)": {
-        en: "Tank Booster (Health)",
-        fr: "Boost Réservoir (Santé)",
-        es: "Mejora de Tanque (Salud)"
-    },
-    "Tank Booster (Energy)": {
-        en: "Tank Booster (Energy)",
-        fr: "Boost Réservoir (Énergie)",
-        es: "Mejora de Tanque (Energía)"
-    },
-    "Tank Booster (Ammo)": {
-        en: "Tank Booster (Ammo)",
-        fr: "Boost Réservoir (Munitions)",
-        es: "Mejora de Tanque (Munición)"
-    }
-};
+    "Heart Module": { en: "Heart Module", fr: "Cardio-Module", es: "Módulo Cardíaco" },
+    "Heart Module Mk II": { en: "Heart Module Mk II", fr: "Cardio-Module Mk II", es: "Módulo Cardíaco Mk II" },
+    "Heart Module Mk III": { en: "Heart Module Mk III", fr: "Cardio-Module Mk III", es: "Módulo Cardíaco Mk III" },
+    "Heart Module Ultra": { en: "Heart Module Ultra", fr: "Cardio-Module Ultra", es: "Módulo Cardíaco Ultra" },
 
+    "Power Core": { en: "Power Core", fr: "Noyau de Puissance", es: "Núcleo de Energía" },
+    "Power Core Mk II": { en: "Power Core Mk II", fr: "Noyau de Puissance Mk II", es: "Núcleo de Energía Mk II" },
+    "Power Core Mk III": { en: "Power Core Mk III", fr: "Noyau de Puissance Mk III", es: "Núcleo de Energía Mk III" },
+
+    "Tank Booster": { en: "Tank Booster", fr: "Amplificateur de Réservoir", es: "Mejora de Tanque" },
+    "Tank Booster Mk II": { en: "Tank Booster Mk II", fr: "Amplificateur de Réservoir Mk II", es: "Mejora de Tanque Mk II" },
+    "Tank Booster Mk III": { en: "Tank Booster Mk III", fr: "Amplificateur de Réservoir Mk III", es: "Mejora de Tanque Mk III" },
+    "Tank Booster Ultra": { en: "Tank Booster Ultra", fr: "Amplificateur de Réservoir Ultra", es: "Mejora de Tanque Ultra" },
+
+    "Water Tank": { en: "Water Tank", fr: "Réservoir d'Eau", es: "Tanque de Agua" },
+
+    "Jetpack": { en: "Jetpack", fr: "Jetpack", es: "Propulsor" },
+    "Air Drive": { en: "Air Drive", fr: "Propulseur", es: "Propulsor Aéreo" },
+    "Dash Boots": { en: "Dash Boots", fr: "Bottes de Course", es: "Botas de Carrera" },
+    "Ultra Dash Boots": { en: "Ultra Dash Boots", fr: "Bottes de Course Ultra", es: "Botas de Carrera Ultra" },
+
+    "Pulse Wave": { en: "Pulse Wave", fr: "Onde de Choc", es: "Onda de Choque" },
+    "Treasure Cracker": { en: "Treasure Cracker", fr: "Ouvre-Capsule", es: "Abre-Cápsulas" },
+    "Treasure Cracker Mk II": { en: "Treasure Cracker Mk II", fr: "Ouvre-Capsule Mk II", es: "Abre-Cápsulas Mk II" },
+    "Treasure Cracker Mk III": { en: "Treasure Cracker Mk III", fr: "Ouvre-Capsule Mk III", es: "Abre-Cápsulas Mk III" },
+    "Golden Sureshot": { en: "Golden Sureshot", fr: "Coup-sûr Doré", es: "Disparo Dorado" },
+    "Slime Key": { en: "Slime Key", fr: "Clé des Slimes", es: "Llave de Slimes" }
+};
 
 const VACPACK_CATEGORY_TRANSLATIONS = {
-    "capacity": {
-        en: "Tank Capacity",
-        fr: "Capacité du Réservoir",
-        es: "Capacidad del Tanque"
-    },
-    "range": {
-        en: "Vacuum Range",
-        fr: "Portée de l'Aspirateur",
-        es: "Alcance del Aspirador"
-    },
-    "water": {
-        en: "Water Tank",
-        fr: "Réservoir d'Eau",
-        es: "Tanque de Agua"
-    },
-    "health": {
-        en: "Health",
-        fr: "Santé",
-        es: "Salud"
-    },
-    "energy": {
-        en: "Energy",
-        fr: "Énergie",
-        es: "Energía"
-    },
-    "ammo": {
-        en: "Ammo",
-        fr: "Munitions",
-        es: "Munición"
-    },
-    "movement": {
-        en: "Movement",
-        fr: "Déplacement",
-        es: "Movimiento"
-    },
-    "special": {
-        en: "Special",
-        fr: "Spécial",
-        es: "Especial"
-    },
-    "booster": {
-        en: "Tank Boosters",
-        fr: "Boost de Réservoir",
-        es: "Mejoras de Tanque"
-    }
+    "core": { en: "Core Systems", fr: "Systèmes Vitaux", es: "Sistemas Vitales" },
+    "tank": { en: "Vac Tanks", fr: "Réservoirs", es: "Tanques" },
+    "mobility": { en: "Mobility", fr: "Mobilité", es: "Movilidad" },
+    "special": { en: "Special Upgrades", fr: "Améliorations Spéciales", es: "Mejoras Especiales" }
 };
+
 
 
 const CLUB_7ZEE_REWARDS = [
