@@ -47,6 +47,19 @@ const ZONE_UNLOCKS_TRANSLATIONS = {
     }
 };
 
+const PRODUCIBLE_TRANSLATIONS = {
+    canProduce: {
+        fr: 'Quantité produisible',
+        en: 'Producible quantity',
+        es: 'Cantidad producible'
+    },
+    cannotProduce: {
+        fr: 'Impossible à produire',
+        en: 'Cannot produce',
+        es: 'No se puede producir'
+    }
+};
+
 const translations = {
     fr: {
         
@@ -63,6 +76,10 @@ const translations = {
         hasAccount: "Déjà un compte ?",
         signupLink: "S'inscrire",
         loginLink: "Se connecter",
+        favoriteAdded: "Ajouté aux favoris",
+        favoriteRemoved: "Retiré des favoris",
+        recipePurchased: "Recette achetée !",
+        recipeRemoved: "Recette retirée !",
         
         
         navRefinery: "Raffinerie",
@@ -153,6 +170,7 @@ const translations = {
         notEnoughMoney: "Pas assez d'argent pour acheter ce tier",
         tierPurchased: "Tier acheté avec succès !",
         tierRemoved: "Tier retiré",
+        cannotRemoveTierWithNextPurchased: "Impossible de retirer ce niveau tant que le suivant est acheté.",
         
         
         dlcsTitle: "DLCs",
@@ -223,6 +241,10 @@ const translations = {
         hasAccount: "Already have an account?",
         signupLink: "Sign up",
         loginLink: "Sign in",
+        favoriteAdded: "Added to favorites",
+        favoriteRemoved: "Removed from favorites",
+        recipePurchased: "Recipe purchased!",
+        recipeRemoved: "Recipe removed!",
         
         
         navRefinery: "Refinery",
@@ -317,6 +339,7 @@ const translations = {
         notEnoughMoney: "Not enough money to purchase this tier",
         tierPurchased: "Tier purchased successfully!",
         tierRemoved: "Tier removed",
+        cannotRemoveTierWithNextPurchased: "Cannot remove this tier while the next one is purchased.",
         
         
         dlcsTitle: "DLCs",
@@ -386,6 +409,10 @@ const translations = {
         hasAccount: "¿Ya tienes cuenta?",
         signupLink: "Regístrate",
         loginLink: "Iniciar sesión",
+        favoriteAdded: "Añadido a favoritos",
+        favoriteRemoved: "Eliminado de favoritos",
+        recipePurchased: "¡Receta comprada!",
+        recipeRemoved: "¡Receta eliminada!",
         
         
         navRefinery: "Refinería",
@@ -445,7 +472,7 @@ const translations = {
         
         clubTitle: "Club 7Zee",
         currentMoney: "Dinero actual:",
-        currentTier: "Nivel actual:",
+        currentTier: "Nivel actuel:",
         level: "Nivel",
         rewards: "Recompensas",
         saveButton: "Guardar",
@@ -478,6 +505,7 @@ const translations = {
         notEnoughMoney: "No tienes suficiente dinero para comprar este nivel",
         tierPurchased: "¡Nivel comprado con éxito!",
         tierRemoved: "Nivel eliminado",
+        cannotRemoveTierWithNextPurchased: "No se puede eliminar este nivel mientras el siguiente esté comprado.",
         
         
         dlcsTitle: "DLCs",
@@ -522,7 +550,7 @@ const translations = {
         goToZones: "Ir a Tierras",
         
         
-        zoneLab: "Laboratorio",
+        zoneLab: "Laboratoire",
         zoneOvergrowth: "Jardín Exuberante",
         zoneGrotto: "Gruta Antigua",
         zoneDocks: "Muelles Viejos",

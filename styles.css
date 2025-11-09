@@ -1,4 +1,3 @@
-
 @font-face {
     font-family: 'FLOPDesign';
     src: url('assets/fonts/FLOPDesignFont.ttf') format('truetype');
@@ -315,7 +314,7 @@ header h1 {
     display: flex;
     align-items: center;
     gap: 12px;
-    /* animation: slideIn 0.3s ease-out; */
+    animation: slideIn 0.28s ease-out;
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     font-family: 'Fredoka', sans-serif;
@@ -325,6 +324,80 @@ header h1 {
     position: absolute;
     top: 0;
     right: 0;
+    transition: top 0.3s, opacity 0.3s, transform 0.3s, font-size 0.3s;
+    z-index: 2;
+    /* espace pour la barre de progression */
+    padding-bottom: 22px;
+    /* espace pour la barre de progression */
+    position: absolute;
+    top: 0;
+    right: 0;
+    max-width: 420px;
+    /* La notification la plus récente reste tout en haut à droite, peut dépasser */
+}
+/* Barre de progression native stylée */
+.notification-progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 8px;
+    border-radius: 0 0 12px 12px;
+    z-index: 3;
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    overflow: hidden;
+}
+.notification-progress::-webkit-progress-bar {
+    background: transparent;
+    border-radius: 0 0 12px 12px;
+}
+.notification-progress-success::-webkit-progress-value {
+    background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+    box-shadow: 0 0 8px #43e97b;
+}
+.notification-progress-error::-webkit-progress-value {
+    background: linear-gradient(90deg, #ff1744 0%, #ff6b6b 100%);
+    box-shadow: 0 0 8px #ff1744;
+}
+.notification-progress-warning::-webkit-progress-value {
+    background: linear-gradient(90deg, #ffd600 0%, #ff9800 100%);
+    box-shadow: 0 0 8px #ffd600;
+}
+.notification-progress-info::-webkit-progress-value {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 0 8px #667eea;
+}
+/* Firefox */
+.notification-progress-success::-moz-progress-bar {
+    background: linear-gradient(90deg, #43e97b 0%, #38f9d7 100%);
+    box-shadow: 0 0 8px #43e97b;
+}
+.notification-progress-error::-moz-progress-bar {
+    background: linear-gradient(90deg, #ff1744 0%, #ff6b6b 100%);
+    box-shadow: 0 0 8px #ff1744;
+}
+.notification-progress-warning::-moz-progress-bar {
+    background: linear-gradient(90deg, #ffd600 0%, #ff9800 100%);
+    box-shadow: 0 0 8px #ffd600;
+}
+.notification-progress-info::-moz-progress-bar {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    box-shadow: 0 0 8px #667eea;
+}
+/* Notification repoussée : plus petite, plus transparente, décalée vers le haut */
+.notification.notification-pushed {
+    font-size: 12px;
+    pointer-events: none;
+    /* Les autres propriétés sont gérées dynamiquement en JS pour l'effet cascade */
+    right: 0;
+    /* Les notifications repoussées sont décalées verticalement sous la première */
+}
+/* Animation disparition vers la droite */
+.slideOut {
+    animation: slideOut 0.3s forwards;
 }
 
 .notification.success {
@@ -799,7 +872,8 @@ header h1 {
 .resource-btn-minus:hover,
 .resource-btn-plus:hover,
 .resource-btn-minus-10:hover,
-.resource-btn-plus-10:hover {
+.resource-btn-plus-10:hover,
+.resource-btn-reset:hover {
     transform: scale(1.1);
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
@@ -871,7 +945,7 @@ header h1 {
 .btn-save-all {
     width: 100%;
     padding: 15px 30px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
     border: none;
     border-radius: 15px;
@@ -1036,7 +1110,7 @@ header h1 {
 .item-name {
     font-weight: 700;
     color: #2d3748;
-    margin-bottom: 5px;
+    margin: 0 0 5px 0;
     font-size: 16px;
 }
 
@@ -1159,7 +1233,6 @@ header h1 {
     border-radius: 20px;
     padding: 0;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-    border: 2px solid rgba(255, 255, 255, 0.3);
     transition: all 0.3s ease;
     overflow: hidden;
     position: relative;
@@ -1313,7 +1386,7 @@ header h1 {
 }
 
 .recipe-ingredients {
-    font-size: 13px;
+    font-size: 15px;
     color: #2d3748;
     margin: 15px 20px;
     line-height: 1.8;
@@ -1400,7 +1473,7 @@ header h1 {
 }
 
 .btn-favorite.active {
-    background: linear-gradient(135deg, #ffd700, #ffed4e, #ffd700);
+        background: linear-gradient(135deg, #ff2c00, #c1b337, #ffd700);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -1417,6 +1490,10 @@ header h1 {
     display: flex;
     gap: 8px;
     margin-top: auto;
+}
+
+.dlc-actions {
+    margin-top: 20px;
 }
 
 .zone-actions .btn-zone,
@@ -1527,7 +1604,6 @@ header h1 {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    gap: 20px;
 }
 
 .dlc-card::before {
@@ -1671,7 +1747,7 @@ header h1 {
     padding: 6px 0 6px 20px;
     position: relative;
     color: #4a5568;
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1.5;
 }
 
@@ -1727,6 +1803,9 @@ header h1 {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .club-tier-card::before {
@@ -1898,14 +1977,15 @@ header h1 {
     display: flex;
     align-items: start;
     gap: 10px;
-    font-size: 13px;
+    font-size: 15px;
     color: #4a5568;
     margin-bottom: 8px;
     line-height: 1.5;
 }
 
-.rewards-list li:last-child {
-    margin-bottom: 0;
+li:last-child {
+    margin-bottom: 0 !important;
+    padding-bottom : 0 !important;
 }
 
 .reward-bullet {
@@ -1932,6 +2012,11 @@ header h1 {
     color: white;
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
     margin-top: auto;
+/* Place le bouton tout en bas de la carte club */
+    margin-top: auto;
+    width: 100%;
+    display: block;
+    box-sizing: border-box;
 }
 
 .btn-tier-action:hover:not(:disabled) {
@@ -2147,6 +2232,7 @@ header h1 {
     font-weight: 700;
     font-size: 14px;
     box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
 }
 
 .vacpack-upgrade-card.owned .upgrade-price-badge {
@@ -2177,15 +2263,6 @@ header h1 {
     gap: 10px;
     padding: 15px 20px;
     margin-top: auto;
-}
-
-.upgrade-actions .btn-upgrade {
-    flex: 1;
-}
-
-.upgrade-actions .btn-favorite {
-    flex: 0 0 auto;
-    width: 48px;
 }
 
 /* Styles pour les boutons de recettes */
@@ -2497,6 +2574,7 @@ header h1 {
     color: white;
     box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
     white-space: nowrap;
+    transition: all 0.3s ease;
 }
 
 .zone-card.owned .zone-price-badge {
@@ -2540,7 +2618,7 @@ header h1 {
     padding: 6px 0 6px 20px;
     position: relative;
     color: #4a5568;
-    font-size: 13px;
+    font-size: 15px;
     line-height: 1.5;
 }
 
@@ -2845,3 +2923,45 @@ header h1 {
     }
 }
 
+.recipe-producible {
+    margin-top: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: #51cf66;
+    background: rgba(81, 207, 102, 0.08);
+    border-radius: 6px;
+    padding: 4px 10px;
+    display: inline-block;
+}
+
+.recipe-producible b {
+    color: #764ba2;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.resource-btn-reset {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 5px 12px;
+    font-size: 16px;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.12);
+    cursor: pointer;
+    transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
+    outline: none;
+    position: relative;
+    top: 2px;
+}
+.resource-btn-reset:disabled {
+    background: #ccc;
+    color: #888;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+.resource-btn-reset:hover:not(:disabled) {
+    box-shadow: 0 4px 12px rgba(81, 207, 102, 0.18);
+    transform: translateY(-2px) scale(1.04);
+}

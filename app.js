@@ -1,4 +1,3 @@
-
 let currentUser = null;
 let userData = {
     refineryDeposits: {}, 
@@ -229,28 +228,28 @@ async function logout() {
 function showSection(sectionName) {
     // Réinitialiser le scroll à 0 lors du changement de section
     window.scrollTo(0, 0);
-    
+
     document.querySelectorAll('.content-section').forEach(section => {
         section.classList.remove('active');
     });
-    
+
     document.querySelectorAll('.nav-btn').forEach(btn => {
         btn.classList.remove('active');
     });
-    
+
     const section = document.getElementById(`${sectionName}-section`);
     if (section) {
         section.classList.add('active');
     }
-    
+
     const navBtn = document.querySelector(`[onclick="showSection('${sectionName}')"]`);
     if (navBtn) {
         navBtn.classList.add('active');
     }
-    
+
     const urlParams = new URLSearchParams(window.location.search);
     const lang = urlParams.get('lang') || 'fr';
-    
+
     let newUrl;
     if (sectionName === 'refinery') {
         const refineryFilter = currentRefineryFilter || 'all';
@@ -262,22 +261,28 @@ function showSection(sectionName) {
     } else {
         newUrl = `${window.location.pathname}?lang=${lang}#${sectionName}`;
     }
-    
+
     window.history.replaceState({}, '', newUrl);
-    
-    // Appeler les fonctions d'affichage pour charger le contenu
-    if (sectionName === 'vacpack') {
-        displayVacpackUpgrades();
-    } else if (sectionName === 'club7zee') {
-        displayClubRewards();
-    } else if (sectionName === 'zones') {
-        displayZones();
-    } else if (sectionName === 'dlcs') {
-        displayDlcs();
-    } else if (sectionName === 'favorites') {
-        displayFavorites();
-    }
-    
+
+    // Recharge les données utilisateur avant d'afficher la section
+    loadUserData().then(() => {
+        if (sectionName === 'vacpack') {
+            displayVacpackUpgrades();
+        } else if (sectionName === 'club7zee') {
+            displayClubRewards();
+        } else if (sectionName === 'zones') {
+            displayZones();
+        } else if (sectionName === 'dlcs') {
+            displayDlcs();
+        } else if (sectionName === 'favorites') {
+            displayFavorites();
+        } else if (sectionName === 'refinery') {
+            displayRefineryDeposits();
+        } else if (sectionName === 'recipes') {
+            displayRecipes(currentFilter);
+        }
+    });
+
     closeMobileMenu();
 }
 
@@ -461,7 +466,8 @@ async function loadUserData() {
         displayZones();
         
     } catch (error) {
-        console.error(`${t('loadError')} ${error.message}`);
+    console.error(`${t('loadError')} ${error.message}`);
+    showError(`${t('loadError')} ${error.message}`);
     }
 }
 
@@ -479,8 +485,8 @@ async function saveUserData(showMessage = false) {
             showSaveConfirmation();
         }
     } catch (error) {
-        console.error(`${t('saveError')}: ${error.message}`);
-        showError(t('saveError'));
+    console.error(`${t('saveError')}: ${error.message}`);
+    showError(`${t('saveError')} ${error.message}`);
     }
 }
 
@@ -510,24 +516,25 @@ function startAutoSave() {
 
 
 function showSaveConfirmation() {
-    const existingMsg = document.getElementById('save-confirmation');
-    if (existingMsg) {
-        existingMsg.remove();
-    }
-    
-    const msg = document.createElement('div');
-    msg.id = 'save-confirmation';
-    msg.className = 'save-confirmation';
-    msg.innerHTML = `<img src="assets/resources/icon_check.png" class="check-icon"> ${t('dataSaved') || 'Données enregistrées'}`;
-    document.body.appendChild(msg);
-    
+    // Utilise le container de notifications pour un rendu cohérent et animation
+    const container = document.getElementById('notification-container');
+    if (!container) return;
+    const notif = document.createElement('div');
+    notif.className = 'notification success';
+    notif.innerHTML = `<div class="notification-icon"><img src="assets/resources/icon_check.png" style="width:20px;height:20px;vertical-align:middle;"></div><div class="notification-message">${t('dataSaved') || 'Données enregistrées'}</div><button class="notification-close" aria-label="close">&times;</button>`;
+    container.appendChild(notif);
+
+    // close handler
+    const closeBtn = notif.querySelector('.notification-close');
+    closeBtn.addEventListener('click', () => {
+        notif.style.animation = 'slideOut 0.22s ease-in forwards';
+        setTimeout(() => notif.remove(), 240);
+    });
+
+    // auto remove after 2s
     setTimeout(() => {
-        msg.classList.add('show');
-    }, 10);
-    
-    setTimeout(() => {
-        msg.classList.remove('show');
-        setTimeout(() => msg.remove(), 300);
+        notif.style.animation = 'slideOut 0.22s ease-in forwards';
+        setTimeout(() => notif.remove(), 240);
     }, 2000);
 }
 
@@ -591,6 +598,7 @@ function displayRefineryDeposits() {
                        min="0"
                        ${isLocked ? 'disabled' : ''}
                        onchange="${isLocked ? 'return false;' : `updateRefineryQuantity('${resource}', this.value)`}">
+                <button class="resource-btn-reset" ${isLocked ? 'disabled' : ''} onclick="${isLocked ? 'return false;' : `updateRefineryQuantity('${resource}', 0)`}" title="Remettre à zéro">⟲</button>
                 <div class="resource-controls-buttons">
                     <button class="resource-btn-minus-10 ${isLocked ? 'disabled' : ''}" 
                             onclick="${isLocked ? 'return false;' : `adjustRefineryQuantity('${resource}', -10)`}"
@@ -650,15 +658,15 @@ function adjustRefineryQuantity(resourceName, delta) {
 
 function updateRefineryQuantity(resourceName, quantity) {
     userData.refineryDeposits[resourceName] = parseInt(quantity) || 0;
-    
+    // Mettre à jour immédiatement l'input correspondant si présent
+    const input = document.getElementById(`refinery-${resourceName.replace(/\s+/g, '_')}`);
+    if (input) {
+        input.value = userData.refineryDeposits[resourceName];
+    }
     markAsChanged();
-    
-    // Sauvegarder après un court délai
-    clearTimeout(saveTimeout);
-    saveTimeout = setTimeout(async () => {
-        await saveUserData();
-        displayRecipes();
-    }, 500);
+    displayRecipes();
+    // Sauvegarder immédiatement et afficher la notif via le container
+    saveUserData(true);
 }
 
 
@@ -682,8 +690,10 @@ async function toggleRecipePurchase(recipeId) {
     const index = userData.purchasedRecipes.indexOf(recipeId);
     if (index >= 0) {
         userData.purchasedRecipes.splice(index, 1);
+        showInfo(t('recipeRemoved') || 'Recette retirée');
     } else {
         userData.purchasedRecipes.push(recipeId);
+        showSuccess(t('recipePurchased') || 'Recette achetée');
     }
     
     markAsChanged();
@@ -695,8 +705,10 @@ async function toggleRecipeFavorite(recipeId) {
     const index = userData.favoriteRecipes.indexOf(recipeId);
     if (index >= 0) {
         userData.favoriteRecipes.splice(index, 1);
+        showInfo(t('favoriteRemoved') || 'Retiré des favoris');
     } else {
         userData.favoriteRecipes.push(recipeId);
+        showSuccess(t('favoriteAdded') || 'Ajouté aux favoris');
     }
     
     markAsChanged();
@@ -709,8 +721,10 @@ async function toggleUpgradeFavorite(upgradeId) {
     const index = userData.favoriteUpgrades.indexOf(upgradeId);
     if (index >= 0) {
         userData.favoriteUpgrades.splice(index, 1);
+        showInfo(t('favoriteRemoved') || 'Retiré des favoris');
     } else {
         userData.favoriteUpgrades.push(upgradeId);
+        showSuccess(t('favoriteAdded') || 'Ajouté aux favoris');
     }
     
     markAsChanged();
@@ -723,8 +737,10 @@ async function toggleZoneFavorite(zoneId) {
     const index = userData.favoriteZones.indexOf(zoneId);
     if (index >= 0) {
         userData.favoriteZones.splice(index, 1);
+        showInfo(t('favoriteRemoved') || 'Retiré des favoris');
     } else {
         userData.favoriteZones.push(zoneId);
+        showSuccess(t('favoriteAdded') || 'Ajouté aux favoris');
     }
     
     markAsChanged();
@@ -737,8 +753,10 @@ async function toggleDlcFavorite(dlcId) {
     const index = userData.favoriteDlcs.indexOf(dlcId);
     if (index >= 0) {
         userData.favoriteDlcs.splice(index, 1);
+        showInfo(t('favoriteRemoved') || 'Retiré des favoris');
     } else {
         userData.favoriteDlcs.push(dlcId);
+        showSuccess(t('favoriteAdded') || 'Ajouté aux favoris');
     }
     
     markAsChanged();
@@ -800,10 +818,8 @@ function displayRecipes(filter) {
     
     let filteredRecipes = RECIPES_DATA;
     if (filter === 'purchased') {
-        filteredRecipes = RECIPES_DATA.filter(r => {
-            const isFree = r.price === 0;
-            return userData.purchasedRecipes.includes(r.id) && !isFree;
-        });
+        // Inclure toutes les recettes dans le filtre 'purchased', y compris les gratuites si achetées
+        filteredRecipes = RECIPES_DATA.filter(r => userData.purchasedRecipes.includes(r.id));
     } else if (filter === 'not-purchased') {
         filteredRecipes = RECIPES_DATA.filter(r => !userData.purchasedRecipes.includes(r.id));
     }
@@ -832,6 +848,19 @@ function displayRecipes(filter) {
                 break;
             case 'price-desc':
                 filteredRecipes.sort((a, b) => b.price - a.price);
+                break;
+            case 'stock-desc':
+                filteredRecipes.sort((a, b) => {
+                    // Trie par quantité produisible (stock max possible)
+                    const getQty = recipe => Math.min(...recipe.ingredients.map(ing => {
+                        const parts = ing.split(' x');
+                        const resourceName = parts[0];
+                        const requiredQty = parseInt(parts[1]);
+                        const currentQty = userData.refineryDeposits[resourceName] || 0;
+                        return Math.floor(currentQty / requiredQty);
+                    }));
+                    return getQty(b) - getQty(a);
+                });
                 break;
         }
     }
@@ -886,6 +915,20 @@ function displayRecipes(filter) {
             return `<span class="${colorClass}"><img src="${resourceIcon}" class="ingredient-icon" onerror="this.style.display='none'"> ${translatedResource}: ${currentQty}/${requiredQty}</span>`;
         }).join('<br>');
         
+        // Calculer combien de fois on peut produire la recette avec le stock actuel
+        const producibleQty = Math.min(...recipe.ingredients.map(ing => {
+            const parts = ing.split(' x');
+            const resourceName = parts[0];
+            const requiredQty = parseInt(parts[1]);
+            const currentQty = userData.refineryDeposits[resourceName] || 0;
+            return Math.floor(currentQty / requiredQty);
+        }));
+        
+        // Utilise la traduction selon la langue
+        const producibleLabel = producibleQty > 0
+            ? (PRODUCIBLE_TRANSLATIONS.canProduce[lang] || 'Quantité produisible')
+            : (PRODUCIBLE_TRANSLATIONS.cannotProduce[lang] || 'Impossible à produire');
+        
         // Détermine le fond à appliquer : vert si ressources, rouge si manquant, sinon violet
         // Couleur de fond pour l'image
         let imageBg = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
@@ -912,6 +955,7 @@ function displayRecipes(filter) {
                 </div>
                 <div class="recipe-ingredients">
                     ${translatedIngredients}
+                    <div class="recipe-producible">${producibleLabel} ${producibleQty > 0 ? `<b>${producibleQty}</b>` : ''}</div>
                 </div>
                 <div class="recipe-actions">
                     <button class="btn-purchase ${isPurchased ? 'purchased' : ''} ${cannotTogglePurchase ? 'disabled' : ''}" 
@@ -958,6 +1002,12 @@ async function toggleClubTierPurchase(tierNumber) {
     
     const index = userData.purchasedClubTiers.indexOf(tierNumber);
     if (index >= 0) {
+        // Vérifie si le niveau supérieur est acheté
+        const nextTierPurchased = userData.purchasedClubTiers.includes(tierNumber + 1);
+        if (nextTierPurchased) {
+            showWarning(t('cannotRemoveTierWithNextPurchased'));
+            return;
+        }
         userData.purchasedClubTiers.splice(index, 1);
         showInfo(t('tierRemoved'));
     } else {
@@ -1416,6 +1466,15 @@ function displayFavorites() {
                 return `<span class="${colorClass}">${resourceIcon}${translatedResource}: ${currentQty}/${requiredQty}</span>`;
             }).join('<br>');
             
+            // Calculer combien de fois on peut produire la recette avec le stock actuel
+            const producibleQty = Math.min(...recipe.ingredients.map(ing => {
+                const parts = ing.split(' x');
+                const resourceName = parts[0];
+                const requiredQty = parseInt(parts[1]);
+                const currentQty = userData.refineryDeposits[resourceName] || 0;
+                return Math.floor(currentQty / requiredQty);
+            }));
+            
             return `
                 <div class="recipe-card ${hasResources ? 'has-resources' : 'missing-resources'} ${isPurchased ? 'owned' : ''}" style="background: ${gradient};">
                     <div class="recipe-header">
@@ -1501,6 +1560,7 @@ function displayFavorites() {
         content += favoriteZones.map(zone => {
             const isOwned = userData.ownedZones.includes(zone.id);
             const isFree = zone.price === 0;
+            const isFavorite = userData.favoriteZones.includes(zone.id);
             const translatedName = ZONES_TRANSLATIONS[zone.nameKey]
                 ? ZONES_TRANSLATIONS[zone.nameKey][lang]
                 : zone.nameKey;
@@ -1531,8 +1591,8 @@ function displayFavorites() {
                             <button class="btn-zone ${isOwned ? 'owned' : ''}" onclick="toggleZone('${zone.id}')">
                                 ${isOwned ? (t('zoneOwned') || 'Acheté') : (t('zoneBuy') || 'Acheter')}
                             </button>
-                            <button class="btn-favorite active" onclick="toggleZoneFavorite('${zone.id}')" title="${t('removeFavorite') || 'Retirer des favoris'}">
-                                ★
+                            <button class="btn-favorite" onclick="toggleZoneFavorite('${zone.id}')" title="${t('addFavorite')}">
+                                ${isFavorite ? '★' : '☆'}
                             </button>
                         </div>
                     ` : ''}
@@ -1548,6 +1608,7 @@ function displayFavorites() {
         content += favoriteDlcs.map(dlc => {
             const isOwned = userData.ownedDlcs.includes(dlc.id);
             const isFree = dlc.price === 0;
+            const isFavorite = userData.favoriteDlcs.includes(dlc.id);
             const translatedName = DLC_TRANSLATIONS[dlc.name]
                 ? DLC_TRANSLATIONS[dlc.name][lang]
                 : dlc.name;

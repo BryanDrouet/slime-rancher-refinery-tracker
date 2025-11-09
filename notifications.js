@@ -18,9 +18,16 @@ function showNotification(message, type = NotificationTypes.INFO, duration = 400
     if (!container) return;
 
     
-    const existingNotification = container.querySelector('.notification');
-    if (existingNotification) {
-        removeNotification(existingNotification);
+    // Effet cascade : chaque notification précédente est décalée, plus petite et transparente
+    const existingNotifications = container.querySelectorAll('.notification');
+    if (existingNotifications.length > 0) {
+        existingNotifications.forEach((notif, i) => {
+            notif.classList.add('notification-pushed');
+            notif.style.top = `${-18 * (existingNotifications.length - i)}px`;
+            notif.style.zIndex = 1;
+            notif.style.opacity = `${0.5 - 0.1 * (existingNotifications.length - i - 1)}`;
+            notif.style.transform = `scale(${0.85 - 0.05 * (existingNotifications.length - i - 1)})`;
+        });
     }
 
     const notification = document.createElement('div');
@@ -53,24 +60,49 @@ function showNotification(message, type = NotificationTypes.INFO, duration = 400
     notification.appendChild(icon);
     notification.appendChild(messageSpan);
     notification.appendChild(closeBtn);
-    
+
+    // Ajoute la barre de progression
+    const progressBar = document.createElement('progress');
+    progressBar.className = `notification-progress notification-progress-${type}`;
+    progressBar.max = duration;
+    progressBar.value = duration;
+    notification.appendChild(progressBar);
+
     container.appendChild(notification);
-    
-    
+
+    // Anime la barre de progression
     if (duration > 0) {
+        const start = Date.now();
+        const timer = setInterval(() => {
+            const elapsed = Date.now() - start;
+            progressBar.value = Math.max(duration - elapsed, 0);
+            if (elapsed >= duration) {
+                clearInterval(timer);
+            }
+        }, 30);
         setTimeout(() => {
             removeNotification(notification);
         }, duration);
     }
-    
+
     return notification;
 }
 
 function removeNotification(notification) {
-    notification.classList.add('removing');
+    notification.classList.add('slideOut');
     setTimeout(() => {
         if (notification.parentNode) {
             notification.parentNode.removeChild(notification);
+        }
+        // Réactive la notification précédente si elle existe
+        const container = document.getElementById('notification-container');
+        const notifs = container.querySelectorAll('.notification');
+        if (notifs.length > 0) {
+            notifs[notifs.length-1].classList.remove('notification-pushed');
+            notifs[notifs.length-1].style.top = '0';
+            notifs[notifs.length-1].style.zIndex = 2;
+            notifs[notifs.length-1].style.opacity = '1';
+            notifs[notifs.length-1].style.transform = 'scale(1)';
         }
     }, 300);
 }
