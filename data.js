@@ -1,3 +1,31 @@
+// Descriptions multilingues pour les upgrades spéciales
+const VACPACK_DESCRIPTIONS = {
+    "Treasure Cracker": {
+        fr: "Vous permet de déverrouiller une capsule au trésor de base. L'Ouvre-Capsule vous permet d'ouvrir les Capsules Vertes ; il deviendra disponible une fois que Le Labo sera déverrouillé et que votre premier gadget aura été fabriqué.",
+        en: "Allows you to unlock a basic treasure pod. The Treasure Cracker lets you open Green Pods; it becomes available once the Lab is unlocked and your first gadget is built.",
+        es: "Te permite desbloquear una cápsula de tesoro básica. El Abre-Cápsulas te permite abrir las cápsulas verdes; estará disponible una vez que el laboratorio esté desbloqueado y hayas fabricado tu primer artilugio."
+    },
+    "Treasure Cracker Mk II": {
+        fr: "Vous permet de déverrouiller une capsule au trésor avec une serrure plus avancée. L'Ouvre-Capsule Mk II vous permet d'ouvrir les Capsules Bleues et deviendra disponible après l'achat de l'amélioration Mk I ainsi qu'un total de 20 gadgets fabriqués dans Le Labo.",
+        en: "Allows you to unlock a treasure pod with a more advanced lock. The Treasure Cracker Mk II lets you open Blue Pods and becomes available after purchasing Mk I and crafting a total of 20 gadgets in the Lab.",
+        es: "Te permite desbloquear una cápsula de tesoro con una cerradura más avanzada. El Abre-Cápsulas Mk II te permite abrir las cápsulas azules y estará disponible después de comprar la mejora Mk I y fabricar un total de 20 artilugios en el laboratorio."
+    },
+    "Treasure Cracker Mk III": {
+        fr: "Vous permet de déverrouiller les capsules au trésor les plus avancées. L'Ouvre-Capsule Mk III vous permet d'ouvrir les Capsules Violettes et devient disponible après l'achat de l'amélioration Mk II ainsi qu'un total de 50 gadgets fabriqués dans Le Labo.",
+        en: "Allows you to unlock the most advanced treasure pods. The Treasure Cracker Mk III lets you open Purple Pods and becomes available after purchasing Mk II and crafting a total of 50 gadgets in the Lab.",
+        es: "Te permite desbloquear las cápsulas de tesoro más avanzadas. El Abre-Cápsulas Mk III te permite abrir las cápsulas moradas y estará disponible después de comprar la mejora Mk II y fabricar un total de 50 artilugios en el laboratorio."
+    },
+    "Golden Sureshot": {
+        fr: "Une amélioration pour aspipack spéciale qui vise le point sensible d'un slime doré (son nombril secret ?) et triple le nombre de plortes dorés qu'il produit lorsqu'il est touché. Déblocage : Rang 22 du 7Zee, Montagne Infinie III.",
+        en: "A special Vacpack upgrade that targets the weak spot of a gold slime (its secret belly button?) and triples the number of gold plorts it produces when hit. Unlock: 7Zee Rank 22, Endless Mountain III.",
+        es: "Una mejora especial para el aspipack que apunta al punto débil de un slime dorado (¿su ombligo secreto?) y triplica la cantidad de plorts dorados que produce cuando es golpeado. Desbloqueo: Rango 22 de 7Zee, Montaña Infinita III."
+    },
+    "Slime Key": {
+        fr: "Une simple clé supplémentaire au cas où la dernière clé aurait été égarée ! Déblocage : Il devient disponible trois heures dans le jeu après avoir lu le dernier courrier de Casey.",
+        en: "A simple extra key in case the last one was lost! Unlock: Becomes available three in-game hours after reading Casey's final mail.",
+        es: "¡Una simple llave extra por si se perdió la última! Desbloqueo: Está disponible tres horas en el juego después de leer el último correo de Casey."
+    }
+};
 
 
 const ALL_RESOURCES_TRANSLATIONS = {
@@ -198,36 +226,36 @@ const RECIPES_DATA = [
 
 const VACPACK_UPGRADES = [
     // Core Systems
-    { id: 1, name: "Heart Module", category: "core", price: 350, icon: "❤️", level: 1, unlock: "Start" },
-    { id: 2, name: "Heart Module Mk II", category: "core", price: 500, icon: "❤️", level: 2, unlock: "2 days after Mk I" },
-    { id: 3, name: "Heart Module Mk III", category: "core", price: 750, icon: "❤️", level: 3, unlock: "3 days after Mk II" },
-    { id: 4, name: "Heart Module Ultra", category: "core", price: 0, icon: "❤️", level: 4, unlock: "7Zee Rank 21" },
+    { id: 1, name: "Heart Module", category: "core", price: 350, icon: "❤️", level: 1, unlock: "Start", image: "assets/resources/vacpack_heart_module.png" },
+    { id: 2, name: "Heart Module Mk II", category: "core", price: 500, icon: "❤️", level: 2, unlock: "2 days after Mk I", image: "assets/resources/vacpack_health_2.png" },
+    { id: 3, name: "Heart Module Mk III", category: "core", price: 750, icon: "❤️", level: 3, unlock: "3 days after Mk II", image: "assets/resources/vacpack_health_3.png" },
+    { id: 4, name: "Heart Module Ultra", category: "core", price: 0, icon: "❤️", level: 4, unlock: "7Zee Rank 21", image: "assets/resources/vacpack_health_4.png" },
 
-    { id: 5, name: "Power Core", category: "core", price: 350, icon: "⚡", level: 1, unlock: "Start" },
-    { id: 6, name: "Power Core Mk II", category: "core", price: 650, icon: "⚡", level: 2, unlock: "2 days after Mk I" },
-    { id: 7, name: "Power Core Mk III", category: "core", price: 950, icon: "⚡", level: 3, unlock: "3 days after Mk II" },
+    { id: 5, name: "Power Core", category: "core", price: 350, icon: "⚡", level: 1, unlock: "Start", image: "assets/resources/vacpack_energy_1.png" },
+    { id: 6, name: "Power Core Mk II", category: "core", price: 650, icon: "⚡", level: 2, unlock: "2 days after Mk I", image: "assets/resources/vacpack_energy_2.png" },
+    { id: 7, name: "Power Core Mk III", category: "core", price: 950, icon: "⚡", level: 3, unlock: "3 days after Mk II", image: "assets/resources/vacpack_energy_3.png" },
 
     // Capacity & Utility
-    { id: 8, name: "Tank Booster", category: "tank", price: 350, icon: "📦", level: 1, unlock: "Start" },
-    { id: 9, name: "Tank Booster Mk II", category: "tank", price: 500, icon: "📦", level: 2, unlock: "2 days after Mk I" },
-    { id: 10, name: "Tank Booster Mk III", category: "tank", price: 750, icon: "📦", level: 3, unlock: "3 days after Mk II" },
-    { id: 11, name: "Tank Booster Ultra", category: "tank", price: 0, icon: "📦", level: 4, unlock: "7Zee Rank 20" },
+    { id: 8, name: "Tank Booster", category: "tank", price: 350, icon: "📦", level: 1, unlock: "Start", image: "assets/resources/iconShopTank01.png" },
+    { id: 9, name: "Tank Booster Mk II", category: "tank", price: 500, icon: "📦", level: 2, unlock: "2 days after Mk I", image: "assets/resources/iconShopTank02.png" },
+    { id: 10, name: "Tank Booster Mk III", category: "tank", price: 750, icon: "📦", level: 3, unlock: "3 days after Mk II", image: "assets/resources/iconShopTank03.png" },
+    { id: 11, name: "Tank Booster Ultra", category: "tank", price: 0, icon: "📦", level: 4, unlock: "7Zee Rank 20", image: "assets/resources/iconShopTank04.png" },
 
-    { id: 12, name: "Water Tank", category: "tank", price: 350, icon: "💧", level: 1, unlock: "Start" },
+    { id: 12, name: "Water Tank", category: "tank", price: 350, icon: "💧", level: 1, unlock: "Start", image: "assets/resources/vacpack_water_1.png" },
 
     // Mobility
-    { id: 13, name: "Jetpack", category: "mobility", price: 350, icon: "🚀", level: 1, unlock: "Start" },
-    { id: 14, name: "Air Drive", category: "mobility", price: 500, icon: "🌬️", level: 2, unlock: "5 days after Jetpack" },
-    { id: 15, name: "Dash Boots", category: "mobility", price: 350, icon: "👟", level: 1, unlock: "Day 3" },
-    { id: 16, name: "Ultra Dash Boots", category: "mobility", price: 0, icon: "👟", level: 2, unlock: "7Zee Rank 19" },
+    { id: 13, name: "Jetpack", category: "mobility", price: 350, icon: "🚀", level: 1, unlock: "Start", image: "assets/resources/vacpack_jetpack.png" },
+    { id: 14, name: "Air Drive", category: "mobility", price: 500, icon: "🌬️", level: 2, unlock: "5 days after Jetpack", image: "assets/resources/iconShopAirdrive.png" },
+    { id: 15, name: "Dash Boots", category: "mobility", price: 350, icon: "👟", level: 1, unlock: "Day 3", image: "assets/resources/vacpack_dash_boots.png" },
+    { id: 16, name: "Ultra Dash Boots", category: "mobility", price: 0, icon: "👟", level: 2, unlock: "7Zee Rank 19", image: "assets/resources/iconShopBoots02.png" },
 
     // Special Upgrades
-    { id: 17, name: "Pulse Wave", category: "special", price: 350, icon: "💥", level: 1, unlock: "Day 4" },
-    { id: 18, name: "Treasure Cracker", category: "special", price: 4500, icon: "🔓", level: 1, unlock: "After building 1 gadget" },
-    { id: 19, name: "Treasure Cracker Mk II", category: "special", price: 9000, icon: "🔓", level: 2, unlock: "After Mk I + 20 gadgets" },
-    { id: 20, name: "Treasure Cracker Mk III", category: "special", price: 25000, icon: "🔓", level: 3, unlock: "After Mk II + 50 gadgets" },
-    { id: 21, name: "Golden Sureshot", category: "special", price: 0, icon: "🎯", level: 1, unlock: "7Zee Rank 22" },
-    { id: 22, name: "Slime Key", category: "special", price: 0, icon: "🗝️", level: 1, unlock: "After final Casey mail" }
+    { id: 17, name: "Pulse Wave", category: "special", price: 350, icon: "💥", level: 1, unlock: "Day 4", image: "assets/resources/iconShopPulsewave.png" },
+    { id: 18, name: "Treasure Cracker", category: "special", price: 4500, icon: "🔓", level: 1, unlock: "After building 1 gadget", image: "assets/resources/iconShopTreasure01.png", description: { fr: "Vous permet de déverrouiller une capsule au trésor de base. L'Ouvre-Capsule vous permet d'ouvrir les Capsules Vertes ; il deviendra disponible une fois que Le Labo sera déverrouillé et que votre premier gadget aura été fabriqué.", en: "Allows you to unlock a basic treasure pod. The Treasure Cracker lets you open Green Pods; it becomes available once the Lab is unlocked and your first gadget is built.", es: "Te permite desbloquear una cápsula de tesoro básica. El Abre-Cápsulas te permite abrir las cápsulas verdes; estará disponible una vez que el laboratorio esté desbloqueado y hayas fabricado tu primer artilugio." } },
+    { id: 19, name: "Treasure Cracker Mk II", category: "special", price: 9000, icon: "🔓", level: 2, unlock: "After Mk I + 20 gadgets", image: "assets/resources/iconShopTreasure02.png", description: { fr: "Vous permet de déverrouiller une capsule au trésor avec une serrure plus avancée. L'Ouvre-Capsule Mk II vous permet d'ouvrir les Capsules Bleues et deviendra disponible après l'achat de l'amélioration Mk I ainsi qu'un total de 20 gadgets fabriqués dans Le Labo.", en: "Allows you to unlock a treasure pod with a more advanced lock. The Treasure Cracker Mk II lets you open Blue Pods and becomes available after purchasing Mk I and crafting a total of 20 gadgets in the Lab.", es: "Te permite desbloquear una cápsula de tesoro con una cerradura más avanzada. El Abre-Cápsulas Mk II te permite abrir las cápsulas azules y estará disponible después de comprar la mejora Mk I y fabricar un total de 20 artilugios en el laboratorio." } },
+    { id: 20, name: "Treasure Cracker Mk III", category: "special", price: 25000, icon: "🔓", level: 3, unlock: "After Mk II + 50 gadgets", image: "assets/resources/iconShopTreasure03.png", description: { fr: "Vous permet de déverrouiller les capsules au trésor les plus avancées. L'Ouvre-Capsule Mk III vous permet d'ouvrir les Capsules Violettes et devient disponible après l'achat de l'amélioration Mk II ainsi qu'un total de 50 gadgets fabriqués dans Le Labo.", en: "Allows you to unlock the most advanced treasure pods. The Treasure Cracker Mk III lets you open Purple Pods and becomes available after purchasing Mk II and crafting a total of 50 gadgets in the Lab.", es: "Te permite desbloquear las cápsulas de tesoro más avanzadas. El Abre-Cápsulas Mk III te permite abrir las cápsulas moradas y estará disponible después de comprar la mejora Mk II y fabricar un total de 50 artilugios en el laboratorio." } },
+    { id: 21, name: "Golden Sureshot", category: "special", price: 0, icon: "🎯", level: 1, unlock: "7Zee Rank 22", image: "assets/resources/iconShopGoldenSureShot.png", description: { fr: "Une amélioration pour aspipack spéciale qui vise le point sensible d'un slime doré (son nombril secret ?) et triple le nombre de plortes dorés qu'il produit lorsqu'il est touché. Déblocage : Rang 22 du 7Zee, Montagne Infinie III.", en: "A special Vacpack upgrade that targets the weak spot of a gold slime (its secret belly button?) and triples the number of gold plorts it produces when hit. Unlock: 7Zee Rank 22, Endless Mountain III.", es: "Una mejora especial para el aspipack que apunta al punto débil de un slime dorado (¿su ombligo secreto?) y triplica la cantidad de plorts dorados que produce cuando es golpeado. Desbloqueo: Rango 22 de 7Zee, Montaña Infinita III." } },
+    { id: 22, name: "Slime Key", category: "special", price: 0, icon: "🗝️", level: 1, unlock: "After final Casey mail", image: "assets/resources/iconKeyPedia.png", description: { fr: "Une simple clé supplémentaire au cas où la dernière clé aurait été égarée ! Déblocage : Il devient disponible trois heures dans le jeu après avoir lu le dernier courrier de Casey.", en: "A simple extra key in case the last one was lost! Unlock: Becomes available three in-game hours after reading Casey's final mail.", es: "¡Una simple llave extra por si se perdió la última! Desbloqueo: Está disponible tres horas en el juego después de leer el último correo de Casey." } }
 ];
 
 const VACPACK_TRANSLATIONS = {

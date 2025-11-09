@@ -19,47 +19,62 @@ function getVacpackDescription(upgrade) {
             14: "Un nano-réservoir portable amélioré qui permet à votre réservoir de contenir 30 unités de ce que vous aspirez.<br><b>Déblocage :</b> Disponible à l'achat au début du jeu.",
             15: "Ces nano-réservoirs portables envoient valser toute prudence et vous permettent d'aspirer 40 unités dans chaque réservoir.<br><b>Déblocage :</b> 2 jours en jeu après avoir acheté le Amplificateur de Réservoir.",
             16: "Plus il y en a, mieux c'est, surtout dans ce cas. Ces nano-réservoirs premiums peuvent contenir 50 unités dans chaque réservoir.<br><b>Déblocage :</b> 3 jours en jeu après avoir acheté le Amplificateur de Réservoir Mk II.",
-            17: "Le meilleur réservoir secret, doté d'une technologie de nano-réservoirs expérimentale qui est sûrement possiblement légale. Probablement.<br><b>Déblocage :</b> Rang 20 du 7Zee, Montagne Infinie I."
+            17: "Le meilleur réservoir secret, doté d'une technologie de nano-réservoirs expérimentale qui est sûrement possiblement légale. Probablement.<br><b>Déblocage :</b> Rang 20 du 7Zee, Montagne Infinie I.",
+            18: "Vous permet de déverrouiller une capsule au trésor de base.<br>L'Ouvre-Capsule vous permet d'ouvrir les Capsules Vertes ; <b>Déblocage :</b> Le Labo doit être déverrouillé et votre premier gadget fabriqué.",
+            19: "Vous permet de déverrouiller une capsule au trésor avec une serrure plus avancée.<br>L'Ouvre-Capsule Mk II vous permet d'ouvrir les Capsules Bleues.<br><b>Déblocage :</b> Après l'achat de l'amélioration Mk I et 20 gadgets fabriqués dans Le Labo.",
+            20: "Vous permet de déverrouiller les capsules au trésor les plus avancées.<br>L'Ouvre-Capsule Mk III vous permet d'ouvrir les Capsules Violettes.<br><b>Déblocage :</b> Après l'achat de l'amélioration Mk II et 50 gadgets fabriqués dans Le Labo.",
+            21: "Une amélioration pour aspipack spéciale qui vise le point sensible d'un slime doré (son nombril secret ?) et triple le nombre de plortes dorés qu'il produit lorsqu'il est touché.<br><b>Déblocage :</b> Rang 22 du 7Zee, Montagne Infinie III.",
+            22: "Une simple clé supplémentaire au cas où la dernière clé aurait été égarée !<br><b>Déblocage :</b> Disponible trois heures après avoir lu le dernier courrier de Casey."
         },
         en: {
-            1: "Synchronize your own body to improve life systems and boost your health bar to 150. Plus, it glows.<br><b>Unlock:</b> Available for purchase at the start of the game.",
-            2: "An even more advanced and shinier cardio module that boosts your health bar to 200.<br><b>Unlock:</b> 2 in-game days after buying the Cardio Module.",
-            3: "The latest in life amplification and shininess, boosting your health bar to 250.<br><b>Unlock:</b> 3 in-game days after buying Cardio Module Mk II.",
-            4: "An experimental life amplification system that pushes technology to... health.<br><b>Unlock:</b> 7Zee Rank 21, Infinite Mountain II.",
-            5: "Adds a specialized tank that lets you store fresh water.<br><b>Unlock:</b> Available for purchase at the start of the game.",
-            6: "Keep your head in the clouds with your very own super jetpack!<br><b>Unlock:</b> Available for purchase at the start of the game.",
-            7: "An improved jetpack thruster that uses 20% less energy, but doubles the fun.<br><b>Unlock:</b> 5 in-game days after buying the Jetpack.",
-            8: "These very advanced, frankly avant-garde boots reduce energy consumption when running.<br><b>Unlock:</b> Day 3.",
-            9: "Experimental shoes that further reduce sprint cost and make you want to never walk again.<br><b>Unlock:</b> 7Zee Rank 19, Dancing Mongoose III.",
-            10: "Adds a shockwave emitter to your vacpack that repels slimes when you feel overwhelmed.<br><b>Unlock:</b> 0:00 on Day 4.",
-            11: "Upgrade your vacpack with a probably-not-dangerous microfusion generator, boosting your energy bar to 150.<br><b>Unlock:</b> Available for purchase at the start of the game.",
-            12: "This improved microfusion generator boosts your energy bar to 200, and it's smaller too.<br><b>Unlock:</b> 2 in-game days after buying the Power Core.",
-            13: "The latest improved microfusion generator boosts your energy bar to 250, which still isn't enough to make you quit coffee.<br><b>Unlock:</b> 3 in-game days after buying Power Core Mk II.",
-            14: "An improved portable nano-tank lets your tank hold 30 units of whatever you vacuum.<br><b>Unlock:</b> Available for purchase at the start of the game.",
-            15: "These portable nano-tanks throw caution to the wind and let you vacuum 40 units in each tank.<br><b>Unlock:</b> 2 in-game days after buying the Tank Booster.",
-            16: "More is better, especially here. These premium nano-tanks can hold 50 units in each tank.<br><b>Unlock:</b> 3 in-game days after buying Tank Booster Mk II.",
-            17: "The best secret tank, with experimental nano-tank technology that's probably possibly legal. Probably.<br><b>Unlock:</b> 7Zee Rank 20, Infinite Mountain I."
-        },
+                1: "Synchronize your own body to improve life systems and boost your health bar to 150. Plus, it glows.<br><b>Unlock:</b> Available for purchase at the start of the game.",
+                2: "An even more advanced and shinier cardio module that boosts your health bar to 200.<br><b>Unlock:</b> 2 in-game days after buying the Cardio Module.",
+                3: "The latest in life amplification and shininess, boosting your health bar to 250.<br><b>Unlock:</b> 3 in-game days after buying Cardio Module Mk II.",
+                4: "An experimental life amplification system that pushes technology to... health.<br><b>Unlock:</b> 7Zee Rank 21, Infinite Mountain II.",
+                5: "Adds a specialized tank that lets you store fresh water.<br><b>Unlock:</b> Available for purchase at the start of the game.",
+                6: "Keep your head in the clouds with your very own super jetpack!<br><b>Unlock:</b> Available for purchase at the start of the game.",
+                7: "An improved jetpack thruster that uses 20% less energy, but doubles the fun.<br><b>Unlock:</b> 5 in-game days after buying the Jetpack.",
+                8: "These very advanced, frankly avant-garde boots reduce energy consumption when running.<br><b>Unlock:</b> Day 3.",
+                9: "Experimental shoes that further reduce sprint cost and make you want to never walk again.<br><b>Unlock:</b> 7Zee Rank 19, Dancing Mongoose III.",
+                10: "Adds a shockwave emitter to your vacpack that repels slimes when you feel overwhelmed.<br><b>Unlock:</b> 0:00 on Day 4.",
+                11: "Upgrade your vacpack with a probably-not-dangerous microfusion generator, boosting your energy bar to 150.<br><b>Unlock:</b> Available for purchase at the start of the game.",
+                12: "This improved microfusion generator boosts your energy bar to 200, and it's smaller too.<br><b>Unlock:</b> 2 in-game days after buying the Power Core.",
+                13: "The latest improved microfusion generator boosts your energy bar to 250, which still isn't enough to make you quit coffee.<br><b>Unlock:</b> 3 in-game days after buying Power Core Mk II.",
+                14: "An improved portable nano-tank lets your tank hold 30 units of whatever you vacuum.<br><b>Unlock:</b> Available for purchase at the start of the game.",
+                15: "These portable nano-tanks throw caution to the wind and let you vacuum 40 units in each tank.<br><b>Unlock:</b> 2 in-game days after buying the Tank Booster.",
+                16: "More is better, especially here. These premium nano-tanks can hold 50 units in each tank.<br><b>Unlock:</b> 3 in-game days after buying Tank Booster Mk II.",
+                17: "The best secret tank, with experimental nano-tank technology that's probably possibly legal. Probably.<br><b>Unlock:</b> 7Zee Rank 20, Infinite Mountain I.",
+                18: "Lets you unlock a basic treasure pod.<br>The Treasure Cracker lets you open Green Pods.<br><b>Unlock:</b> Lab must be unlocked and your first gadget crafted.",
+                19: "Lets you unlock a treasure pod with a more advanced lock.<br>Treasure Cracker Mk II lets you open Blue Pods.<br><b>Unlock:</b> After buying Mk I and crafting 20 gadgets in the Lab.",
+                20: "Lets you unlock the most advanced treasure pods.<br>Treasure Cracker Mk III lets you open Purple Pods.<br><b>Unlock:</b> After buying Mk II and crafting 50 gadgets in the Lab.",
+                21: "A special Vacpack upgrade that targets the weak spot of a gold slime (its secret belly button?) and triples the number of gold plorts it produces when hit.<br><b>Unlock:</b> 7Zee Rank 22, Endless Mountain III.",
+                22: "A simple extra key in case the last one was lost!<br><b>Unlock:</b> Available three hours after reading Casey's final mail."
+            },
         es: {
-            1: "Sincroniza tu propio cuerpo para mejorar los sistemas de vida y aumenta tu barra de salud hasta 150. Además, ¡brilla!<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
-            2: "Un cardio-módulo aún más avanzado y brillante que aumenta tu barra de salud hasta 200.<br><b>Desbloqueo:</b> 2 días en el juego después de comprar el Cardio-Módulo.",
-            3: "El último modelo en amplificación de vida y brillo, que aumenta tu barra de salud hasta 250.<br><b>Desbloqueo:</b> 3 días en el juego después de comprar el Cardio-Módulo Mk II.",
-            4: "Un sistema experimental de amplificación de vida que lleva la tecnología hasta... la salud.<br><b>Desbloqueo:</b> Rango 21 de 7Zee, Montaña Infinita II.",
-            5: "Agrega un depósito especializado que te permite almacenar agua dulce.<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
-            6: "¡Mantén la cabeza en las nubes con tu propio super jetpack!<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
-            7: "Un propulsor mejorado para el jetpack que consume un 20% menos de energía, pero duplica la diversión.<br><b>Desbloqueo:</b> 5 días en el juego después de comprar el Jetpack.",
-            8: "Estas botas muy avanzadas y, francamente, vanguardistas reducen el consumo de energía al correr.<br><b>Desbloqueo:</b> Día 3.",
-            9: "Zapatos experimentales que reducen aún más el coste de sprint y te hacen despreciar caminar.<br><b>Desbloqueo:</b> Rango 19 de 7Zee, Mangosta Bailarina III.",
-            10: "Agrega un emisor de ondas de choque a tu aspipack que repele slimes cuando te sientes abrumado.<br><b>Desbloqueo:</b> 0:00 en el Día 4.",
-            11: "Mejora tu aspipack con un generador de microfusión probablemente no peligroso, que aumenta tu barra de energía hasta 150.<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
-            12: "Este generador de microfusión mejorado aumenta tu barra de energía hasta 200, y además es más pequeño.<br><b>Desbloqueo:</b> 2 días en el juego después de comprar el Núcleo de Energía.",
-            13: "El último generador de microfusión mejorado aumenta tu barra de energía hasta 250, lo que no es suficiente para dejar el café.<br><b>Desbloqueo:</b> 3 días en el juego después de comprar el Núcleo de Energía Mk II.",
-            14: "Un nano-depósito portátil mejorado permite que tu depósito contenga 30 unidades de lo que aspiras.<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
-            15: "Estos nano-depósitos portátiles dejan de lado la prudencia y te permiten aspirar 40 unidades en cada depósito.<br><b>Desbloqueo:</b> 2 días en el juego después de comprar el Amplificador de Depósito.",
-            16: "Cuantos más, mejor, especialmente en este caso. Estos nano-depósitos premium pueden contener 50 unidades en cada depósito.<br><b>Desbloqueo:</b> 3 días en el juego después de comprar el Amplificador de Depósito Mk II.",
-            17: "El mejor depósito secreto, con tecnología experimental de nano-depósitos que seguramente es posiblemente legal. Probablemente.<br><b>Desbloqueo:</b> Rango 20 de 7Zee, Montaña Infinita I."
+                1: "Sincroniza tu propio cuerpo para mejorar los sistemas de vida y aumenta tu barra de salud hasta 150. Además, ¡brilla!<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
+                2: "Un cardio-módulo aún más avanzado y brillante que aumenta tu barra de salud hasta 200.<br><b>Desbloqueo:</b> 2 días en el juego después de comprar el Cardio-Módulo.",
+                3: "El último modelo en amplificación de vida y brillo, que aumenta tu barra de salud hasta 250.<br><b>Desbloqueo:</b> 3 días en el juego después de comprar el Cardio-Módulo Mk II.",
+                4: "Un sistema experimental de amplificación de vida que lleva la tecnología hasta... la salud.<br><b>Desbloqueo:</b> Rango 21 de 7Zee, Montaña Infinita II.",
+                5: "Agrega un depósito especializado que te permite almacenar agua dulce.<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
+                6: "¡Mantén la cabeza en las nubes con tu propio super jetpack!<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
+                7: "Un propulsor mejorado para el jetpack que consume un 20% menos de energía, pero duplica la diversión.<br><b>Desbloqueo:</b> 5 días en el juego después de comprar el Jetpack.",
+                8: "Estas botas muy avanzadas y, francamente, vanguardistas reducen el consumo de energía al correr.<br><b>Desbloqueo:</b> Día 3.",
+                9: "Zapatos experimentales que reducen aún más el coste de sprint y te hacen despreciar caminar.<br><b>Desbloqueo:</b> Rango 19 de 7Zee, Mangosta Bailarina III.",
+                10: "Agrega un emisor de ondas de choque a tu aspipack que repele slimes cuando te sientes abrumado.<br><b>Desbloqueo:</b> 0:00 en el Día 4.",
+                11: "Mejora tu aspipack con un generador de microfusión probablemente no peligroso, que aumenta tu barra de energía hasta 150.<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
+                12: "Este generador de microfusión mejorado aumenta tu barra de energía hasta 200, y además es más pequeño.<br><b>Desbloqueo:</b> 2 días en el juego después de comprar el Núcleo de Energía.",
+                13: "El último generador de microfusión mejorado aumenta tu barra de energía hasta 250, lo que no es suficiente para dejar el café.<br><b>Desbloqueo:</b> 3 días en el juego después de comprar el Núcleo de Energía Mk II.",
+                14: "Un nano-depósito portátil mejorado permite que tu depósito contenga 30 unidades de lo que aspiras.<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
+                15: "Estos nano-depósitos portátiles dejan de lado la prudencia y te permiten aspirar 40 unidades en cada depósito.<br><b>Desbloqueo:</b> 2 días en el juego después de comprar el Amplificador de Depósito.",
+                16: "Cuantos más, mejor, especialmente en este caso. Estos nano-depósitos premium pueden contener 50 unidades en cada depósito.<br><b>Desbloqueo:</b> 3 días en el juego después de comprar el Amplificador de Depósito Mk II.",
+                17: "El mejor depósito secreto, con tecnología experimental de nano-depósitos que seguramente es posiblemente legal. Probablemente.<br><b>Desbloqueo:</b> Rango 20 de 7Zee, Montaña Infinita I.",
+                18: "Te permite desbloquear una cápsula de tesoro básica.<br>El Abre-Cápsulas te permite abrir Cápsulas Verdes.<br><b>Desbloqueo:</b> El laboratorio debe estar desbloqueado y tu primer gadget fabricado.",
+                19: "Te permite desbloquear una cápsula de tesoro con una cerradura más avanzada.<br>El Abre-Cápsulas Mk II te permite abrir Cápsulas Azules.<br><b>Desbloqueo:</b> Después de comprar la mejora Mk I y fabricar 20 gadgets en el laboratorio.",
+                20: "Te permite desbloquear las cápsulas de tesoro más avanzadas.<br>El Abre-Cápsulas Mk III te permite abrir Cápsulas Moradas.<br><b>Desbloqueo:</b> Después de comprar la mejora Mk II y fabricar 50 gadgets en el laboratorio.",
+                21: "Una mejora especial para el aspipack que apunta al punto débil de un slime dorado (¿su ombligo secreto?) y triplica la cantidad de plorts dorados que produce cuando es golpeado.<br><b>Desbloqueo:</b> Rango 22 de 7Zee, Montaña Infinita III.",
+                22: "¡Una simple llave extra por si la última se perdió!<br><b>Desbloqueo:</b> Disponible tres horas después de leer el último correo de Casey."
+            },
         }
-    };
     return descMap[lang] && descMap[lang][upgrade.id] ? descMap[lang][upgrade.id] : (descMap['fr'][upgrade.id] || '');
 }
 
@@ -90,8 +105,8 @@ function getRecipeDescription(recipe) {
             21: "Vous permet de déverrouiller les capsules au trésor les plus avancées.<br>L'Ouvre-Capsule Mk III vous permet d'ouvrir les Capsules Violettes et devient disponible après l'achat de l'amélioration Mk II ainsi qu'un total de 50 gadgets fabriqués dans Le Labo.",
             22: "Une amélioration pour aspipack spéciale qui vise le point sensible d'un slime doré (son nombril secret ?) et triple le nombre de plortes dorés qu'il produit lorsqu'il est touché.<br><b>Déblocage :</b> Rang 22 du 7Zee, Montagne Infinie III.",
             23: "Une simple clé supplémentaire au cas où la dernière clé aurait été égarée !<br><b>Déblocage :</b> Il devient disponible trois heures dans le jeu après avoir lu le dernier courrier de Casey."
-        },
-        en: {
+    },
+    en: {
             2: "Adds a specialized tank that lets you store fresh water.<br><b>Unlock:</b> Available for purchase at the start of the game.",
             3: "Keep your head in the clouds with your very own super jetpack!<br><b>Unlock:</b> Available for purchase at the start of the game.",
             4: "An improved jetpack thruster that uses 20% less energy, but doubles the fun.<br><b>Unlock:</b> 5 in-game days after buying the Jetpack.",
@@ -114,8 +129,8 @@ function getRecipeDescription(recipe) {
             21: "Lets you unlock the most advanced treasure pods.<br>Treasure Cracker Mk III lets you open Purple Pods and becomes available after buying Mk II and crafting a total of 50 gadgets in the Lab.",
             22: "A special vacpack upgrade that targets the secret belly button of a gold slime and triples the number of gold plorts it produces when hit.<br><b>Unlock:</b> 7Zee Rank 22, Infinite Mountain III.",
             23: "A simple extra key in case the last one was lost!<br><b>Unlock:</b> Becomes available three hours into the game after reading Casey's last mail."
-        },
-        es: {
+    },
+    es: {
             2: "Agrega un depósito especializado que te permite almacenar agua dulce.<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
             3: "¡Mantén la cabeza en las nubes con tu propio super jetpack!<br><b>Desbloqueo:</b> Disponible para comprar al inicio del juego.",
             4: "Un propulsor mejorado para el jetpack que consume un 20% menos de energía, pero duplica la diversión.<br><b>Desbloqueo:</b> 5 días en el juego después de comprar el Jetpack.",
@@ -225,7 +240,7 @@ function getGradientByPercentage(percentage) {
     } else if (percentage >= 75) {
         return 'linear-gradient(135deg, #94d82d 0%, #51cf66 100%)';
     } else if (percentage >= 50) {
-        return 'linear-gradient(135deg, #ffd43b 0%, #fab005 100%)';
+        return 'linear-gradient(135deg, #8a2be2 0%, #fab005 100%)';
     } else if (percentage >= 25) {
         return 'linear-gradient(135deg, #ff922b 0%, #fd7e14 100%)';
     } else {
@@ -409,6 +424,20 @@ function showSection(sectionName) {
     } else if (sectionName === 'favorites') {
         displayFavorites();
     }
+    // Nettoyer les filtres de l'URL selon la section
+    const url = new URL(window.location.href);
+    url.hash = sectionName;
+    // Toujours supprimer tous les filtres non pertinents
+    url.searchParams.delete('recipeFilter');
+    url.searchParams.delete('refineryFilter');
+    url.searchParams.delete('vacpackFilter');
+    url.searchParams.delete('sort');
+
+    if (sectionName === 'recipes') {
+        url.searchParams.set('recipeFilter', currentFilter || 'all');
+        url.searchParams.set('sort', currentSort || 'default');
+    }
+    window.history.replaceState({}, '', url);
     closeMobileMenu();
 }
 
@@ -648,37 +677,16 @@ function startAutoSave() {
         if (hasUnsavedChanges && currentUser) {
             await saveUserData();
             
-            setTimeout(() => {
-                if (!hasUnsavedChanges && Date.now() - lastSaveTime >= 1000) {
-                    showSaveConfirmation();
-                }
-            }, 1000);
+            if (!hasUnsavedChanges) {
+                showSaveConfirmation();
+            }
         }
     }, 2000);
 }
 
 
 function showSaveConfirmation() {
-    // Utilise le container de notifications pour un rendu cohérent et animation
-    const container = document.getElementById('notification-container');
-    if (!container) return;
-    const notif = document.createElement('div');
-    notif.className = 'notification success';
-    notif.innerHTML = `<div class="notification-icon"><img src="assets/resources/icon_check.png" style="width:20px;height:20px;vertical-align:middle;"></div><div class="notification-message">${t('dataSaved') || 'Données enregistrées'}</div><button class="notification-close" aria-label="close">&times;</button>`;
-    container.appendChild(notif);
-
-    // close handler
-    const closeBtn = notif.querySelector('.notification-close');
-    closeBtn.addEventListener('click', () => {
-        notif.style.animation = 'slideOut 0.22s ease-in forwards';
-        setTimeout(() => notif.remove(), 240);
-    });
-
-    // auto remove after 2s
-    setTimeout(() => {
-        notif.style.animation = 'slideOut 0.22s ease-in forwards';
-        setTimeout(() => notif.remove(), 240);
-    }, 2000);
+    showSuccess(t('dataSaved') || 'Données enregistrées');
 }
 
 
@@ -884,7 +892,16 @@ async function toggleUpgradeFavorite(upgradeId) {
     
     markAsChanged();
     await saveUserData();
+    // Sauvegarder la position de scroll avant le refresh
+    const vacpackContainer = document.getElementById('vacpack-upgrades');
+    let scrollY = window.scrollY;
+    let vacpackScroll = vacpackContainer ? vacpackContainer.scrollTop : null;
     displayVacpackUpgrades();
+    // Restaurer la position de scroll après le refresh
+    if (vacpackContainer && vacpackScroll !== null) {
+        vacpackContainer.scrollTop = vacpackScroll;
+    }
+    window.scrollTo({ top: scrollY });
     displayFavorites();
 }
 
@@ -1084,16 +1101,10 @@ function displayRecipes(filter) {
             ? (PRODUCIBLE_TRANSLATIONS.canProduce[lang] || 'Quantité produisible')
             : (PRODUCIBLE_TRANSLATIONS.cannotProduce[lang] || 'Impossible à produire');
         
-        // Détermine le fond à appliquer : vert si ressources, rouge si manquant, sinon violet
-        // Couleur de fond pour l'image
-        let imageBg = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
-        if (hasResources) {
-            imageBg = 'linear-gradient(135deg, rgba(81, 207, 102, 0.95) 0%, rgba(46, 184, 92, 0.95) 100%)'; // vert
-        } else {
-            imageBg = 'linear-gradient(135deg, rgba(255, 107, 107, 0.95) 0%, rgba(229, 62, 62, 0.95) 100%)'; // rouge
-        }
+        // Utilise le gradient dynamique selon le pourcentage de ressources
+        const imageBg = getGradientByPercentage(resourcesPercentage);
         return `
-            <div class="recipe-card ${hasResources ? 'has-resources' : 'missing-resources'} ${isLocked ? 'locked' : ''} ${isPurchased ? 'owned' : ''}">
+            <div class="recipe-card ${hasResources ? 'has-resources' : 'missing-resources'} ${isLocked ? 'locked' : ''} ${isPurchased ? 'owned' : ''} ${isFree && !isPurchased ? 'free' : ''}">
                 ${isLocked ? '<div class="locked-overlay">🔒</div>' : ''}
                 <div class="recipe-header">
                     <h3 class="recipe-name">${translatedName}</h3>
@@ -1437,21 +1448,7 @@ function displayZones() {
 }
 
 function canPurchaseUpgrade(upgrade) {
-    // Si c'est gratuit et déjà acheté, on ne peut pas le retirer
-    if (upgrade.price === 0 && userData.purchasedVacpackUpgrades.includes(upgrade.id)) {
-        return false;
-    }
-    
-    // Vérifier si l'amélioration précédente est achetée
-    const previousUpgrade = VACPACK_UPGRADES.find(u => 
-        u.category === upgrade.category && u.level === upgrade.level - 1
-    );
-    
-    // Si il y a une amélioration précédente et qu'elle n'est pas achetée, on ne peut pas acheter celle-ci
-    if (previousUpgrade && !userData.purchasedVacpackUpgrades.includes(previousUpgrade.id)) {
-        return false;
-    }
-    
+    // Protection retirée : on peut acheter n'importe quelle amélioration
     return true;
 }
 
@@ -1463,19 +1460,11 @@ async function toggleVacpackUpgrade(upgradeId) {
     // Suppression de la restriction : on peut retirer les gratuits
     
     
-    const previousUpgrade = VACPACK_UPGRADES.find(u => 
-        u.category === upgrade.category && u.level === upgrade.level - 1
-    );
-    
-    if (previousUpgrade && !userData.purchasedVacpackUpgrades.includes(previousUpgrade.id)) {
-        showError(t('previousUpgradeRequired') || 'Amélioration précédente requise');
-        return;
-    }
+    // Protection retirée : on peut acheter n'importe quelle amélioration
     
     const index = userData.purchasedVacpackUpgrades.indexOf(upgradeId);
     if (index >= 0) {
-        // Protection : impossible de retirer si le niveau suivant est acheté
-        const upgrade = VACPACK_UPGRADES.find(u => u.id === upgradeId);
+        // On ne peut retirer que si le niveau suivant n'est pas acheté
         const nextUpgrade = VACPACK_UPGRADES.find(u => u.category === upgrade.category && u.level === upgrade.level + 1);
         if (nextUpgrade && userData.purchasedVacpackUpgrades.includes(nextUpgrade.id)) {
             showError(t('cannotRemoveTierWithNextPurchased') || 'Impossible de retirer ce niveau tant que le suivant est acheté.');
@@ -1484,6 +1473,7 @@ async function toggleVacpackUpgrade(upgradeId) {
         userData.purchasedVacpackUpgrades.splice(index, 1);
         showInfo(t('upgradeRemoved') || 'Amélioration retirée');
     } else {
+        // Protection retirée : on peut acheter n'importe quelle amélioration
         userData.purchasedVacpackUpgrades.push(upgradeId);
         showSuccess(t('upgradePurchased') || 'Amélioration achetée');
     }
@@ -1570,58 +1560,93 @@ function displayVacpackUpgrades() {
     
     
     const upgrades = getFilteredSortedVacpackUpgrades();
+    // Pour chaque upgrade, ajouter une propriété "unlocks" qui référence le niveau suivant
+    upgrades.forEach(upg => {
+        upg.unlocks = upgrades.filter(u => u.category === upg.category && u.level === upg.level + 1);
+    });
     let html = '';
     if (vacpackFilter === 'purchased' && upgrades.length === 0) {
         html = `<div class="empty-message">${t('noPurchasedVacpackUpgrades') || 'Aucune amélioration achetée. Commencez à acheter des améliorations !'}</div>`;
     } else {
-        html = upgrades.map((upgrade, index) => {
-            const isPurchased = userData.purchasedVacpackUpgrades.includes(upgrade.id);
-            const translatedName = VACPACK_TRANSLATIONS[upgrade.name]
-                ? VACPACK_TRANSLATIONS[upgrade.name][lang]
-                : upgrade.name;
-            const isFavorite = userData.favoriteUpgrades.includes(upgrade.id);
-            const isFree = upgrade.price === 0;
-            let canPurchase = true;
-            if (upgrade.level > 1) {
-                const previous = VACPACK_UPGRADES.find(u => u.category === upgrade.category && u.level === upgrade.level - 1);
-                if (previous && !userData.purchasedVacpackUpgrades.includes(previous.id)) {
-                    canPurchase = false;
+        // Regroupement par section
+    const cardio = upgrades.filter(u => u.category === 'core' && /heart|cardio/i.test(u.name));
+    const power = upgrades.filter(u => u.category === 'core' && /power/i.test(u.name));
+    const tank = upgrades.filter(u => u.category === 'tank' && /tank|amplificateur/i.test(u.name));
+    // Le réservoir d'eau doit être dans "Autres"
+    const other = upgrades.filter(u => !cardio.includes(u) && !power.includes(u) && !tank.includes(u) || /eau|water/i.test(u.name));
+
+        function renderSection(title, upgradesArr) {
+            if (upgradesArr.length === 0) return '';
+            // grille explicite : 1 colonne, n lignes, grid-area pour chaque carte
+            const gridRows = upgradesArr.length;
+            let gridCards = upgradesArr.map((upgrade, idx) => {
+                const isPurchased = userData.purchasedVacpackUpgrades.includes(upgrade.id);
+                const translatedName = VACPACK_TRANSLATIONS[upgrade.name]
+                    ? VACPACK_TRANSLATIONS[upgrade.name][lang]
+                    : upgrade.name;
+                const isFavorite = userData.favoriteUpgrades.includes(upgrade.id);
+                const isFree = upgrade.price === 0;
+                let canPurchase = true;
+                if (upgrade.level > 1) {
+                    const previous = VACPACK_UPGRADES.find(u => u.category === upgrade.category && u.level === upgrade.level - 1);
+                    if (previous && !userData.purchasedVacpackUpgrades.includes(previous.id)) {
+                        canPurchase = false;
+                    }
                 }
-            }
-            const imageSrc = upgrade.image ? upgrade.image : `assets/resources/vacpack_${upgrade.category}_${upgrade.level || upgrade.id}.png`;
-            return `
-                <div class="vacpack-upgrade-card ${isPurchased ? 'owned' : ''} ${!canPurchase && !isPurchased ? 'locked' : ''} ${isFree ? 'free' : ''}">
-                    ${!canPurchase && !isPurchased ? '<div class="locked-overlay">🔒</div>' : ''}
-                    <div class="upgrade-header">
-                        <h3 class="upgrade-name">${translatedName}</h3>
-                        <div class="upgrade-price-badge">
-                            ${isFree ? (t('free') || 'Gratuit') : formatPrice(upgrade.price)}
-                            ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
+                const imageSrc = upgrade.image ? upgrade.image : `assets/resources/vacpack_${upgrade.category}_${upgrade.level || upgrade.id}.png`;
+                let btnText = t('purchase');
+                if (isPurchased) {
+                    btnText = isFree ? (t('obtain') || 'Obtenu') : t('purchased');
+                } else if (isFree) {
+                    btnText = t('obtain') || 'Obtenir';
+                }
+                // grid-area: ligne idx+1
+                return `
+                    <div class="vacpack-upgrade-card ${isPurchased ? 'owned' : ''} ${!canPurchase && !isPurchased ? 'locked' : ''} ${isFree ? 'free' : ''} div${idx+1}" style="grid-area: ${idx+1} / 1 / ${idx+2} / 2;">
+                        ${!canPurchase && !isPurchased ? '<div class="locked-overlay">🔒</div>' : ''}
+                        <div class="upgrade-header">
+                            <h3 class="upgrade-name">${translatedName}</h3>
+                            <div class="upgrade-price-badge">
+                                ${isFree ? (t('free') || 'Gratuit') : formatPrice(upgrade.price)}
+                                ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="upgrade-image-container">
+                                <img loading="lazy" src="${imageSrc}" 
+                                    alt="${translatedName}" class="upgrade-img"
+                                    onerror="this.parentElement.innerHTML='${upgrade.icon}'">
+                            </div>
+                            <div class="upgrade-description" style="margin: 16px 0; color: #444; font-size: 15px; line-height: 1.5;">
+                                ${getVacpackDescription(upgrade)}
+                            </div>
+                        </div>
+                        <div class="upgrade-actions">
+                            <button class="btn-upgrade ${isPurchased ? 'owned' : ''}"
+                                    onclick="toggleVacpackUpgrade(${upgrade.id})"
+                                    ${!canPurchase && !isPurchased ? 'disabled' : ''}>
+                                ${btnText}
+                            </button>
+                            <button class="btn-favorite ${isFavorite ? 'active' : ''}" onclick="toggleUpgradeFavorite(${upgrade.id})" title="${t('addFavorite')}">
+                                ${isFavorite ? '★' : '☆'}
+                            </button>
                         </div>
                     </div>
-                    <div class="upgrade-image-container">
-                        <img loading="lazy" src="${imageSrc}" 
-                             alt="${translatedName}" class="upgrade-img"
-                             onerror="this.parentElement.innerHTML='${upgrade.icon}'">
-                    </div>
-                    <div class="upgrade-description" style="margin: 16px 0; color: #444; font-size: 15px; line-height: 1.5;">
-                        ${getVacpackDescription(upgrade)}
-                    </div>
-                    <div class="upgrade-actions">
-                        <button class="btn-upgrade ${isPurchased ? 'owned' : ''}"
-                                onclick="toggleVacpackUpgrade(${upgrade.id})"
-                                ${!canPurchase && !isPurchased ? 'disabled' : ''}>
-                            ${isPurchased ? t('purchased') : (isFree ? t('obtain') : t('purchase'))}
-                        </button>
-                        <button class="btn-favorite ${isFavorite ? 'active' : ''}" onclick="toggleUpgradeFavorite(${upgrade.id})" title="${t('addFavorite')}">
-                            ${isFavorite ? '★' : '☆'}
-                        </button>
-                    </div>
-                </div>
-            `;
-        }).join('');
+                `;
+            }).join('');
+            // Limite la hauteur à la section parente et active le scroll vertical
+            return `<div class="vacpack-section-group"><h2 class="vacpack-section-title">${title}</h2><div class="vacpack-section-list scroll-x parent">${gridCards}</div></div>`;
+        }
+
+        html += `<div class="vacpack-sections">
+            ${renderSection('Cardio-Module', cardio)}
+            ${renderSection('Noyau de Puissance', power)}
+            ${renderSection('Amplificateur', tank)}
+            ${renderSection('Autres', other)}
+        </div>`;
     }
     container.innerHTML = `<div class="vacpack-upgrades-list">${html}</div>`;
+
 }
 
 
@@ -1651,74 +1676,87 @@ function displayFavorites() {
     if (favoriteRecipes.length > 0) {
         content += `<h3 class="favorites-category-title">${t('recipesTitle') || 'Recettes'}</h3>`;
         content += `<div class="recipes-grid">`;
-        content += favoriteRecipes.map(recipe => {
-            const isPurchased = userData.purchasedRecipes.includes(recipe.id);
-            const isFree = recipe.price === 0;
-            const hasResources = hasEnoughResources(recipe.ingredients);
-            const resourcesPercentage = getResourcesPercentage(recipe.ingredients);
-            const gradient = getGradientByPercentage(resourcesPercentage);
-            
-            const translatedName = RECIPES_TRANSLATIONS[recipe.name]
-                ? RECIPES_TRANSLATIONS[recipe.name][lang]
-                : recipe.name;
-            
-            const translatedIngredients = recipe.ingredients.map(ing => {
-                const parts = ing.split(' x');
-                const resourceName = parts[0];
-                const requiredQty = parseInt(parts[1]);
-                const currentQty = userData.refineryDeposits[resourceName] || 0;
-                const translatedResource = ALL_RESOURCES_TRANSLATIONS[resourceName]
-                    ? ALL_RESOURCES_TRANSLATIONS[resourceName][lang]
-                    : resourceName;
-                const hasEnough = currentQty >= requiredQty;
-                const colorClass = hasEnough ? 'ingredient-sufficient' : 'ingredient-insufficient';
-                
-                const resourceIcon = `<img src="assets/resources/${resourceName.toLowerCase().replace(/\s+/g, '_')}.png" class="ingredient-icon" alt="${resourceName}" onerror="this.style.display='none'">`;
-                return `<span class="${colorClass}">${resourceIcon}${translatedResource}: ${currentQty}/${requiredQty}</span>`;
-            }).join('<br>');
-            
-            // Calculer combien de fois on peut produire la recette avec le stock actuel
-            const producibleQty = Math.min(...recipe.ingredients.map(ing => {
-                const parts = ing.split(' x');
-                const resourceName = parts[0];
-                const requiredQty = parseInt(parts[1]);
-                const currentQty = userData.refineryDeposits[resourceName] || 0;
-                return Math.floor(currentQty / requiredQty);
-            }));
-            
-            return `
-                <div class="recipe-card ${hasResources ? 'has-resources' : 'missing-resources'} ${isPurchased ? 'owned' : ''}" style="background: ${gradient};">
-                    <div class="recipe-header">
-                        <h3 class="recipe-name">${translatedName}</h3>
-                        <div class="recipe-price-badge">
-                            ${isFree ? (t('free') || 'Gratuit') : formatPrice(recipe.price)}
-                            ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
-                        </div>
-                    </div>
-                    <div>
-                        <div class="recipe-image-container">
-                            <img loading="lazy" src="assets/resources/${recipe.name.toLowerCase().replace(/\s+/g, '_').replace(/\(/g, '').replace(/\)/g, '')}.png" 
-                                alt="${translatedName}" class="recipe-img"
-                                onerror="this.parentElement.innerHTML='${recipe.icon}'">
-                        </div>
-                        <div class="recipe-content">
-                            <div class="recipe-ingredients">${translatedIngredients}</div>
-                        </div>
-                    </div>
-                    <div class="recipe-actions">
-                        <button class="btn-recipe ${isPurchased ? 'owned' : ''}" 
-                                onclick="toggleRecipePurchase(${recipe.id})">
-                            ${isPurchased ? t('purchased') : (isFree ? t('obtain') : t('purchase'))}
-                        </button>
-                        <button class="btn-favorite active" 
-                                onclick="toggleRecipeFavorite(${recipe.id})"
-                                title="${t('removeFavorite') || 'Retirer des favoris'}">
-                            ★
-                        </button>
-                    </div>
+        content += RECIPES_DATA.filter(r => userData.favoriteRecipes.includes(r.id)).map(recipe => renderRecipeCard(recipe)).join('');
+// Fonction utilitaire pour rendre une recette (copié-collé de displayRecipes)
+function renderRecipeCard(recipe) {
+    const lang = currentLanguage || 'en';
+    const isPurchased = userData.purchasedRecipes.includes(recipe.id);
+    const isFavorite = userData.favoriteRecipes.includes(recipe.id);
+    const hasResources = hasEnoughResources(recipe.ingredients);
+    const resourcesPercentage = getResourcesPercentage(recipe.ingredients);
+    const gradient = getGradientByPercentage(resourcesPercentage);
+    const labAccess = hasLabAccess();
+    const isFree = recipe.price === 0;
+    const isLocked = !labAccess;
+    const cannotTogglePurchase = isLocked;
+    const cannotToggleFavorite = isLocked;
+    const translatedName = RECIPES_TRANSLATIONS[recipe.name]
+        ? RECIPES_TRANSLATIONS[recipe.name][lang]
+        : recipe.name;
+    const translatedIngredients = recipe.ingredients.map(ing => {
+        const parts = ing.split(' x');
+        const resourceName = parts[0];
+        const requiredQty = parseInt(parts[1]);
+        const currentQty = userData.refineryDeposits[resourceName] || 0;
+        const translatedResource = ALL_RESOURCES_TRANSLATIONS[resourceName]
+            ? ALL_RESOURCES_TRANSLATIONS[resourceName][lang]
+            : resourceName;
+        const hasEnough = currentQty >= requiredQty;
+        const colorClass = hasEnough ? 'ingredient-sufficient' : 'ingredient-insufficient';
+        const resourceIcon = `assets/resources/${resourceName.toLowerCase().replace(/\s+/g, '_')}.png`;
+        return `<span class="${colorClass}"><img src="${resourceIcon}" class="ingredient-icon" onerror="this.style.display='none'"> ${translatedResource}: ${currentQty}/${requiredQty}</span>`;
+    }).join('<br>');
+    const producibleQty = Math.min(...recipe.ingredients.map(ing => {
+        const parts = ing.split(' x');
+        const resourceName = parts[0];
+        const requiredQty = parseInt(parts[1]);
+        const currentQty = userData.refineryDeposits[resourceName] || 0;
+        return Math.floor(currentQty / requiredQty);
+    }));
+    const producibleLabel = producibleQty > 0
+        ? (PRODUCIBLE_TRANSLATIONS.canProduce[lang] || 'Quantité produisible')
+        : (PRODUCIBLE_TRANSLATIONS.cannotProduce[lang] || 'Impossible à produire');
+    const imageBg = getGradientByPercentage(resourcesPercentage);
+    return `
+        <div class="recipe-card ${hasResources ? 'has-resources' : 'missing-resources'} ${isLocked ? 'locked' : ''} ${isPurchased ? 'owned' : ''}">
+            ${isLocked ? '<div class="locked-overlay">🔒</div>' : ''}
+            <div class="recipe-header">
+                <h3 class="recipe-name">${translatedName}</h3>
+                <div class="recipe-price-badge">
+                    ${isFree ? (t('free') || 'Gratuit') : formatPrice(recipe.price)}
+                    ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
                 </div>
-            `;
-        }).join('');
+            </div>
+            <div>
+                <div class="recipe-image-container" style="background: ${imageBg};">
+                    <img loading="lazy" src="assets/resources/${recipe.name.toLowerCase().replace(/\s+/g, '_').replace(/\(/g, '').replace(/\)/g, '')}.png" 
+                        alt="${translatedName}"
+                        onerror="this.parentElement.innerHTML='${recipe.icon}'"
+                        class="recipe-img">
+                </div>
+                <div class="recipe-ingredients">
+                    ${translatedIngredients}
+                </div>
+                <div class="recipe-producible${producibleQty === 0 ? ' recipe-producible-impossible' : ''}">${producibleLabel} ${producibleQty > 0 ? `<b>${producibleQty}</b>` : ''}</div>
+            </div>
+            <div class="recipe-actions">
+                <button class="btn-purchase ${isPurchased ? 'purchased' : ''} ${cannotTogglePurchase ? 'disabled' : ''}" 
+                        onclick="${cannotTogglePurchase ? 'return false;' : `toggleRecipePurchase(${recipe.id})`}" 
+                        ${cannotTogglePurchase ? 'disabled' : ''}>
+                    ${isLocked && !isFree ? ('🔒 ' + (t('locked') || 'Verrouillé'))
+                        : (isFree && isPurchased ? (t('obtained') || 'Obtenu')
+                            : (isPurchased ? t('purchased') : (isFree ? t('obtain') : t('purchase'))))}
+                </button>
+                <button class="btn-favorite ${isFavorite ? 'active' : ''} ${cannotToggleFavorite ? 'disabled' : ''}" 
+                        onclick="${cannotToggleFavorite ? 'return false;' : `toggleRecipeFavorite(${recipe.id})`}"
+                        ${cannotToggleFavorite ? 'disabled' : ''}
+                        title="${t('addFavorite')}">
+                    ${isFavorite ? '★' : '☆'}
+                </button>
+            </div>
+        </div>
+    `;
+}
         content += `</div>`;
     }
     
@@ -1744,10 +1782,15 @@ function displayFavorites() {
                             ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
                         </div>
                     </div>
-                    <div class="upgrade-image-container">
-                        <img loading="lazy" src="assets/resources/vacpack_${upgrade.category}_${upgrade.level || upgrade.id}.png" 
-                             alt="${translatedName}" class="upgrade-img"
-                             onerror="this.parentElement.innerHTML='${upgrade.icon}'">
+                    <div>
+                        <div class="upgrade-image-container">
+                            <img loading="lazy" src="assets/resources/vacpack_${upgrade.category}_${upgrade.level || upgrade.id}.png" 
+                                 alt="${translatedName}" class="upgrade-img"
+                                 onerror="this.parentElement.innerHTML='${upgrade.icon}'">
+                        </div>
+                        <div class="upgrade-description" style="margin: 16px 0; color: #444; font-size: 15px; line-height: 1.5;">
+                            ${getVacpackDescription(upgrade)}
+                        </div>
                     </div>
                     <div class="upgrade-actions">
                         <button class="btn-upgrade ${isPurchased ? 'owned' : ''}" 
@@ -1819,7 +1862,13 @@ function displayFavorites() {
     if (favoriteDlcs.length > 0) {
         content += `<h3 class="favorites-category-title">${t('dlcsTitle') || 'DLCs'}</h3>`;
         content += `<div class="dlcs-grid">`;
-        content += favoriteDlcs.map(dlc => {
+        // Trier pour mettre le pack gratuit en premier
+        const sortedDlcs = [...favoriteDlcs].sort((a, b) => {
+            if (a.price === 0 && b.price !== 0) return -1;
+            if (a.price !== 0 && b.price === 0) return 1;
+            return 0;
+        });
+        content += sortedDlcs.map(dlc => {
             const isOwned = userData.ownedDlcs.includes(dlc.id);
             const isFree = dlc.price === 0;
             const isFavorite = userData.favoriteDlcs.includes(dlc.id);
