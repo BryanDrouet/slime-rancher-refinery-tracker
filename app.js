@@ -983,15 +983,17 @@ function displayRecipes(filter) {
                         ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
                     </div>
                 </div>
-                <div class="recipe-image-container" style="background: ${imageBg};">
-                    <img loading="lazy" src="assets/resources/${recipe.name.toLowerCase().replace(/\s+/g, '_').replace(/\(/g, '').replace(/\)/g, '')}.png" 
-                         alt="${translatedName}"
-                         onerror="this.parentElement.innerHTML='${recipe.icon}'"
-                         class="recipe-img">
-                </div>
-                <div class="recipe-ingredients">
-                    ${translatedIngredients}
-                    <div class="recipe-producible">${producibleLabel} ${producibleQty > 0 ? `<b>${producibleQty}</b>` : ''}</div>
+                <div>
+                    <div class="recipe-image-container" style="background: ${imageBg};">
+                        <img loading="lazy" src="assets/resources/${recipe.name.toLowerCase().replace(/\s+/g, '_').replace(/\(/g, '').replace(/\)/g, '')}.png" 
+                            alt="${translatedName}"
+                            onerror="this.parentElement.innerHTML='${recipe.icon}'"
+                            class="recipe-img">
+                    </div>
+                    <div class="recipe-ingredients">
+                        ${translatedIngredients}
+                        <div class="recipe-producible">${producibleLabel} ${producibleQty > 0 ? `<b>${producibleQty}</b>` : ''}</div>
+                    </div>
                 </div>
                 <div class="recipe-actions">
                     <button class="btn-purchase ${isPurchased ? 'purchased' : ''} ${cannotTogglePurchase ? 'disabled' : ''}" 
@@ -1520,13 +1522,15 @@ function displayFavorites() {
                             ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
                         </div>
                     </div>
-                    <div class="recipe-image-container">
-                        <img loading="lazy" src="assets/resources/${recipe.name.toLowerCase().replace(/\s+/g, '_').replace(/\(/g, '').replace(/\)/g, '')}.png" 
-                             alt="${translatedName}" class="recipe-img"
-                             onerror="this.parentElement.innerHTML='${recipe.icon}'">
-                    </div>
-                    <div class="recipe-content">
-                        <div class="recipe-ingredients">${translatedIngredients}</div>
+                    <div>
+                        <div class="recipe-image-container">
+                            <img loading="lazy" src="assets/resources/${recipe.name.toLowerCase().replace(/\s+/g, '_').replace(/\(/g, '').replace(/\)/g, '')}.png" 
+                                alt="${translatedName}" class="recipe-img"
+                                onerror="this.parentElement.innerHTML='${recipe.icon}'">
+                        </div>
+                        <div class="recipe-content">
+                            <div class="recipe-ingredients">${translatedIngredients}</div>
+                        </div>
                     </div>
                     <div class="recipe-actions">
                         <button class="btn-recipe ${isPurchased ? 'owned' : ''}" 

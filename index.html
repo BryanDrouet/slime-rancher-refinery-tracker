@@ -19,10 +19,8 @@
     
     <div id="auth-container" class="auth-container">
         <div class="auth-box">
-            <h1 data-i18n="mainTitle">
-                <img src="assets/icon.png" alt="Slime" class="title-icon" style="vertical-align:middle;width:32px;height:32px;margin-right:8px;">
-                Slime Rancher Refinery Tracker
-            </h1>
+            <img src="assets/icon.png" alt="Slime" class="title-icon-account">
+            <h1 data-i18n="mainTitle">Slime Rancher Refinery Tracker</h1>
             <div id="login-section">
                 <h2 data-i18n="login">Connexion</h2>
                 <form onsubmit="loginWithEmail(); return false;">
@@ -69,10 +67,8 @@
         
         <header>
             <div class="header-content">
-                <h1 data-i18n="mainTitle" onclick="showSection('refinery'); event.stopPropagation();" style="cursor: pointer;">
-                    <img src="assets/icon.png" alt="Slime" class="title-icon" style="cursor: pointer;"> 
-                    Slime Rancher Refinery Tracker
-                </h1>
+                <img src="assets/icon.png" onclick="showSection('refinery'); event.stopPropagation();" alt="Slime" class="title-icon" style="cursor: pointer;"> 
+                <h1 data-i18n="mainTitle" onclick="showSection('refinery'); event.stopPropagation();" style="cursor: pointer;">Slime Rancher Refinery Tracker</h1>
                 <div class="header-info">
                     <span id="currency-display" style="font-size: 0.8em; opacity: 0.8;"></span>
                     <button onclick="logout()" class="btn-logout" data-i18n="logout">Déconnexion</button>
@@ -131,7 +127,7 @@
                 <button onclick="filterRefinery('plorts')" class="filter-btn" data-i18n="filterPlorts">Plorts</button>
             </div>
             <div class="sort-controls">
-                <label data-i18n="sortBy">Trier par:</label>
+                <label for="refinery-sort" data-i18n="sortBy">Trier par:</label>
                 <select id="refinery-sort" onchange="sortRefineryDeposits(this.value)">
                     <option value="default" data-i18n="sortDefault">Par défaut</option>
                     <option value="name-asc" data-i18n="sortNameAsc">Nom (A-Z)</option>
@@ -160,7 +156,7 @@
                 <button onclick="filterRecipes('not-purchased')" class="filter-btn" data-i18n="filterNotPurchased">Non achetées</button>
             </div>
             <div class="sort-controls">
-                <label data-i18n="sortBy">Trier par:</label>
+                <label for="recipe-sort" data-i18n="sortBy">Trier par:</label>
                 <select id="recipe-sort" onchange="sortRecipes(this.value)">
                     <option value="default" data-i18n="sortDefault">Par défaut</option>
                     <option value="name-asc" data-i18n="sortNameAsc">Nom (A-Z)</option>
