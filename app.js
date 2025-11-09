@@ -110,7 +110,6 @@ auth.onAuthStateChanged(async user => {
         currentUser = user;
         document.getElementById('auth-container').style.display = 'none';
         document.getElementById('app-container').style.display = 'block';
-        document.getElementById('user-email').textContent = user.email;
         
         
         updateLanguageFlags();
@@ -228,6 +227,9 @@ async function logout() {
 
 
 function showSection(sectionName) {
+    // Réinitialiser le scroll à 0 lors du changement de section
+    window.scrollTo(0, 0);
+    
     document.querySelectorAll('.content-section').forEach(section => {
         section.classList.remove('active');
     });
@@ -255,7 +257,8 @@ function showSection(sectionName) {
         newUrl = `${window.location.pathname}?lang=${lang}&refineryFilter=${refineryFilter}#${sectionName}`;
     } else if (sectionName === 'recipes') {
         const recipeFilter = currentFilter || 'all';
-        newUrl = `${window.location.pathname}?lang=${lang}&recipeFilter=${recipeFilter}#${sectionName}`;
+        const recipeSort = currentSort || 'default';
+        newUrl = `${window.location.pathname}?lang=${lang}&recipeFilter=${recipeFilter}&sort=${recipeSort}#${sectionName}`;
     } else {
         newUrl = `${window.location.pathname}?lang=${lang}#${sectionName}`;
     }
@@ -304,6 +307,7 @@ function handleURLNavigation() {
     const urlParams = new URLSearchParams(window.location.search);
     const refineryFilter = urlParams.get('refineryFilter') || 'all';
     const recipeFilter = urlParams.get('recipeFilter') || 'all';
+    const recipeSort = urlParams.get('sort') || 'default';
     
     if (hash && validSections.includes(hash)) {
         showSection(hash);
@@ -315,7 +319,9 @@ function handleURLNavigation() {
             displayRefineryDeposits();
         } else if (hash === 'recipes') {
             currentFilter = recipeFilter;
+            currentSort = recipeSort;
             updateFilterButtons('recipes', recipeFilter);
+            updateSortDropdown(recipeSort);
             displayRecipes(recipeFilter);
         } else if (hash === 'vacpack') {
             displayVacpackUpgrades();
@@ -330,6 +336,13 @@ function handleURLNavigation() {
         }
     } else {
         showSection('refinery');
+    }
+}
+
+function updateSortDropdown(sortValue) {
+    const sortSelect = document.getElementById('recipe-sort');
+    if (sortSelect) {
+        sortSelect.value = sortValue;
     }
 }
 
@@ -404,31 +417,16 @@ async function loadUserData() {
             if (!userData.purchasedRecipes) {
                 userData.purchasedRecipes = [];
             }
-            RECIPES_DATA.filter(r => r.price === 0).forEach(recipe => {
-                if (!userData.purchasedRecipes.includes(recipe.id)) {
-                    userData.purchasedRecipes.push(recipe.id);
-                }
-            });
             
             
             if (!userData.purchasedVacpackUpgrades) {
                 userData.purchasedVacpackUpgrades = [];
             }
-            VACPACK_UPGRADES.filter(u => u.price === 0).forEach(upgrade => {
-                if (!userData.purchasedVacpackUpgrades.includes(upgrade.id)) {
-                    userData.purchasedVacpackUpgrades.push(upgrade.id);
-                }
-            });
             
             
             if (!userData.ownedDlcs) {
                 userData.ownedDlcs = [];
             }
-            SLIME_RANCHER_DLCS.filter(d => d.price === 0).forEach(dlc => {
-                if (!userData.ownedDlcs.includes(dlc.id)) {
-                    userData.ownedDlcs.push(dlc.id);
-                }
-            });
             
             if (!userData.favoriteRecipes) {
                 userData.favoriteRecipes = [];
@@ -443,15 +441,14 @@ async function loadUserData() {
                 userData.favoriteDlcs = [];
             }
             
-            console.log('User data loaded successfully');
         } else {
             console.log('No existing user data, starting fresh');
             
             
             userData.ownedZones = ['ranch'];
-            userData.purchasedRecipes = RECIPES_DATA.filter(r => r.price === 0).map(r => r.id);
-            userData.purchasedVacpackUpgrades = VACPACK_UPGRADES.filter(u => u.price === 0).map(u => u.id);
-            userData.ownedDlcs = SLIME_RANCHER_DLCS.filter(d => d.price === 0).map(d => d.id);
+            userData.purchasedRecipes = [];
+            userData.purchasedVacpackUpgrades = [];
+            userData.ownedDlcs = [];
         }
         
         
@@ -540,6 +537,12 @@ function showSaveConfirmation() {
 
 let currentRefineryFilter = 'all';
 
+// Initialiser currentRefineryFilter depuis l'URL au chargement
+const initialRefineryUrlParams = new URLSearchParams(window.location.search);
+if (initialRefineryUrlParams.get('refineryFilter')) {
+    currentRefineryFilter = initialRefineryUrlParams.get('refineryFilter');
+}
+
 function displayRefineryDeposits() {
     const container = document.getElementById('refinery-grid');
     if (!container) return;
@@ -581,9 +584,6 @@ function displayRefineryDeposits() {
             </div>
             <div class="resource-name-display">${translatedName}</div>
             <div class="resource-controls">
-                <button class="resource-btn-minus ${isLocked ? 'disabled' : ''}" 
-                        onclick="${isLocked ? 'return false;' : `adjustRefineryQuantity('${resource}', -1)`}"
-                        ${isLocked ? 'disabled' : ''}>−</button>
                 <input type="number" 
                        class="resource-qty-input"
                        id="refinery-${resource.replace(/\s+/g, '_')}" 
@@ -591,9 +591,22 @@ function displayRefineryDeposits() {
                        min="0"
                        ${isLocked ? 'disabled' : ''}
                        onchange="${isLocked ? 'return false;' : `updateRefineryQuantity('${resource}', this.value)`}">
-                <button class="resource-btn-plus ${isLocked ? 'disabled' : ''}" 
-                        onclick="${isLocked ? 'return false;' : `adjustRefineryQuantity('${resource}', 1)`}"
-                        ${isLocked ? 'disabled' : ''}>+</button>
+                <div class="resource-controls-buttons">
+                    <button class="resource-btn-minus-10 ${isLocked ? 'disabled' : ''}" 
+                            onclick="${isLocked ? 'return false;' : `adjustRefineryQuantity('${resource}', -10)`}"
+                            ${isLocked ? 'disabled' : ''}
+                            title="-10">−10</button>
+                    <button class="resource-btn-minus ${isLocked ? 'disabled' : ''}" 
+                            onclick="${isLocked ? 'return false;' : `adjustRefineryQuantity('${resource}', -1)`}"
+                            ${isLocked ? 'disabled' : ''}>−</button>
+                    <button class="resource-btn-plus ${isLocked ? 'disabled' : ''}" 
+                            onclick="${isLocked ? 'return false;' : `adjustRefineryQuantity('${resource}', 1)`}"
+                            ${isLocked ? 'disabled' : ''}>+</button>
+                    <button class="resource-btn-plus-10 ${isLocked ? 'disabled' : ''}" 
+                            onclick="${isLocked ? 'return false;' : `adjustRefineryQuantity('${resource}', 10)`}"
+                            ${isLocked ? 'disabled' : ''}
+                            title="+10">+10</button>
+                </div>
             </div>
         </div>`;
     }).join('');
@@ -640,9 +653,10 @@ function updateRefineryQuantity(resourceName, quantity) {
     
     markAsChanged();
     
-    
+    // Sauvegarder après un court délai
     clearTimeout(saveTimeout);
-    saveTimeout = setTimeout(() => {
+    saveTimeout = setTimeout(async () => {
+        await saveUserData();
         displayRecipes();
     }, 500);
 }
@@ -663,9 +677,7 @@ async function toggleRecipePurchase(recipeId) {
     const recipe = RECIPES_DATA.find(r => r.id === recipeId);
     
     
-    if (recipe && recipe.price === 0 && userData.purchasedRecipes.includes(recipeId)) {
-        return;
-    }
+    // On peut retirer les gratuits aussi, donc on retire la restriction
     
     const index = userData.purchasedRecipes.indexOf(recipeId);
     if (index >= 0) {
@@ -738,8 +750,24 @@ async function toggleDlcFavorite(dlcId) {
 let currentFilter = 'all';
 let currentSort = 'default';
 
+// Initialiser currentFilter et currentSort depuis l'URL au chargement
+const initialUrlParams = new URLSearchParams(window.location.search);
+if (initialUrlParams.get('recipeFilter')) {
+    currentFilter = initialUrlParams.get('recipeFilter');
+}
+if (initialUrlParams.get('sort')) {
+    currentSort = initialUrlParams.get('sort');
+}
+
 function sortRecipes(sortType) {
     currentSort = sortType;
+    
+    const urlParams = new URLSearchParams(window.location.search);
+    const lang = urlParams.get('lang') || 'fr';
+    const filter = urlParams.get('recipeFilter') || 'all';
+    const newUrl = `${window.location.pathname}?lang=${lang}&recipeFilter=${filter}&sort=${sortType}#recipes`;
+    window.history.replaceState({}, '', newUrl);
+    
     displayRecipes(currentFilter);
 }
 
@@ -748,7 +776,8 @@ function filterRecipes(filter) {
     
     const urlParams = new URLSearchParams(window.location.search);
     const lang = urlParams.get('lang') || 'fr';
-    const newUrl = `${window.location.pathname}?lang=${lang}&recipeFilter=${filter}#recipes`;
+    const sort = urlParams.get('sort') || 'default';
+    const newUrl = `${window.location.pathname}?lang=${lang}&recipeFilter=${filter}&sort=${sort}#recipes`;
     window.history.replaceState({}, '', newUrl);
     
     
@@ -771,7 +800,10 @@ function displayRecipes(filter) {
     
     let filteredRecipes = RECIPES_DATA;
     if (filter === 'purchased') {
-        filteredRecipes = RECIPES_DATA.filter(r => userData.purchasedRecipes.includes(r.id));
+        filteredRecipes = RECIPES_DATA.filter(r => {
+            const isFree = r.price === 0;
+            return userData.purchasedRecipes.includes(r.id) && !isFree;
+        });
     } else if (filter === 'not-purchased') {
         filteredRecipes = RECIPES_DATA.filter(r => !userData.purchasedRecipes.includes(r.id));
     }
@@ -831,7 +863,8 @@ function displayRecipes(filter) {
         const labAccess = hasLabAccess();
         const isFree = recipe.price === 0;
         const isLocked = !labAccess;
-        const cannotToggle = isFree || isLocked;
+        const cannotTogglePurchase = isLocked;
+        const cannotToggleFavorite = isLocked;
         
         
         const translatedName = RECIPES_TRANSLATIONS[recipe.name]
@@ -849,36 +882,51 @@ function displayRecipes(filter) {
                 : resourceName;
             const hasEnough = currentQty >= requiredQty;
             const colorClass = hasEnough ? 'ingredient-sufficient' : 'ingredient-insufficient';
-            return `<span class="${colorClass}">${translatedResource}: ${currentQty}/${requiredQty}</span>`;
+            const resourceIcon = `assets/resources/${resourceName.toLowerCase().replace(/\s+/g, '_')}.png`;
+            return `<span class="${colorClass}"><img src="${resourceIcon}" class="ingredient-icon" onerror="this.style.display='none'"> ${translatedResource}: ${currentQty}/${requiredQty}</span>`;
         }).join('<br>');
         
+        // Détermine le fond à appliquer : vert si ressources, rouge si manquant, sinon violet
+        // Couleur de fond pour l'image
+        let imageBg = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)';
+        if (hasResources) {
+            imageBg = 'linear-gradient(135deg, rgba(81, 207, 102, 0.95) 0%, rgba(46, 184, 92, 0.95) 100%)'; // vert
+        } else {
+            imageBg = 'linear-gradient(135deg, rgba(255, 107, 107, 0.95) 0%, rgba(229, 62, 62, 0.95) 100%)'; // rouge
+        }
         return `
-            <div class="recipe-card ${hasResources ? 'has-resources' : 'missing-resources'} ${isLocked ? 'locked' : ''}" style="background: ${gradient};">
+            <div class="recipe-card ${hasResources ? 'has-resources' : 'missing-resources'} ${isLocked ? 'locked' : ''} ${isPurchased ? 'owned' : ''}">
                 ${isLocked ? '<div class="locked-overlay">🔒</div>' : ''}
-                <div class="recipe-image">
+                <div class="recipe-header">
+                    <h3 class="recipe-name">${translatedName}</h3>
+                    <div class="recipe-price-badge">
+                        ${isFree ? (t('free') || 'Gratuit') : formatPrice(recipe.price)}
+                        ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
+                    </div>
+                </div>
+                <div class="recipe-image-container" style="background: ${imageBg};">
                     <img loading="lazy" src="assets/resources/${recipe.name.toLowerCase().replace(/\s+/g, '_').replace(/\(/g, '').replace(/\)/g, '')}.png" 
                          alt="${translatedName}"
-                         onerror="this.parentElement.innerHTML='${recipe.icon}'">
+                         onerror="this.parentElement.innerHTML='${recipe.icon}'"
+                         class="recipe-img">
                 </div>
-                <div class="recipe-content">
-                    <div class="recipe-name">${translatedName}</div>
-                    <div class="recipe-price">${formatPrice(recipe.price)}</div>
-                    <div class="recipe-ingredients">
-                        ${translatedIngredients}
-                    </div>
-                    <div class="recipe-actions">
-                        <button class="btn-purchase ${isPurchased ? 'purchased' : ''} ${cannotToggle ? 'disabled' : ''}" 
-                                onclick="${cannotToggle ? 'return false;' : `toggleRecipePurchase(${recipe.id})`}"
-                                ${cannotToggle ? 'disabled' : ''}>
-                            ${isLocked && !isFree ? '🔒 ' + (t('locked') || 'Verrouillé') : (isPurchased ? t('purchased') : (isFree ? t('obtain') : t('purchase')))}
-                        </button>
-                        <button class="btn-favorite ${isFavorite ? 'active' : ''} ${isLocked ? 'disabled' : ''}" 
-                                onclick="${isLocked ? 'return false;' : `toggleRecipeFavorite(${recipe.id})`}"
-                                ${isLocked ? 'disabled' : ''}
-                                title="${t('addFavorite')}">
-                            ${isFavorite ? '★' : '☆'}
-                        </button>
-                    </div>
+                <div class="recipe-ingredients">
+                    ${translatedIngredients}
+                </div>
+                <div class="recipe-actions">
+                    <button class="btn-purchase ${isPurchased ? 'purchased' : ''} ${cannotTogglePurchase ? 'disabled' : ''}" 
+                            onclick="${cannotTogglePurchase ? 'return false;' : `toggleRecipePurchase(${recipe.id})`}" 
+                            ${cannotTogglePurchase ? 'disabled' : ''}>
+                        ${isLocked && !isFree ? ('🔒 ' + (t('locked') || 'Verrouillé'))
+                            : (isFree && isPurchased ? (t('obtained') || 'Obtenu')
+                                : (isPurchased ? t('purchased') : (isFree ? t('obtain') : t('purchase'))))}
+                    </button>
+                    <button class="btn-favorite ${isFavorite ? 'active' : ''} ${cannotToggleFavorite ? 'disabled' : ''}" 
+                            onclick="${cannotToggleFavorite ? 'return false;' : `toggleRecipeFavorite(${recipe.id})`}"
+                            ${cannotToggleFavorite ? 'disabled' : ''}
+                            title="${t('addFavorite')}">
+                        ${isFavorite ? '★' : '☆'}
+                    </button>
                 </div>
             </div>
         `;
@@ -923,7 +971,6 @@ async function toggleClubTierPurchase(tierNumber) {
 }
 
 function displayClubRewards() {
-    console.log('displayClubRewards() called');
     const container = document.getElementById('club-rewards');
     if (!container) {
         console.error('Club rewards container not found');
@@ -934,8 +981,6 @@ function displayClubRewards() {
         console.error('CLUB_7ZEE_REWARDS is not defined');
         return;
     }
-    
-    console.log('Club rewards count:', CLUB_7ZEE_REWARDS.length);
     
     const lang = currentLanguage || 'en';
     
@@ -957,17 +1002,18 @@ function displayClubRewards() {
         });
         
         return `
-            <div class="club-tier-card ${isPurchased ? 'tier-purchased' : ''} ${canPurchase && !isPurchased ? 'tier-available' : ''}">
+            <div class="club-tier-card ${isPurchased ? 'tier-purchased' : ''} ${canPurchase && !isPurchased ? 'tier-available' : ''} ${!canPurchase && !isPurchased ? 'locked' : ''}">
+                ${!canPurchase && !isPurchased ? '<div class="locked-overlay">🔒</div>' : ''}
                 <div class="tier-header">
                     <div class="tier-badge">${t('level')} ${reward.tier}</div>
-                    <div class="tier-status">
-                        ${isPurchased ? '<span class="status-icon"><img src="assets/resources/icon_check.png" class="check-icon-small"></span>' : ''}
+                    <div class="tier-price">
+                        ${tierPrice.toLocaleString()} <img src="assets/resources/iconNewBuck.png" alt="Newbucks" class="currency-icon">
+                        ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
                     </div>
                 </div>
                 
                 <div class="tier-content">
                     <h3 class="tier-title">${rewardName}</h3>
-                    <div class="tier-price">${tierPrice.toLocaleString()} <img src="assets/resources/iconNewBuck.png" alt="Newbucks" class="currency-icon"></div>
                     
                     <div class="tier-rewards">
                         <h4 class="rewards-title">${t('rewards') || 'Récompenses'}</h4>
@@ -980,7 +1026,7 @@ function displayClubRewards() {
                 <button class="btn-tier-action ${isPurchased ? 'tier-purchased' : ''}" 
                         onclick="toggleClubTierPurchase(${reward.tier})"
                         ${!canPurchase && !isPurchased ? 'disabled' : ''}>
-                    ${isPurchased ? '<span class="btn-icon"><img src="assets/resources/icon_check.png" class="check-icon-small"></span> ' + t('purchased') : '<span class="btn-icon">🛒</span> ' + t('purchase')}
+                    ${isPurchased ? t('purchased') : '<span class="btn-icon">🛒</span> ' + t('purchase')}
                 </button>
             </div>
         `;
@@ -993,9 +1039,7 @@ async function toggleDlcOwnership(dlcId) {
     const dlc = SLIME_RANCHER_DLCS.find(d => d.id === dlcId);
     
     
-    if (dlc && dlc.price === 0 && userData.ownedDlcs.includes(dlcId)) {
-        return;
-    }
+    // On peut retirer les gratuits aussi, donc on retire la restriction
     
     const index = userData.ownedDlcs.indexOf(dlcId);
     if (index >= 0) {
@@ -1012,7 +1056,6 @@ async function toggleDlcOwnership(dlcId) {
 }
 
 function displayDlcs() {
-    console.log('displayDlcs() called');
     const container = document.getElementById('dlcs-list');
     if (!container) {
         console.error('DLC container not found');
@@ -1024,13 +1067,19 @@ function displayDlcs() {
         return;
     }
     
-    console.log('DLCs count:', SLIME_RANCHER_DLCS.length);
-    
     const lang = currentLanguage || 'en';
     
-    container.innerHTML = SLIME_RANCHER_DLCS.map(dlc => {
+    // Trier les DLCs : gratuits d'abord, puis payants
+    const sortedDlcs = [...SLIME_RANCHER_DLCS].sort((a, b) => {
+        if (a.price === 0 && b.price !== 0) return -1;
+        if (a.price !== 0 && b.price === 0) return 1;
+        return 0;
+    });
+    
+    container.innerHTML = sortedDlcs.map(dlc => {
         const isOwned = userData.ownedDlcs.includes(dlc.id);
         const isFavorite = userData.favoriteDlcs.includes(dlc.id);
+        const isFree = dlc.price === 0;
         
         
         const translatedName = DLC_TRANSLATIONS[dlc.name]
@@ -1044,11 +1093,24 @@ function displayDlcs() {
                 : item;
         });
         
+        // Map des noms d'images personnalisés
+        const imageMap = {
+            'galactic-bundle': 'dlc_galactic.png',
+            'secret-style-pack': 'dlc_secret_style_pack.jpg'
+        };
+        const imageName = imageMap[dlc.id] || `dlc_${dlc.id}.png`;
+        
         return `
-            <div class="dlc-card ${isOwned ? 'owned' : ''}">
+            <div class="dlc-card ${isOwned ? 'owned' : ''} ${isFree ? 'free' : ''}">
                 <div class="dlc-header">
                     <h3 class="dlc-name">${translatedName}</h3>
-                    <div class="dlc-price">${formatPrice(dlc.price)}</div>
+                    <div class="dlc-price">
+                        ${isFree ? (t('free') || 'Gratuit') : formatPrice(dlc.price)}
+                        ${isOwned ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
+                    </div>
+                </div>
+                <div class="dlc-image-container">
+                    <img loading="lazy" src="assets/resources/${imageName}" alt="${translatedName}" class="dlc-img" onerror="this.parentElement.innerHTML='🎮'">
                 </div>
                 <div class="dlc-content">
                     <h4>${t('dlcContent')}</h4>
@@ -1056,13 +1118,15 @@ function displayDlcs() {
                         ${translatedContent.map(item => `<li>${item}</li>`).join('')}
                     </ul>
                 </div>
-                <button class="btn-favorite" onclick="toggleDlcFavorite('${dlc.id}')" title="${t('addFavorite')}">
-                    ${isFavorite ? '★' : '☆'}
-                </button>
-                <button class="btn-dlc ${isOwned ? 'owned' : ''}" 
-                        onclick="toggleDlcOwnership('${dlc.id}')">
-                    ${isOwned ? t('dlcOwned') : t('dlcBuy')}
-                </button>
+                <div class="dlc-actions">
+                    <button class="btn-dlc ${isOwned ? 'owned' : ''}" 
+                            onclick="toggleDlcOwnership('${dlc.id}')">
+                        ${isFree ? (isOwned ? (t('obtained') || 'Obtenu') : (t('obtain') || 'Obtenir')) : (isOwned ? t('dlcOwned') : t('dlcBuy'))}
+                    </button>
+                    <button class="btn-favorite" onclick="toggleDlcFavorite('${dlc.id}')" title="${t('addFavorite')}">
+                        ${isFavorite ? '★' : '☆'}
+                    </button>
+                </div>
             </div>
         `;
     }).join('');
@@ -1100,7 +1164,6 @@ async function toggleZone(zoneId) {
 }
 
 function displayZones() {
-    console.log('displayZones() called');
     const container = document.getElementById('zones-list');
     if (!container) {
         console.error('Zones container not found');
@@ -1111,8 +1174,6 @@ function displayZones() {
         console.error('ZONES_DATA is not defined');
         return;
     }
-    
-    console.log('Zones count:', ZONES_DATA.length);
     
     const lang = currentLanguage || 'en';
     
@@ -1130,39 +1191,62 @@ function displayZones() {
         const zoneImage = zone.image || `iconExpan${zone.id.charAt(0).toUpperCase() + zone.id.slice(1)}.png`;
         
         return `
-            <div class="zone-card ${isOwned ? 'owned' : ''} ${isFree ? 'free' : ''}">
+            <div class="zone-card ${isOwned && !isFree ? 'owned' : ''} ${isFree ? 'free' : ''}">
+                <div class="zone-header">
+                    <h3 class="zone-name">${translatedName}</h3>
+                    <div class="zone-price-badge">
+                        ${isFree ? (t('included') || 'Inclus') : formatPrice(zone.price)}
+                        ${isOwned && !isFree ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
+                    </div>
+                </div>
                 <div class="zone-image-container">
                     <img loading="lazy" src="assets/resources/${zoneImage}" alt="${translatedName}" class="zone-img">
-                    ${isOwned ? '<div class="zone-owned-badge"><img src="assets/resources/icon_check.png" class="check-icon-small"></div>' : ''}
-                </div>
-                <div class="zone-header">
-                    <div class="zone-title-wrapper">
-                        <h3 class="zone-name">${translatedName}</h3>
-                        <div class="zone-price">${formatPrice(zone.price)}</div>
-                    </div>
                 </div>
                 ${zone.unlocks.length > 0 ? `
                     <div class="zone-content">
                         <h4>${t('zoneUnlock') || 'Débloque'}</h4>
                         <ul>
-                            ${zone.unlocks.map(unlock => `<li>${unlock}</li>`).join('')}
+                            ${zone.unlocks.map(unlock => {
+                                const unlockTranslation = (typeof ZONE_UNLOCKS_TRANSLATIONS !== 'undefined' && ZONE_UNLOCKS_TRANSLATIONS[unlock] && ZONE_UNLOCKS_TRANSLATIONS[unlock][lang]) ? ZONE_UNLOCKS_TRANSLATIONS[unlock][lang] : unlock;
+                                return `<li>${unlockTranslation}</li>`;
+                            }).join('')}
                         </ul>
                     </div>
                 ` : ''}
-                <button class="btn-favorite" onclick="toggleZoneFavorite('${zone.id}')" title="${t('addFavorite')}">
-                    ${isFavorite ? '★' : '☆'}
-                </button>
-                <button class="btn-zone ${isOwned ? 'owned' : ''} ${isFree ? 'disabled' : ''}" 
-                        onclick="${isFree ? 'return false;' : `toggleZone('${zone.id}')`}"
-                        ${isFree ? 'disabled' : ''}>
-                    ${isOwned ? '<img src="assets/resources/icon_check.png" class="check-icon-small"> ' + (t('zoneOwned') || 'Acheté') : (isFree ? (t('included') || 'Inclus') : (t('zoneBuy') || 'Acheter'))}
-                </button>
+                ${!isFree ? `
+                    <div class="zone-actions">
+                        <button class="btn-zone ${isOwned ? 'owned' : ''}" 
+                                onclick="toggleZone('${zone.id}')">
+                            ${isOwned ? (t('zoneOwned') || 'Acheté') : (t('zoneBuy') || 'Acheter')}
+                        </button>
+                        <button class="btn-favorite" onclick="toggleZoneFavorite('${zone.id}')" title="${t('addFavorite')}">
+                            ${isFavorite ? '★' : '☆'}
+                        </button>
+                    </div>
+                ` : ''}
             </div>
         `;
     }).join('');
 }
 
-
+function canPurchaseUpgrade(upgrade) {
+    // Si c'est gratuit et déjà acheté, on ne peut pas le retirer
+    if (upgrade.price === 0 && userData.purchasedVacpackUpgrades.includes(upgrade.id)) {
+        return false;
+    }
+    
+    // Vérifier si l'amélioration précédente est achetée
+    const previousUpgrade = VACPACK_UPGRADES.find(u => 
+        u.category === upgrade.category && u.level === upgrade.level - 1
+    );
+    
+    // Si il y a une amélioration précédente et qu'elle n'est pas achetée, on ne peut pas acheter celle-ci
+    if (previousUpgrade && !userData.purchasedVacpackUpgrades.includes(previousUpgrade.id)) {
+        return false;
+    }
+    
+    return true;
+}
 
 async function toggleVacpackUpgrade(upgradeId) {
     const upgrade = VACPACK_UPGRADES.find(u => u.id === upgradeId);
@@ -1198,7 +1282,6 @@ async function toggleVacpackUpgrade(upgradeId) {
 }
 
 function displayVacpackUpgrades() {
-    console.log('displayVacpackUpgrades() called');
     const container = document.getElementById('vacpack-upgrades');
     if (!container) {
         console.error('Vacpack container not found');
@@ -1209,8 +1292,6 @@ function displayVacpackUpgrades() {
         console.error('VACPACK_UPGRADES is not defined');
         return;
     }
-    
-    console.log('Vacpack upgrades count:', VACPACK_UPGRADES.length);
     
     const lang = currentLanguage || 'en';
     
@@ -1246,26 +1327,33 @@ function displayVacpackUpgrades() {
                             : upgrade.name;
                         
                         const isFavorite = userData.favoriteUpgrades.includes(upgrade.id);
+                        const isFree = upgrade.price === 0;
                         
                         return `
-                            <div class="vacpack-upgrade-card ${isPurchased ? 'purchased' : ''} ${canPurchase && !isPurchased ? 'available' : ''}">
-                                <div class="upgrade-icon">
+                            <div class="vacpack-upgrade-card ${isPurchased ? 'owned' : ''} ${!canPurchase && !isPurchased ? 'locked' : ''} ${isFree ? 'free' : ''}">
+                                ${!canPurchase && !isPurchased ? '<div class="locked-overlay">🔒</div>' : ''}
+                                <div class="upgrade-header">
+                                    <h3 class="upgrade-name">${translatedName}</h3>
+                                    <div class="upgrade-price-badge">
+                                        ${isFree ? (t('free') || 'Gratuit') : formatPrice(upgrade.price)}
+                                        ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
+                                    </div>
+                                </div>
+                                <div class="upgrade-image-container">
                                     <img loading="lazy" src="assets/resources/vacpack_${category}_${upgrade.level || upgrade.id}.png" 
-                                         alt="${translatedName}"
+                                         alt="${translatedName}" class="upgrade-img"
                                          onerror="this.parentElement.innerHTML='${upgrade.icon}'">
                                 </div>
-                                <div class="upgrade-details">
-                                    <div class="upgrade-name">${translatedName}</div>
-                                    <div class="upgrade-price">${formatPrice(upgrade.price)}</div>
+                                <div class="upgrade-actions">
+                                    <button class="btn-upgrade ${isPurchased ? 'owned' : ''}"
+                                            onclick="toggleVacpackUpgrade(${upgrade.id})"
+                                            ${!canPurchase && !isPurchased ? 'disabled' : ''}>
+                                        ${isPurchased ? t('purchased') : (isFree ? t('obtain') : t('purchase'))}
+                                    </button>
+                                    <button class="btn-favorite ${isFavorite ? 'active' : ''}" onclick="toggleUpgradeFavorite(${upgrade.id})" title="${t('addFavorite')}">
+                                        ${isFavorite ? '★' : '☆'}
+                                    </button>
                                 </div>
-                                <button class="btn-favorite" onclick="toggleUpgradeFavorite(${upgrade.id})" title="${t('addFavorite')}">
-                                    ${isFavorite ? '★' : '☆'}
-                                </button>
-                                <button class="btn-upgrade ${isPurchased ? 'purchased' : ''}"
-                                        onclick="toggleVacpackUpgrade(${upgrade.id})"
-                                        ${!canPurchase && !isPurchased ? 'disabled' : ''}>
-                                    ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small"> ' + t('purchased') : (upgrade.price === 0 ? t('obtain') : t('purchase'))}
-                                </button>
                             </div>
                         `;
                     }).join('')}
@@ -1278,7 +1366,6 @@ function displayVacpackUpgrades() {
 
 
 function displayFavorites() {
-    console.log('displayFavorites() called');
     const favoritesContainer = document.getElementById('favorites-list');
     if (!favoritesContainer) {
         console.error('Favorites container not found');
@@ -1301,10 +1388,11 @@ function displayFavorites() {
     let content = '';
     
     if (favoriteRecipes.length > 0) {
-        content += `<h3>${t('recipesTitle') || 'Recettes'}</h3>`;
+        content += `<h3 class="favorites-category-title">${t('recipesTitle') || 'Recettes'}</h3>`;
         content += `<div class="recipes-grid">`;
         content += favoriteRecipes.map(recipe => {
             const isPurchased = userData.purchasedRecipes.includes(recipe.id);
+            const isFree = recipe.price === 0;
             const hasResources = hasEnoughResources(recipe.ingredients);
             const resourcesPercentage = getResourcesPercentage(recipe.ingredients);
             const gradient = getGradientByPercentage(resourcesPercentage);
@@ -1323,31 +1411,38 @@ function displayFavorites() {
                     : resourceName;
                 const hasEnough = currentQty >= requiredQty;
                 const colorClass = hasEnough ? 'ingredient-sufficient' : 'ingredient-insufficient';
-                return `<span class="${colorClass}">${translatedResource}: ${currentQty}/${requiredQty}</span>`;
+                
+                const resourceIcon = `<img src="assets/resources/${resourceName.toLowerCase().replace(/\s+/g, '_')}.png" class="ingredient-icon" alt="${resourceName}" onerror="this.style.display='none'">`;
+                return `<span class="${colorClass}">${resourceIcon}${translatedResource}: ${currentQty}/${requiredQty}</span>`;
             }).join('<br>');
             
             return `
-                <div class="recipe-card ${hasResources ? 'has-resources' : 'missing-resources'}" style="background: ${gradient};">
-                    <div class="recipe-image">
+                <div class="recipe-card ${hasResources ? 'has-resources' : 'missing-resources'} ${isPurchased ? 'owned' : ''}" style="background: ${gradient};">
+                    <div class="recipe-header">
+                        <h3 class="recipe-name">${translatedName}</h3>
+                        <div class="recipe-price-badge">
+                            ${isFree ? (t('free') || 'Gratuit') : formatPrice(recipe.price)}
+                            ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
+                        </div>
+                    </div>
+                    <div class="recipe-image-container">
                         <img loading="lazy" src="assets/resources/${recipe.name.toLowerCase().replace(/\s+/g, '_').replace(/\(/g, '').replace(/\)/g, '')}.png" 
-                             alt="${translatedName}"
+                             alt="${translatedName}" class="recipe-img"
                              onerror="this.parentElement.innerHTML='${recipe.icon}'">
                     </div>
                     <div class="recipe-content">
-                        <div class="recipe-name">${translatedName}</div>
-                        <div class="recipe-price">${formatPrice(recipe.price)}</div>
                         <div class="recipe-ingredients">${translatedIngredients}</div>
-                        <div class="recipe-actions">
-                            <button class="btn-purchase ${isPurchased ? 'purchased' : ''}" 
-                                    onclick="toggleRecipePurchase(${recipe.id})">
-                                ${isPurchased ? t('purchased') : (recipe.price === 0 ? t('obtain') : t('purchase'))}
-                            </button>
-                            <button class="btn-favorite active" 
-                                    onclick="toggleRecipeFavorite(${recipe.id})"
-                                    title="${t('removeFavorite') || 'Retirer des favoris'}">
-                                ★
-                            </button>
-                        </div>
+                    </div>
+                    <div class="recipe-actions">
+                        <button class="btn-recipe ${isPurchased ? 'owned' : ''}" 
+                                onclick="toggleRecipePurchase(${recipe.id})">
+                            ${isPurchased ? t('purchased') : (isFree ? t('obtain') : t('purchase'))}
+                        </button>
+                        <button class="btn-favorite active" 
+                                onclick="toggleRecipeFavorite(${recipe.id})"
+                                title="${t('removeFavorite') || 'Retirer des favoris'}">
+                            ★
+                        </button>
                     </div>
                 </div>
             `;
@@ -1356,31 +1451,44 @@ function displayFavorites() {
     }
     
     if (favoriteUpgrades.length > 0) {
-        content += `<h3>${t('vacpackTitle') || 'Améliorations Aspipack'}</h3>`;
-        content += `<div class="vacpack-upgrades-list">`;
+        content += `<h3 class="favorites-category-title">${t('vacpackTitle') || 'Améliorations Aspipack'}</h3>`;
+        content += `<div class="vacpack-grid">`;
         content += favoriteUpgrades.map(upgrade => {
             const isPurchased = userData.purchasedVacpackUpgrades.includes(upgrade.id);
+            const isFree = upgrade.price === 0;
+            const isLocked = !canPurchaseUpgrade(upgrade);
+            
             const translatedName = VACPACK_TRANSLATIONS[upgrade.name]
                 ? VACPACK_TRANSLATIONS[upgrade.name][lang]
                 : upgrade.name;
             
             return `
-                <div class="vacpack-upgrade-card ${isPurchased ? 'purchased' : ''}">
-                    <div class="upgrade-icon">
+                <div class="vacpack-upgrade-card ${isPurchased ? 'owned' : ''} ${isLocked ? 'locked' : ''} ${isFree ? 'free' : ''}">
+                    ${isLocked && !isPurchased ? '<div class="locked-overlay">🔒</div>' : ''}
+                    <div class="upgrade-header">
+                        <h3 class="upgrade-name">${translatedName}</h3>
+                        <div class="upgrade-price-badge">
+                            ${isFree ? (t('free') || 'Gratuit') : formatPrice(upgrade.price)}
+                            ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
+                        </div>
+                    </div>
+                    <div class="upgrade-image-container">
                         <img loading="lazy" src="assets/resources/vacpack_${upgrade.category}_${upgrade.level || upgrade.id}.png" 
-                             alt="${translatedName}"
+                             alt="${translatedName}" class="upgrade-img"
                              onerror="this.parentElement.innerHTML='${upgrade.icon}'">
                     </div>
-                    <div class="upgrade-details">
-                        <div class="upgrade-name">${translatedName}</div>
-                        <div class="upgrade-price">${formatPrice(upgrade.price)}</div>
+                    <div class="upgrade-actions">
+                        <button class="btn-upgrade ${isPurchased ? 'owned' : ''}" 
+                                onclick="toggleVacpackUpgrade(${upgrade.id})"
+                                ${isLocked && !isPurchased ? 'disabled' : ''}>
+                            ${isPurchased ? t('purchased') : (isFree ? t('obtain') : t('purchase'))}
+                        </button>
+                        <button class="btn-favorite active" 
+                                onclick="toggleUpgradeFavorite(${upgrade.id})" 
+                                title="${t('removeFavorite') || 'Retirer des favoris'}">
+                            ★
+                        </button>
                     </div>
-                    <button class="btn-favorite active" onclick="toggleUpgradeFavorite(${upgrade.id})" title="${t('removeFavorite') || 'Retirer des favoris'}">
-                        ★
-                    </button>
-                    <button class="btn-upgrade ${isPurchased ? 'purchased' : ''}" onclick="toggleVacpackUpgrade(${upgrade.id})">
-                        ${isPurchased ? '<img src="assets/resources/icon_check.png" class="check-icon-small"> ' + t('purchased') : (upgrade.price === 0 ? t('obtain') : t('purchase'))}
-                    </button>
                 </div>
             `;
         }).join('');
@@ -1388,33 +1496,46 @@ function displayFavorites() {
     }
     
     if (favoriteZones.length > 0) {
-        content += `<h3>${t('zonesTitle') || 'Terres'}</h3>`;
+        content += `<h3 class="favorites-category-title">${t('zonesTitle') || 'Terres'}</h3>`;
         content += `<div class="zones-grid">`;
         content += favoriteZones.map(zone => {
             const isOwned = userData.ownedZones.includes(zone.id);
+            const isFree = zone.price === 0;
             const translatedName = ZONES_TRANSLATIONS[zone.nameKey]
                 ? ZONES_TRANSLATIONS[zone.nameKey][lang]
                 : zone.nameKey;
             const zoneImage = zone.image || `iconExpan${zone.id.charAt(0).toUpperCase() + zone.id.slice(1)}.png`;
             
             return `
-                <div class="zone-card ${isOwned ? 'owned' : ''}">
-                    <div class="zone-image-container">
-                        <img loading="lazy" src="assets/resources/${zoneImage}" alt="${translatedName}" class="zone-img">
-                        ${isOwned ? '<div class="zone-owned-badge"><img src="assets/resources/icon_check.png" class="check-icon-small"></div>' : ''}
-                    </div>
+                <div class="zone-card ${isOwned && !isFree ? 'owned' : ''} ${isFree ? 'free' : ''}">
                     <div class="zone-header">
-                        <div class="zone-title-wrapper">
-                            <h3 class="zone-name">${translatedName}</h3>
-                            <div class="zone-price">${formatPrice(zone.price)}</div>
+                        <h3 class="zone-name">${translatedName}</h3>
+                        <div class="zone-price-badge">
+                            ${isFree ? (t('included') || 'Inclus') : formatPrice(zone.price)}
+                            ${isOwned && !isFree ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
                         </div>
                     </div>
-                    <button class="btn-favorite active" onclick="toggleZoneFavorite('${zone.id}')" title="${t('removeFavorite') || 'Retirer des favoris'}">
-                        ★
-                    </button>
-                    <button class="btn-zone ${isOwned ? 'owned' : ''}" onclick="toggleZone('${zone.id}')">
-                        ${isOwned ? '<img src="assets/resources/icon_check.png" class="check-icon-small"> ' + (t('zoneOwned') || 'Acheté') : (t('zoneBuy') || 'Acheter')}
-                    </button>
+                    <div class="zone-image-container">
+                        <img loading="lazy" src="assets/resources/${zoneImage}" alt="${translatedName}" class="zone-img">
+                    </div>
+                    ${zone.unlocks.length > 0 ? `
+                        <div class="zone-content">
+                            <h4>${t('zoneUnlock') || 'Débloque'}</h4>
+                            <ul>
+                                ${zone.unlocks.map(unlock => `<li>${unlock}</li>`).join('')}
+                            </ul>
+                        </div>
+                    ` : ''}
+                    ${!isFree ? `
+                        <div class="zone-actions">
+                            <button class="btn-zone ${isOwned ? 'owned' : ''}" onclick="toggleZone('${zone.id}')">
+                                ${isOwned ? (t('zoneOwned') || 'Acheté') : (t('zoneBuy') || 'Acheter')}
+                            </button>
+                            <button class="btn-favorite active" onclick="toggleZoneFavorite('${zone.id}')" title="${t('removeFavorite') || 'Retirer des favoris'}">
+                                ★
+                            </button>
+                        </div>
+                    ` : ''}
                 </div>
             `;
         }).join('');
@@ -1422,26 +1543,55 @@ function displayFavorites() {
     }
     
     if (favoriteDlcs.length > 0) {
-        content += `<h3>${t('dlcsTitle') || 'DLCs'}</h3>`;
+        content += `<h3 class="favorites-category-title">${t('dlcsTitle') || 'DLCs'}</h3>`;
         content += `<div class="dlcs-grid">`;
         content += favoriteDlcs.map(dlc => {
             const isOwned = userData.ownedDlcs.includes(dlc.id);
+            const isFree = dlc.price === 0;
             const translatedName = DLC_TRANSLATIONS[dlc.name]
                 ? DLC_TRANSLATIONS[dlc.name][lang]
                 : dlc.name;
             
+            const translatedContent = dlc.content.map(item => {
+                return DLC_TRANSLATIONS[item]
+                    ? DLC_TRANSLATIONS[item][lang]
+                    : item;
+            });
+            
+            // Map des noms d'images personnalisés
+            const imageMap = {
+                'galactic-bundle': 'dlc_galactic.png',
+                'secret-style-pack': 'dlc_secret_style_pack.jpg'
+            };
+            const imageName = imageMap[dlc.id] || `dlc_${dlc.id}.png`;
+            
             return `
-                <div class="dlc-card ${isOwned ? 'owned' : ''}">
+                <div class="dlc-card ${isOwned ? 'owned' : ''} ${isFree ? 'free' : ''}">
                     <div class="dlc-header">
                         <h3 class="dlc-name">${translatedName}</h3>
-                        <div class="dlc-price">${formatPrice(dlc.price)}</div>
+                        <div class="dlc-price">
+                            ${isFree ? (t('free') || 'Gratuit') : formatPrice(dlc.price)}
+                            ${isOwned ? '<img src="assets/resources/icon_check.png" class="check-icon-small" style="margin-left: 8px;">' : ''}
+                        </div>
                     </div>
-                    <button class="btn-favorite active" onclick="toggleDlcFavorite('${dlc.id}')" title="${t('removeFavorite') || 'Retirer des favoris'}">
-                        ★
-                    </button>
-                    <button class="btn-dlc ${isOwned ? 'owned' : ''}" onclick="toggleDlcOwnership('${dlc.id}')">
-                        ${isOwned ? t('dlcOwned') : t('dlcBuy')}
-                    </button>
+                    <div class="dlc-image-container">
+                        <img loading="lazy" src="assets/resources/${imageName}" alt="${translatedName}" class="dlc-img" onerror="this.parentElement.innerHTML='🎮'">
+                    </div>
+                    <div class="dlc-content">
+                        <h4>${t('dlcContent')}</h4>
+                        <ul>
+                            ${translatedContent.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div class="dlc-actions">
+                        <button class="btn-dlc ${isOwned ? 'owned' : ''}" 
+                                onclick="toggleDlcOwnership('${dlc.id}')">
+                            ${isFree ? (isOwned ? (t('obtained') || 'Obtenu') : (t('obtain') || 'Obtenir')) : (isOwned ? t('dlcOwned') : t('dlcBuy'))}
+                        </button>
+                        <button class="btn-favorite active" onclick="toggleDlcFavorite('${dlc.id}')" title="${t('removeFavorite') || 'Retirer des favoris'}">
+                            ★
+                        </button>
+                    </div>
                 </div>
             `;
         }).join('');
@@ -1452,6 +1602,44 @@ function displayFavorites() {
 }
 
 
-window.addEventListener('load', () => {
-    displayRecipes('all');
+// Sauvegarder avant de quitter la page
+window.addEventListener('beforeunload', async (e) => {
+    // Sauvegarder la position de scroll
+    sessionStorage.setItem('scrollPosition', window.scrollY.toString());
+    
+    if (hasUnsavedChanges && currentUser) {
+        e.preventDefault();
+        await saveUserData();
+    }
 });
+
+
+window.addEventListener('load', () => {
+    // Restaurer la position de scroll après le chargement
+    const savedScrollPosition = sessionStorage.getItem('scrollPosition');
+    if (savedScrollPosition) {
+        setTimeout(() => {
+            window.scrollTo(0, parseInt(savedScrollPosition));
+        }, 100);
+    }
+});
+
+// Gérer la visibilité du bouton scroll to top
+window.addEventListener('scroll', () => {
+    const scrollToTopBtn = document.getElementById('scroll-to-top');
+    if (scrollToTopBtn) {
+        if (window.scrollY > 300) {
+            scrollToTopBtn.classList.add('visible');
+        } else {
+            scrollToTopBtn.classList.remove('visible');
+        }
+    }
+});
+
+// Fonction pour remonter en haut de la page
+function scrollToTop() {
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
+}

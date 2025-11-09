@@ -7,7 +7,7 @@ const NotificationTypes = {
 };
 
 const NotificationIcons = {
-    success: '✓',
+    success: '🟢',
     error: '✕',
     warning: '⚠',
     info: 'ℹ'
@@ -26,9 +26,20 @@ function showNotification(message, type = NotificationTypes.INFO, duration = 400
     const notification = document.createElement('div');
     notification.className = `notification ${type}`;
     
-    const icon = document.createElement('span');
-    icon.className = 'notification-icon';
-    icon.textContent = NotificationIcons[type];
+    let icon;
+    if (type === NotificationTypes.SUCCESS) {
+        icon = document.createElement('img');
+        icon.className = 'notification-icon';
+        icon.src = 'assets/resources/icon_check.png';
+        icon.alt = 'Succès';
+        icon.style.width = '20px';
+        icon.style.height = '20px';
+        icon.style.verticalAlign = 'middle';
+    } else {
+        icon = document.createElement('span');
+        icon.className = 'notification-icon';
+        icon.textContent = NotificationIcons[type];
+    }
     
     const messageSpan = document.createElement('span');
     messageSpan.className = 'notification-message';
@@ -112,7 +123,12 @@ function showConfirmDialog(options) {
         overlay.appendChild(dialog);
         document.body.appendChild(overlay);
         
+        let isClosing = false;
+        
         const removeDialog = () => {
+            if (isClosing) return;
+            isClosing = true;
+            
             overlay.style.animation = 'fadeOut 0.2s ease-out';
             dialog.style.animation = 'scaleOut 0.2s ease-out';
             setTimeout(() => {

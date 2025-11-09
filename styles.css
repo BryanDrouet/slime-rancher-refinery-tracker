@@ -25,8 +25,8 @@ body {
     width: 40px;
     height: 40px;
     vertical-align: middle;
-    margin-right: 10px;
     filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
+    flex-shrink: 0;
 }
 
 
@@ -223,6 +223,9 @@ header h1 {
     font-weight: 700;
     text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
     margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .user-info {
@@ -312,7 +315,7 @@ header h1 {
     display: flex;
     align-items: center;
     gap: 12px;
-    animation: slideIn 0.3s ease-out;
+    /* animation: slideIn 0.3s ease-out; */
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     font-family: 'Fredoka', sans-serif;
@@ -395,10 +398,6 @@ header h1 {
         transform: translateX(400px);
         opacity: 0;
     }
-}
-
-.notification.removing {
-    animation: slideOut 0.3s ease-in forwards;
 }
 
 .confirmation-dialog-overlay {
@@ -647,7 +646,6 @@ header h1 {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 15px;
-    margin-bottom: 30px;
 }
 
 
@@ -745,7 +743,8 @@ header h1 {
 
 .resource-controls {
     display: flex;
-    align-items: center;
+    flex-direction: column;
+    align-items: stretch;
     gap: 8px;
     width: 100%;
     background: #f8f9fa;
@@ -754,9 +753,16 @@ header h1 {
     border: 2px solid #e9ecef;
 }
 
+.resource-controls-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: stretch;
+    width: 100%;
+}
+
 .resource-btn-minus,
 .resource-btn-plus {
-    width: 38px;
+    flex: 1;
     height: 38px;
     border: none;
     background: linear-gradient(135deg, #667eea, #764ba2);
@@ -770,22 +776,43 @@ header h1 {
     align-items: center;
     justify-content: center;
     font-family: 'Fredoka', sans-serif;
-    flex-shrink: 0;
+}
+
+.resource-btn-minus-10,
+.resource-btn-plus-10 {
+    flex: 1;
+    height: 38px;
+    border: none;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fredoka', sans-serif;
 }
 
 .resource-btn-minus:hover,
-.resource-btn-plus:hover {
+.resource-btn-plus:hover,
+.resource-btn-minus-10:hover,
+.resource-btn-plus-10:hover {
     transform: scale(1.1);
     box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
 }
 
 .resource-btn-minus:active,
-.resource-btn-plus:active {
+.resource-btn-plus:active,
+.resource-btn-minus-10:active,
+.resource-btn-plus-10:active {
     transform: scale(0.95);
 }
 
 .resource-qty-input {
-    flex: 1;
+    width: 100%;
     padding: 10px;
     border: 2px solid #e0e0e0;
     border-radius: 10px;
@@ -794,7 +821,6 @@ header h1 {
     text-align: center;
     font-weight: 700;
     background: white;
-    min-width: 60px;
     appearance: textfield;
     -moz-appearance: textfield;
 }
@@ -1121,7 +1147,6 @@ header h1 {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
-    margin-bottom: 20px;
 }
 
 .recipes-grid .empty-message {
@@ -1207,7 +1232,44 @@ header h1 {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
     pointer-events: none;
 }
-.recipe-image {
+.recipe-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.recipe-name {
+    font-weight: 700;
+    font-size: 18px;
+    color: #2d3748;
+    margin: 0;
+    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.recipe-price-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+    transition: all 0.3s ease;
+}
+
+.recipe-card.owned .recipe-price-badge {
+    background: linear-gradient(135deg, #51cf66, #40c057);
+    box-shadow: 0 2px 8px rgba(81, 207, 102, 0.3);
+}
+
+.recipe-image-container {
     width: 100%;
     height: 150px;
     object-fit: contain;
@@ -1220,36 +1282,10 @@ header h1 {
     padding: 15px;
 }
 
-.recipe-image img {
+.recipe-img {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-}
-
-.recipe-content {
-    padding: 20px;
-}
-
-.recipe-name {
-    font-weight: 700;
-    font-size: 18px;
-    color: #2d3748;
-    margin: 0 0 12px 0;
-    text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 255, 255, 0.5);
-}
-
-.recipe-price {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: linear-gradient(135deg, #667eea, #764ba2);
-    color: white;
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-weight: 700;
-    margin-bottom: 12px;
-    font-size: 14px;
-    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
 }
 
 .currency-icon {
@@ -1279,13 +1315,21 @@ header h1 {
 .recipe-ingredients {
     font-size: 13px;
     color: #2d3748;
-    margin-bottom: 15px;
+    margin: 15px 20px;
     line-height: 1.8;
     background: rgba(255, 255, 255, 0.85);
     padding: 12px;
     border-radius: 10px;
     text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(5px);
+}
+
+.ingredient-icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 4px;
+    display: inline-block;
 }
 
 .ingredient-sufficient {
@@ -1301,6 +1345,7 @@ header h1 {
 .recipe-actions {
     display: flex;
     gap: 8px;
+    padding: 0 20px 20px 20px;
 }
 
 .btn-purchase {
@@ -1336,43 +1381,47 @@ header h1 {
 }
 
 .btn-favorite {
-    padding: 12px;
-    background: white;
-    border: 2px solid #ffd43b;
-    border-radius: 12px;
+    background: transparent;
+    border: none;
     cursor: pointer;
-    font-size: 20px;
+    font-size: 28px;
     transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 4px;
+    color: #ff5d00;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .btn-favorite:hover {
-    transform: scale(1.1);
-    background: #fff9e6;
-    border-color: #fab005;
+    transform: scale(1.2);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
 }
 
 .btn-favorite.active {
-    background: linear-gradient(135deg, #ffd43b, #fab005);
-    border-color: #fab005;
-    box-shadow: 0 4px 12px rgba(250, 176, 5, 0.4);
+    background: linear-gradient(135deg, #ffd700, #ffed4e, #ffd700);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 2px 8px rgba(255, 215, 0, 0.6));
 }
 
 .btn-favorite.active:hover {
-    box-shadow: 0 6px 16px rgba(250, 176, 5, 0.5);
+    transform: scale(1.2);
+    filter: drop-shadow(0 4px 12px rgba(255, 215, 0, 0.8));
 }
 
-.zone-card .btn-favorite,
-.dlc-card .btn-favorite {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    z-index: 10;
-    width: 45px;
-    height: 45px;
-    padding: 8px;
+.zone-actions,
+.dlc-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.zone-actions .btn-zone,
+.dlc-actions .btn-dlc {
+    flex: 1;
 }
 
 .total-price {
@@ -1476,6 +1525,9 @@ header h1 {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .dlc-card::before {
@@ -1509,6 +1561,27 @@ header h1 {
     opacity: 1;
 }
 
+.dlc-card.free {
+    background: linear-gradient(135deg, #e7f5ff 0%, #ffffff 100%);
+    border-color: #74c0fc;
+}
+
+.dlc-card.free::before {
+    background: linear-gradient(90deg, #74c0fc, #4dabf7);
+    opacity: 1;
+}
+
+/* Si owned ET free, garder le style vert (owned) */
+.dlc-card.owned.free {
+    background: linear-gradient(135deg, #d3f9d8 0%, #ebfbee 100%);
+    border-color: #51cf66;
+}
+
+.dlc-card.owned.free::before {
+    background: linear-gradient(90deg, #51cf66, #40c057);
+    opacity: 1;
+}
+
 .dlc-header {
     margin-bottom: 20px;
     display: flex;
@@ -1537,13 +1610,46 @@ header h1 {
     color: white;
     box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
     white-space: nowrap;
+    transition: all 0.3s ease;
+}
+
+.dlc-card.owned .dlc-price {
+    background: linear-gradient(135deg, #51cf66, #40c057);
+    box-shadow: 0 2px 8px rgba(81, 207, 102, 0.3);
+}
+
+.dlc-card.free .dlc-price {
+    background: linear-gradient(135deg, #74c0fc, #4dabf7);
+    box-shadow: 0 2px 8px rgba(116, 192, 252, 0.3);
+}
+
+.dlc-card.owned.free .dlc-price {
+    background: linear-gradient(135deg, #51cf66, #40c057);
+    box-shadow: 0 2px 8px rgba(81, 207, 102, 0.3);
+}
+
+.dlc-image-container {
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 48px;
+    border-radius: 12px 12px 0 0;
+}
+
+.dlc-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
 }
 
 .dlc-content {
     background: #f8f9fa;
     padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 20px;
+    border-radius: 0 0 12px 12px;
 }
 
 .dlc-content h4 {
@@ -1598,7 +1704,6 @@ header h1 {
 }
 
 .btn-dlc:hover {
-    transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
 }
 
@@ -1660,6 +1765,35 @@ header h1 {
     border-color: #ffd43b;
 }
 
+.club-tier-card.locked {
+    position: relative;
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.club-tier-card.locked::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    z-index: 1;
+}
+
+.club-tier-card .locked-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    z-index: 10;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    pointer-events: none;
+}
+
 .tier-header {
     display: flex;
     justify-content: space-between;
@@ -1682,6 +1816,11 @@ header h1 {
 
 .club-tier-card.tier-purchased .tier-badge {
     background: linear-gradient(135deg, #51cf66, #40c057);
+}
+
+.club-tier-card.tier-purchased .tier-price {
+    background: linear-gradient(135deg, #51cf66, #40c057);
+    box-shadow: 0 2px 8px rgba(81, 207, 102, 0.3);
 }
 
 .tier-status {
@@ -1726,7 +1865,12 @@ header h1 {
     color: white;
     box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
     white-space: nowrap;
-    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.club-tier-card.owned .tier-price {
+    background: linear-gradient(135deg, #51cf66, #40c057);
+    box-shadow: 0 2px 8px rgba(81, 207, 102, 0.3);
 }
 
 .tier-rewards {
@@ -1787,6 +1931,7 @@ header h1 {
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
     box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    margin-top: auto;
 }
 
 .btn-tier-action:hover:not(:disabled) {
@@ -1824,7 +1969,6 @@ header h1 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
     gap: 25px;
-    margin-bottom: 30px;
 }
 
 .vacpack-category {
@@ -1857,22 +2001,23 @@ header h1 {
 }
 
 .vacpack-upgrades-list {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
 }
 
 .vacpack-upgrade-card {
     display: flex;
-    align-items: center;
-    gap: 15px;
+    flex-direction: column;
     background: white;
-    padding: 15px;
-    border-radius: 15px;
+    border-radius: 20px;
     border: 2px solid #e9ecef;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    gap: 0;
 }
 
 .vacpack-upgrade-card::before {
@@ -1882,7 +2027,7 @@ header h1 {
     left: 0;
     right: 0;
     height: 5px;
-    background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+    background: linear-gradient(90deg, #667eea, #764ba2);
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -1896,88 +2041,66 @@ header h1 {
     opacity: 1;
 }
 
-.vacpack-upgrade-card.purchased {
+.vacpack-upgrade-card.owned {
     background: linear-gradient(135deg, #d3f9d8 0%, #ebfbee 100%);
     border-color: #51cf66;
 }
 
-.vacpack-upgrade-card.purchased::before {
+.vacpack-upgrade-card.owned::before {
     background: linear-gradient(90deg, #51cf66, #40c057);
     opacity: 1;
 }
 
-.vacpack-upgrade-card.available {
-    background: linear-gradient(135deg, #fff3bf 0%, #fff9e6 100%);
-    border-color: #ffd43b;
+.vacpack-upgrade-card.free {
+    background: linear-gradient(135deg, #e7f5ff 0%, #ffffff 100%);
+    border-color: #74c0fc;
 }
 
-.upgrade-icon {
-    font-size: 32px;
-    width: 50px;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #f8f9fa, #ffffff);
-    border-radius: 12px;
-    flex-shrink: 0;
-    border: 2px solid #e9ecef;
+.vacpack-upgrade-card.free::before {
+    background: linear-gradient(90deg, #74c0fc, #339af0);
+    opacity: 1;
 }
 
-.upgrade-icon img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-    padding: 3px;
+.vacpack-upgrade-card.owned.free {
+    background: linear-gradient(135deg, #d3f9d8 0%, #ebfbee 100%);
+    border-color: #51cf66;
 }
 
-.upgrade-details {
-    flex: 1;
+.vacpack-upgrade-card.owned.free::before {
+    background: linear-gradient(90deg, #51cf66, #40c057);
+    opacity: 1;
 }
 
-.upgrade-name {
-    font-weight: 700;
-    color: #2d3748;
-    font-size: 15px;
-    margin-bottom: 4px;
-}
-
-.upgrade-price {
-    font-size: 14px;
-    color: #667eea;
-    font-weight: 600;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
+.vacpack-upgrade-card.locked {
+    opacity: 0.7;
 }
 
 .btn-upgrade {
-    padding: 10px 20px;
+    flex: 1;
+    padding: 14px 20px;
     border: none;
     border-radius: 12px;
     font-weight: 700;
-    font-family: 'Fredoka', sans-serif;
+    font-size: 15px;
     cursor: pointer;
     transition: all 0.3s ease;
     background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
-    font-size: 14px;
-    box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
-    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
 .btn-upgrade:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
 }
 
-.btn-upgrade.purchased {
+.btn-upgrade.owned {
     background: linear-gradient(135deg, #51cf66, #40c057);
-    box-shadow: 0 3px 10px rgba(81, 207, 102, 0.3);
+    box-shadow: 0 4px 12px rgba(81, 207, 102, 0.3);
 }
 
-.btn-upgrade.purchased:hover {
-    box-shadow: 0 5px 15px rgba(81, 207, 102, 0.4);
+.btn-upgrade.owned:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(81, 207, 102, 0.4);
 }
 
 .btn-upgrade:disabled {
@@ -1987,12 +2110,137 @@ header h1 {
     box-shadow: none;
 }
 
-
-.favorites-container {
-    margin-bottom: 30px;
+/* Styles pour les cartes Vacpack en grid (favoris) */
+.vacpack-grid .vacpack-upgrade-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: 0;
 }
 
+.upgrade-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 20px 20px 0 0;
+}
 
+.upgrade-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 0;
+    flex: 1;
+}
+
+.upgrade-price-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+.vacpack-upgrade-card.owned .upgrade-price-badge {
+    background: linear-gradient(135deg, #51cf66, #40c057);
+    box-shadow: 0 2px 8px rgba(81, 207, 102, 0.3);
+}
+
+.upgrade-image-container {
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 48px;
+    padding: 15px;
+}
+
+.upgrade-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.upgrade-actions {
+    display: flex;
+    gap: 10px;
+    padding: 15px 20px;
+    margin-top: auto;
+}
+
+.upgrade-actions .btn-upgrade {
+    flex: 1;
+}
+
+.upgrade-actions .btn-favorite {
+    flex: 0 0 auto;
+    width: 48px;
+}
+
+/* Styles pour les boutons de recettes */
+.btn-recipe {
+    flex: 1;
+    padding: 14px 20px;
+    border: none;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-recipe:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.btn-recipe.owned {
+    background: linear-gradient(135deg, #51cf66, #40c057);
+    box-shadow: 0 4px 12px rgba(81, 207, 102, 0.3);
+}
+
+.btn-recipe.owned:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(81, 207, 102, 0.4);
+}
+
+.favorites-category-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #2d3748;
+    margin: 30px 0 20px 0;
+    padding-bottom: 12px;
+    border-bottom: 3px solid #667eea;
+    position: relative;
+}
+
+.favorites-category-title:first-child {
+    margin-top: 0;
+}
+
+.favorites-category-title::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    width: 100px;
+    height: 3px;
+    background: linear-gradient(90deg, #764ba2, transparent);
+}
 
 .empty-message {
     text-align: center;
@@ -2119,6 +2367,9 @@ header h1 {
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .zone-card.free {
@@ -2162,9 +2413,20 @@ header h1 {
     opacity: 1;
 }
 
+.zone-card.owned.free {
+    background: linear-gradient(135deg, #d3f9d8 0%, #ebfbee 100%);
+    border-color: #51cf66;
+}
+
+.zone-card.owned.free::before {
+    background: linear-gradient(90deg, #51cf66, #40c057);
+    opacity: 1;
+}
+
 .zone-image-container {
     position: relative;
     width: 100%;
+    height: 150px;
     margin-bottom: 20px;
     border-radius: 15px;
     overflow: hidden;
@@ -2176,11 +2438,10 @@ header h1 {
 
 .zone-img {
     width: 100%;
-    height: auto;
-    max-height: 200px;
-    object-fit: scale-down;
+    height: 100%;
+    object-fit: contain;
     transition: transform 0.3s ease;
-    padding: 10px;
+    padding: 15px;
 }
 
 .zone-card:hover .zone-img {
@@ -2211,35 +2472,46 @@ header h1 {
 }
 
 .zone-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     margin-bottom: 20px;
-}
-
-.zone-title-wrapper {
-    flex: 1;
 }
 
 .zone-name {
     font-size: 20px;
     font-weight: 700;
     color: #2d3748;
-    margin: 0 0 8px 0;
+    margin: 0;
 }
 
-.zone-price {
+.zone-price-badge {
     font-size: 16px;
     font-weight: 700;
     background: linear-gradient(135deg, #667eea, #764ba2);
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 6px 14px;
+    padding: 8px 16px;
     border-radius: 20px;
     color: white;
     box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+    white-space: nowrap;
 }
 
-.zone-card.owned .zone-price {
+.zone-card.owned .zone-price-badge {
     background: linear-gradient(135deg, #51cf66, #40c057);
+    box-shadow: 0 2px 8px rgba(81, 207, 102, 0.3);
+}
+
+.zone-card.free .zone-price-badge {
+    background: linear-gradient(135deg, #74c0fc, #4dabf7);
+    box-shadow: 0 2px 8px rgba(116, 192, 252, 0.3);
+}
+
+.zone-card.owned.free .zone-price-badge {
+    background: linear-gradient(135deg, #51cf66, #40c057);
+    box-shadow: 0 2px 8px rgba(81, 207, 102, 0.3);
 }
 
 .zone-content {
@@ -2267,16 +2539,29 @@ header h1 {
 .zone-content li {
     padding: 6px 0 6px 20px;
     position: relative;
-    color: #495057;
-    font-size: 14px;
+    color: #4a5568;
+    font-size: 13px;
+    line-height: 1.5;
 }
 
 .zone-content li::before {
-    content: '✓';
+    content: '◆';
     position: absolute;
     left: 0;
-    color: #51cf66;
-    font-weight: bold;
+    color: #667eea;
+    font-size: 10px;
+    top: 8px;
+}
+
+.zone-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+
+.zone-actions .btn-favorite {
+    flex: 0 0 auto;
+    width: 48px;
 }
 
 .btn-zone {
@@ -2297,10 +2582,6 @@ header h1 {
 .btn-zone:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
-}
-
-.btn-zone:active {
-    transform: translateY(0);
 }
 
 .btn-zone.owned {
@@ -2512,6 +2793,55 @@ header h1 {
         width: 40px;
         height: 40px;
         border-width: 2px;
+    }
+}
+
+/* Bouton scroll to top */
+.scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 50px;
+    height: 50px;
+    background: white;
+    color: #667eea;
+    border: 3px solid transparent;
+    border-radius: 8px;
+    font-size: 24px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.scroll-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.scroll-to-top:hover {
+    transform: scale(1.15);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    border-color: #667eea;
+}
+
+.scroll-to-top:active {
+    transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+    .scroll-to-top {
+        bottom: 15px;
+        left: 15px;
+        width: 45px;
+        height: 45px;
+        font-size: 20px;
     }
 }
 

@@ -444,19 +444,19 @@ const SLIME_RANCHER_DLCS = [
         id: "secret-style-pack",
         name: "Secret Style Pack",
         price: {
-            USD: 2.99,
-            EUR: 2.99,
-            GBP: 2.39,
-            CAD: 3.39,
-            AUD: 4.50,
-            BRL: 10.99,
-            JPY: 310,
-            KRW: 3300,
-            RUB: 229,
-            CNY: 22,
-            CHF: 2.90,
-            NOK: 31,
-            SEK: 31
+            USD: 7.49,
+            EUR: 7.49,
+            GBP: 5.99,
+            CAD: 8.49,
+            AUD: 10.95,
+            BRL: 20.95,
+            JPY: 820,
+            KRW: 8500,
+            RUB: 549,
+            CNY: 58,
+            CHF: 7.50,
+            NOK: 77,
+            SEK: 77
         },
         content: [
             "20 Fashion Pods",
@@ -467,39 +467,12 @@ const SLIME_RANCHER_DLCS = [
     {
         id: "galactic-bundle",
         name: "Galactic Bundle",
-        price: {
-            USD: 4.99,
-            EUR: 4.99,
-            GBP: 3.99,
-            CAD: 5.69,
-            AUD: 7.50,
-            BRL: 18.99,
-            JPY: 520,
-            KRW: 5500,
-            RUB: 389,
-            CNY: 37,
-            CHF: 4.90,
-            NOK: 52,
-            SEK: 52
-        },
+        price: 0,
         content: [
             "Starlight Ranch House style",
             "Cosmic Slime Fashion Pods",
             "Space-themed decorations",
             "Galaxy colored slimes"
-        ]
-    },
-    {
-        id: "viktor-lab-pack",
-        name: "Viktor's Experimental Update",
-        price: 0,
-        content: [
-            "The Lab (new area)",
-            "Quantum Slime",
-            "Dervish Slime",
-            "Tangle Slime",
-            "Advanced gadgets",
-            "Slime Science progression"
         ]
     }
 ];
@@ -515,11 +488,6 @@ const DLC_TRANSLATIONS = {
         en: "Galactic Bundle",
         fr: "Pack Galactique",
         es: "Paquete Galáctico"
-    },
-    "Viktor's Experimental Update": {
-        en: "Viktor's Experimental Update",
-        fr: "Mise à Jour Expérimentale de Viktor",
-        es: "Actualización Experimental de Viktor"
     },
     
     "20 Fashion Pods": {
@@ -556,36 +524,6 @@ const DLC_TRANSLATIONS = {
         en: "Galaxy colored slimes",
         fr: "Slimes couleur galaxie",
         es: "Slimes color galaxia"
-    },
-    "The Lab (new area)": {
-        en: "The Lab (new area)",
-        fr: "Le Labo (nouvelle zone)",
-        es: "El Laboratorio (nueva área)"
-    },
-    "Quantum Slime": {
-        en: "Quantum Slime",
-        fr: "Slime Quantique",
-        es: "Slime Cuántico"
-    },
-    "Dervish Slime": {
-        en: "Dervish Slime",
-        fr: "Slime Derviche",
-        es: "Slime Derviche"
-    },
-    "Tangle Slime": {
-        en: "Tangle Slime",
-        fr: "Slime Enchevêtré",
-        es: "Slime Enredado"
-    },
-    "Advanced gadgets": {
-        en: "Advanced gadgets",
-        fr: "Gadgets avancés",
-        es: "Gadgets avanzados"
-    },
-    "Slime Science progression": {
-        en: "Slime Science progression",
-        fr: "Progression Slime Science",
-        es: "Progresión de Slime Science"
     }
 };
 

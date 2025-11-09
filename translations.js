@@ -1,3 +1,51 @@
+// Traductions des unlocks de zones
+const ZONE_UNLOCKS_TRANSLATIONS = {
+    'Zone de départ': {
+        fr: 'Zone de départ',
+        en: 'Starting Area',
+        es: 'Zona inicial'
+    },
+    'Parcelles de base': {
+        fr: 'Parcelles de base',
+        en: 'Base Plots',
+        es: 'Parcelas básicas'
+    },
+    'Raffinerie': {
+        fr: 'Raffinerie',
+        en: 'Refinery',
+        es: 'Refinería'
+    },
+    'Extracteurs': {
+        fr: 'Extracteurs',
+        en: 'Extractors',
+        es: 'Extractores'
+    },
+    'Slime Science': {
+        fr: 'Slime Science',
+        en: 'Slime Science',
+        es: 'Ciencia Slime'
+    },
+    'Jardin Foisonnant': {
+        fr: 'Jardin Foisonnant',
+        en: 'Overgrown Garden',
+        es: 'Jardín Exuberante'
+    },
+    'Plus de parcelles': {
+        fr: 'Plus de parcelles',
+        en: 'More Plots',
+        es: 'Más parcelas'
+    },
+    'Grotte Antique': {
+        fr: 'Grotte Antique',
+        en: 'Ancient Grotto',
+        es: 'Gruta antigua'
+    },
+    'Docks Vieux': {
+        fr: 'Docks Vieux',
+        en: 'Old Docks',
+        es: 'Muelle viejo'
+    }
+};
 
 const translations = {
     fr: {
@@ -32,8 +80,8 @@ const translations = {
         quantity: "Quantité",
         addButton: "Ajouter",
         noDeposits: "Aucun dépôt dans la raffinerie",
-        saveAll: "💾 Enregistrer tout",
-        quantityLabel: "Quantité:",
+        saveAll: "💾 Sauvegarder tout",
+        quantityLabel: "Quantité :",
         filterDrill: "Foreuse",
         filterPump: "Pompe",
         filterApiary: "Ruche",
@@ -45,15 +93,15 @@ const translations = {
         filterAll: "Toutes",
         filterPurchased: "Achetées",
         filterNotPurchased: "Non achetées",
-        sortBy: "Trier par:",
+        sortBy: "Trier par :",
         sortDefault: "Par défaut",
         sortNameAsc: "Nom (A-Z)",
         sortNameDesc: "Nom (Z-A)",
         sortPriceAsc: "Prix croissant",
-        sortPriceDesc: "Prix décroissant",
+        sortPriceDesc: "Prix (Élevé à Faible)",
         locked: "Verrouillé",
-        totalPrice: "Prix total des recettes non achetées:",
-        newbucks: "Newbucks",
+        totalPrice: "Prix total des recettes non achetées :",
+        newbucks: "Nouvodollars",
         purchase: "Acheter",
         purchased: "Acheté",
         addFavorite: "Ajouter aux favoris",
@@ -73,13 +121,13 @@ const translations = {
         
         
         clubTitle: "Club 7Zee",
-        currentMoney: "Argent actuel:",
-        currentTier: "Palier actuel:",
+        currentMoney: "Argent actuel :",
+        currentTier: "Palier actuel :",
         level: "Niveau",
         rewards: "Récompenses",
         saveButton: "Sauvegarder",
         unlocked: "✓ Débloqué",
-        required: "Requis:",
+        required: "Requis :",
         
         
         favoritesTitle: "Items Favoris",
@@ -88,11 +136,11 @@ const translations = {
         
         fillAllFields: "Veuillez remplir tous les champs",
         passwordLength: "Le mot de passe doit contenir au moins 6 caractères",
-        loginError: "Erreur de connexion:",
-        registerError: "Erreur d'inscription:",
-        googleError: "Erreur de connexion Google:",
+        loginError: "Erreur de connexion :",
+        registerError: "Erreur d'inscription :",
+        googleError: "Erreur de connexion Google :",
         saveError: "Erreur lors de la sauvegarde des données",
-        loadError: "Erreur de chargement:",
+        loadError: "Erreur de chargement :",
         enterItemName: "Veuillez entrer le nom de l'objet",
         enterValidQuantity: "Veuillez entrer une quantité valide",
         confirmLogout: "Déconnexion",
@@ -108,10 +156,10 @@ const translations = {
         
         
         dlcsTitle: "DLCs",
-        dlcOwned: "✓ Possédé",
+        dlcOwned: "Possédé",
         dlcBuy: "Marquer comme possédé",
-        dlcPrice: "Prix:",
-        dlcContent: "Contenu:",
+        dlcPrice: "Prix :",
+        dlcContent: "Contenu :",
         dlcAdded: "DLC ajouté !",
         dlcRemoved: "DLC retiré",
         
@@ -132,6 +180,7 @@ const translations = {
         cost: "Coût",
         price: "Prix",
         obtain: "Obtenir",
+    obtained: "Obtenu",
         get: "Récupérer",
         
         
@@ -215,6 +264,7 @@ const translations = {
         newbucks: "Newbucks",
         purchase: "Purchase",
         purchased: "Purchased",
+    obtained: "Obtained",
         addFavorite: "Add to favorites",
         buyLabFirst: "Start by buying the lab!",
         noPurchasedRecipes: "No purchased recipes. Start buying recipes!",
@@ -270,7 +320,7 @@ const translations = {
         
         
         dlcsTitle: "DLCs",
-        dlcOwned: "✓ Owned",
+        dlcOwned: "Owned",
         dlcBuy: "Mark as owned",
         dlcPrice: "Price:",
         dlcContent: "Content:",
@@ -431,7 +481,7 @@ const translations = {
         
         
         dlcsTitle: "DLCs",
-        dlcOwned: "✓ Poseído",
+        dlcOwned: "Poseído",
         dlcBuy: "Marcar como poseído",
         dlcPrice: "Precio:",
         dlcContent: "Contenido:",
@@ -531,7 +581,8 @@ function changeLanguage(lang, forceUpdate = false) {
         url = `${window.location.pathname}?lang=${lang}&refineryFilter=${refineryFilter}#${hash}`;
     } else if (hash === 'recipes') {
         const recipeFilter = typeof currentFilter !== 'undefined' ? currentFilter : 'all';
-        url = `${window.location.pathname}?lang=${lang}&recipeFilter=${recipeFilter}#${hash}`;
+        const recipeSort = typeof currentSort !== 'undefined' ? currentSort : 'default';
+        url = `${window.location.pathname}?lang=${lang}&recipeFilter=${recipeFilter}&sort=${recipeSort}#${hash}`;
     } else {
         url = `${window.location.pathname}?lang=${lang}#${hash}`;
     }

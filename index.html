@@ -9,6 +9,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Ajoute l'icône dans le titre du navigateur */
+        head::before {
+            content: url('assets/icon.png');
+        }
+    </style>
 </head>
 <body>
     <!-- Écran de connexion -->
@@ -17,9 +23,11 @@
             <h1 data-i18n="mainTitle"><img src="assets/icon.png" alt="Slime" class="title-icon"> Slime Rancher Refinery Tracker</h1>
             <div id="login-section">
                 <h2 data-i18n="login">Connexion</h2>
-                <input type="email" id="login-email" data-i18n="email" placeholder="Email">
-                <input type="password" id="login-password" data-i18n="password" placeholder="Mot de passe">
-                <button onclick="loginWithEmail()" class="btn-primary" data-i18n="loginButton">Se connecter</button>
+                <form onsubmit="loginWithEmail(); return false;">
+                    <input type="email" id="login-email" data-i18n="email" placeholder="Email" autocomplete="email">
+                    <input type="password" id="login-password" data-i18n="password" placeholder="Mot de passe" autocomplete="current-password">
+                    <button type="submit" class="btn-primary" data-i18n="loginButton">Se connecter</button>
+                </form>
                 <button onclick="loginWithGoogle()" class="btn-google">
                     <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" width="20">
                     <span data-i18n="googleLogin">Connexion avec Google</span>
@@ -28,9 +36,11 @@
             </div>
             <div id="register-section" style="display: none;">
                 <h2 data-i18n="register">Inscription</h2>
-                <input type="email" id="register-email" data-i18n="email" placeholder="Email">
-                <input type="password" id="register-password" data-i18n="password" placeholder="Mot de passe">
-                <button onclick="registerWithEmail()" class="btn-primary" data-i18n="registerButton">S'inscrire</button>
+                <form onsubmit="registerWithEmail(); return false;">
+                    <input type="email" id="register-email" data-i18n="email" placeholder="Email" autocomplete="email">
+                    <input type="password" id="register-password" data-i18n="password" placeholder="Mot de passe" autocomplete="new-password">
+                    <button type="submit" class="btn-primary" data-i18n="registerButton">S'inscrire</button>
+                </form>
                 <p class="switch-auth"><span data-i18n="hasAccount">Déjà un compte ?</span> <a href="#" onclick="showLogin()" data-i18n="loginLink">Se connecter</a></p>
             </div>
         </div>
@@ -57,7 +67,10 @@
         <!-- Header -->
         <header>
             <div class="header-content">
-                <h1 data-i18n="mainTitle"><img src="assets/icon.png" alt="Slime" class="title-icon"> Slime Rancher Refinery Tracker</h1>
+                <h1 data-i18n="mainTitle" onclick="showSection('refinery'); event.stopPropagation();" style="cursor: pointer;">
+                    <img src="assets/icon.png" alt="Slime" class="title-icon" style="cursor: pointer;"> 
+                    Slime Rancher Refinery Tracker
+                </h1>
                 <div class="header-info">
                     <span id="currency-display" style="font-size: 0.8em; opacity: 0.8;"></span>
                     <button onclick="logout()" class="btn-logout" data-i18n="logout">Déconnexion</button>
@@ -81,6 +94,11 @@
                 <button class="nav-btn" onclick="showSection('favorites')" data-i18n="navFavorites">Favoris</button>
             </div>
         </nav>
+        
+        <!-- Bouton scroll to top -->
+        <button id="scroll-to-top" class="scroll-to-top" onclick="scrollToTop()" title="Remonter en haut">
+            <img src="assets/resources/icon_top.png" alt="Remonter en haut" style="width:32px;height:32px;vertical-align:middle;">
+        </button>
         
         <!-- Sélecteur de langue en bas à droite -->
         <div class="language-flags-corner">

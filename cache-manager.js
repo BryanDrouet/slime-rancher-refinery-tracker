@@ -85,7 +85,7 @@ class CacheManager {
         
         localStorage.setItem('user-region', JSON.stringify(regionInfo));
         
-        console.log(`Région détectée: ${this.userRegion}, Devise: ${this.userCurrency} (${this.currencySymbol})`);
+        console.log(`Region detected: ${this.userRegion}, Currency: ${this.userCurrency} (${this.currencySymbol})`);
         
         return regionInfo;
     }
