@@ -1230,12 +1230,14 @@ header h1 {
 
 
 .recipe-card {
+    border: 2px solid #e9ecef;
     border-radius: 20px;
     padding: 0;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     transition: all 0.3s ease;
     overflow: hidden;
     position: relative;
+    background-color: white;
 }
 
 .recipe-card::before {
@@ -1252,7 +1254,7 @@ header h1 {
 
 .recipe-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
 }
 
 .recipe-card:hover::before {
@@ -1339,6 +1341,24 @@ header h1 {
 
 .recipe-card.owned .recipe-price-badge {
     background: linear-gradient(135deg, #51cf66, #40c057);
+    box-shadow: 0 2px 8px rgba(81, 207, 102, 0.3);
+}
+
+.recipe-card.purchased {
+    border-color: #51cf66;
+    box-shadow: 0 4px 20px rgba(81, 207, 102, 0.15);
+}
+.recipe-card.purchased::before {
+    background: linear-gradient(90deg, #51cf66, #40c057);
+    opacity: 1;
+}
+.recipe-card.purchased .recipe-image-container {
+    background: linear-gradient(135deg, #d3f9d8 0%, #ebfbee 100%);
+    border-top: 5px solid #51cf66;
+}
+.recipe-card.purchased .recipe-price-badge {
+    background: linear-gradient(135deg, #51cf66, #40c057);
+    color: white;
     box-shadow: 0 2px 8px rgba(81, 207, 102, 0.3);
 }
 
@@ -1490,10 +1510,7 @@ header h1 {
     display: flex;
     gap: 8px;
     margin-top: auto;
-}
-
-.dlc-actions {
-    margin-top: 20px;
+    width: 100%;
 }
 
 .zone-actions .btn-zone,
@@ -1604,6 +1621,7 @@ header h1 {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .dlc-card::before {
@@ -1621,6 +1639,7 @@ header h1 {
 .dlc-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15);
+    border: 2px solid #e9ecef;
 }
 
 .dlc-card:hover::before {
@@ -1726,6 +1745,7 @@ header h1 {
     background: #f8f9fa;
     padding: 15px;
     border-radius: 0 0 12px 12px;
+    margin-bottom: 20px;
 }
 
 .dlc-content h4 {
@@ -1794,7 +1814,7 @@ header h1 {
 
 
 
-.club-tier-card {
+.club-tier-card{
     background: white;
     border-radius: 20px;
     padding: 25px;
@@ -2430,7 +2450,8 @@ li:last-child {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 25px;
-    margin-top: 20px;
+    margin-top: auto;
+    width: 100%;
 }
 
 

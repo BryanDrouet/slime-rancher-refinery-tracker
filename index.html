@@ -128,6 +128,16 @@
                 <button onclick="filterRefinery('apiary')" class="filter-btn" data-i18n="filterApiary">Ruche</button>
                 <button onclick="filterRefinery('plorts')" class="filter-btn" data-i18n="filterPlorts">Plorts</button>
             </div>
+            <div class="sort-controls">
+                <label data-i18n="sortBy">Trier par:</label>
+                <select id="refinery-sort" onchange="sortRefineryDeposits(this.value)">
+                    <option value="default" data-i18n="sortDefault">Par défaut</option>
+                    <option value="name-asc" data-i18n="sortNameAsc">Nom (A-Z)</option>
+                    <option value="name-desc" data-i18n="sortNameDesc">Nom (Z-A)</option>
+                    <option value="quantity-asc" data-i18n="sortQuantityAsc">Quantité croissante</option>
+                    <option value="quantity-desc" data-i18n="sortQuantityDesc">Quantité décroissante</option>
+                </select>
+            </div>
             
             <div class="refinery-grid" id="refinery-grid">
                 <!-- La grille sera générée dynamiquement -->

@@ -543,6 +543,7 @@ function showSaveConfirmation() {
 
 
 let currentRefineryFilter = 'all';
+let currentRefinerySort = 'default';
 
 // Initialiser currentRefineryFilter depuis l'URL au chargement
 const initialRefineryUrlParams = new URLSearchParams(window.location.search);
@@ -572,6 +573,29 @@ function displayRefineryDeposits() {
     let resourcesToDisplay = ALL_RESOURCES;
     if (currentRefineryFilter !== 'all') {
         resourcesToDisplay = RESOURCE_CATEGORIES[currentRefineryFilter] || ALL_RESOURCES;
+    }
+
+    // Tri selon currentRefinerySort
+    if (currentRefinerySort === 'name-asc') {
+        resourcesToDisplay = [...resourcesToDisplay].sort((a, b) => {
+            const nameA = ALL_RESOURCES_TRANSLATIONS[a]?.[lang] || a;
+            const nameB = ALL_RESOURCES_TRANSLATIONS[b]?.[lang] || b;
+            return nameA.localeCompare(nameB);
+        });
+    } else if (currentRefinerySort === 'name-desc') {
+        resourcesToDisplay = [...resourcesToDisplay].sort((a, b) => {
+            const nameA = ALL_RESOURCES_TRANSLATIONS[a]?.[lang] || a;
+            const nameB = ALL_RESOURCES_TRANSLATIONS[b]?.[lang] || b;
+            return nameB.localeCompare(nameA);
+        });
+    } else if (currentRefinerySort === 'quantity-asc') {
+        resourcesToDisplay = [...resourcesToDisplay].sort((a, b) => {
+            return (userData.refineryDeposits[a] || 0) - (userData.refineryDeposits[b] || 0);
+        });
+    } else if (currentRefinerySort === 'quantity-desc') {
+        resourcesToDisplay = [...resourcesToDisplay].sort((a, b) => {
+            return (userData.refineryDeposits[b] || 0) - (userData.refineryDeposits[a] || 0);
+        });
     }
     
     container.innerHTML = resourcesToDisplay.map(resource => {
@@ -623,19 +647,15 @@ function displayRefineryDeposits() {
 
 function filterRefinery(category) {
     currentRefineryFilter = category;
-    
     const urlParams = new URLSearchParams(window.location.search);
     const lang = urlParams.get('lang') || 'fr';
-    const newUrl = `${window.location.pathname}?lang=${lang}&refineryFilter=${category}#refinery`;
+    const sort = currentRefinerySort || 'default';
+    const newUrl = `${window.location.pathname}?lang=${lang}&refineryFilter=${category}&sort=${sort}#refinery`;
     window.history.replaceState({}, '', newUrl);
-    
-    
     document.querySelectorAll('#refinery-section .filter-btn').forEach(btn => {
         btn.classList.remove('active');
     });
     event.target.classList.add('active');
-    
-    
     displayRefineryDeposits();
 }
 
@@ -1588,7 +1608,8 @@ function displayFavorites() {
                     ` : ''}
                     ${!isFree ? `
                         <div class="zone-actions">
-                            <button class="btn-zone ${isOwned ? 'owned' : ''}" onclick="toggleZone('${zone.id}')">
+                            <button class="btn-zone ${isOwned ? 'owned' : ''}" 
+                                    onclick="toggleZone('${zone.id}')">
                                 ${isOwned ? (t('zoneOwned') || 'Acheté') : (t('zoneBuy') || 'Acheter')}
                             </button>
                             <button class="btn-favorite" onclick="toggleZoneFavorite('${zone.id}')" title="${t('addFavorite')}">
@@ -1703,4 +1724,14 @@ function scrollToTop() {
         top: 0,
         behavior: 'smooth'
     });
+}
+
+function sortRefineryDeposits(sortType) {
+    currentRefinerySort = sortType;
+    const urlParams = new URLSearchParams(window.location.search);
+    const lang = urlParams.get('lang') || 'fr';
+    const filter = currentRefineryFilter || 'all';
+    const newUrl = `${window.location.pathname}?lang=${lang}&refineryFilter=${filter}&sort=${sortType}#refinery`;
+    window.history.replaceState({}, '', newUrl);
+    displayRefineryDeposits();
 }
