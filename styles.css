@@ -1341,7 +1341,24 @@ header h1 {
 
 .recipe-card.owned .recipe-price-badge {
     background: linear-gradient(135deg, #51cf66, #40c057);
+    color: white;
     box-shadow: 0 2px 8px rgba(81, 207, 102, 0.3);
+}
+
+.recipe-card.owned {
+    background: linear-gradient(135deg, #d3f9d8 0%, #ebfbee 100%);
+    border-color: #51cf66;
+    box-shadow: 0 4px 20px rgba(81, 207, 102, 0.15);
+}
+
+.recipe-card.owned::before {
+    background: linear-gradient(90deg, #51cf66, #40c057);
+    opacity: 1;
+}
+
+.recipe-card.owned .recipe-image-container {
+    background: linear-gradient(135deg, #d3f9d8 0%, #ebfbee 100%);
+    border-top: 5px solid #51cf66;
 }
 
 .recipe-card.purchased {

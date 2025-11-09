@@ -277,6 +277,11 @@ function showSection(sectionName) {
         } else if (sectionName === 'favorites') {
             displayFavorites();
         } else if (sectionName === 'refinery') {
+            const refineryFilter = currentRefineryFilter || 'all';
+            const refinerySort = currentRefinerySort || 'default';
+            const newUrl = `${window.location.pathname}?lang=${lang}&refineryFilter=${refineryFilter}&sort=${refinerySort}#${sectionName}`;
+            window.history.replaceState({}, '', newUrl);
+            updateRefinerySortDropdown(refinerySort);
             displayRefineryDeposits();
         } else if (sectionName === 'recipes') {
             displayRecipes(currentFilter);
@@ -316,11 +321,12 @@ function handleURLNavigation() {
     
     if (hash && validSections.includes(hash)) {
         showSection(hash);
-        
-        
+
         if (hash === 'refinery') {
             currentRefineryFilter = refineryFilter;
+            currentRefinerySort = recipeSort;
             updateFilterButtons('refinery', refineryFilter);
+            updateRefinerySortDropdown(currentRefinerySort);
             displayRefineryDeposits();
         } else if (hash === 'recipes') {
             currentFilter = recipeFilter;
@@ -346,6 +352,13 @@ function handleURLNavigation() {
 
 function updateSortDropdown(sortValue) {
     const sortSelect = document.getElementById('recipe-sort');
+    if (sortSelect) {
+        sortSelect.value = sortValue;
+    }
+}
+
+function updateRefinerySortDropdown(sortValue) {
+    const sortSelect = document.getElementById('refinery-sort');
     if (sortSelect) {
         sortSelect.value = sortValue;
     }
@@ -549,6 +562,9 @@ let currentRefinerySort = 'default';
 const initialRefineryUrlParams = new URLSearchParams(window.location.search);
 if (initialRefineryUrlParams.get('refineryFilter')) {
     currentRefineryFilter = initialRefineryUrlParams.get('refineryFilter');
+}
+if (initialRefineryUrlParams.get('sort')) {
+    currentRefinerySort = initialRefineryUrlParams.get('sort');
 }
 
 function displayRefineryDeposits() {
